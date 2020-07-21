@@ -5,7 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.fund.likeeat.utilities.DATABASE_NAME
+import com.fund.likeeat.workers.PlaceTempDatabaseWorker
 
 @Database(entities = [Place::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
@@ -25,6 +28,8 @@ abstract class AppDatabase : RoomDatabase() {
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
+                        val request = OneTimeWorkRequestBuilder<PlaceTempDatabaseWorker>().build()
+                        WorkManager.getInstance(context).enqueue(request)
                     }
                 })
                 .build()
