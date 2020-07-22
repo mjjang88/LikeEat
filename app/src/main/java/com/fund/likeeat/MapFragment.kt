@@ -31,12 +31,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         val binding = FragmentMapBinding.inflate(inflater, container, false).apply {
             viewModel = mapViewModel
-            lifecycleOwner = viewLifecycleOwner
         }
         context ?: return binding.root
 
         mapInit()
-        subscribeUi()
 
         return binding.root
     }
@@ -64,5 +62,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(p0: NaverMap) {
         mNaverMap = p0
+
+        initAfterMapReady()
+    }
+
+    private fun initAfterMapReady() {
+        subscribeUi()
     }
 }
