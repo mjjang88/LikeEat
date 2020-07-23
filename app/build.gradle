@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'koin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -63,6 +64,12 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
     implementation "com.naver.maps:map-sdk:$rootProject.naverMapSdkVersion"
+    implementation "org.koin:koin-core:$rootProject.koinVersion"
+    implementation "org.koin:koin-core-ext:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-scope:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-fragment:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-ext:$rootProject.koinVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
@@ -73,4 +80,5 @@ dependencies {
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
     androidTestImplementation "androidx.work:work-testing:$rootProject.workVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation "org.koin:koin-test:$rootProject.koinVersion"
 }
