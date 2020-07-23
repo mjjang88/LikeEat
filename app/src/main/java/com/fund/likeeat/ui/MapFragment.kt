@@ -1,28 +1,26 @@
-package com.fund.likeeat
+package com.fund.likeeat.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.fund.likeeat.R
 import com.fund.likeeat.databinding.FragmentMapBinding
-import com.fund.likeeat.utilities.InjectorUtils
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
+import org.koin.android.ext.android.inject
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mNaverMap : NaverMap
 
-    private val mapViewModel: MapViewModel by viewModels {
-        InjectorUtils.provideMapViewModelFactory(this)
-    }
+    private val mapViewModel: MapViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
