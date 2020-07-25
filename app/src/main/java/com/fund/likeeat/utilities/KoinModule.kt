@@ -2,7 +2,9 @@ package com.fund.likeeat.utilities
 
 import com.fund.likeeat.data.AppDatabase
 import com.fund.likeeat.data.PlaceRepository
+import com.fund.likeeat.viewmodels.MapViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
@@ -17,5 +19,5 @@ val appModule = module {
     /**
      * ViewModel Module
      */
-
+    viewModel { MapViewModel(get()) }
 }

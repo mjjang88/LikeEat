@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Place(
     @PrimaryKey val id: Int,
     val name: String,
-    val x: Float,
-    val y: Float
+    val x: Double,
+    val y: Double
 ) {
 }
