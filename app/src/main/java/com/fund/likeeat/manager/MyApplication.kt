@@ -4,9 +4,13 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import com.fund.likeeat.utilities.appModule
+import com.kakao.auth.IApplicationConfig
+import com.kakao.auth.KakaoAdapter
+import com.kakao.auth.KakaoSDK
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+
 
 class MyApplication : Application() {
     override fun onCreate() {
@@ -21,6 +25,12 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(appModule)
         }
+
+        KakaoSDK.init(object : KakaoAdapter() {
+            override fun getApplicationConfig(): IApplicationConfig {
+                return IApplicationConfig { this@MyApplication }
+            }
+        })
     }
 
     companion object {
