@@ -16,6 +16,7 @@ import com.kakao.auth.Session
 import com.kakao.auth.network.response.AccessTokenInfoResponse
 import com.kakao.network.ErrorResult
 import com.kakao.util.exception.KakaoException
+import kotlin.system.exitProcess
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,9 +29,6 @@ class LoginActivity : AppCompatActivity() {
         )
 
         Session.getCurrentSession().addCallback(sessionCallback)
-
-        AuthService.getInstance()
-            .requestAccessTokenInfo(kakaoApiResponseCallback)
     }
 
     // 세션 콜백 구현
@@ -40,6 +38,8 @@ class LoginActivity : AppCompatActivity() {
 
             AuthService.getInstance()
                 .requestAccessTokenInfo(kakaoApiResponseCallback)
+
+            finish()
         }
 
         override fun onSessionOpenFailed(exception: KakaoException) {
@@ -63,8 +63,6 @@ class LoginActivity : AppCompatActivity() {
             result?.let {
                 RetrofitProcedure.sendUserId(User(it.userId))
             }
-
-            startMainActivity()
         }
     }
 
@@ -80,10 +78,12 @@ class LoginActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun startMainActivity() {
-        intent = Intent(this@LoginActivity, MainActivity::class.java)
-        startActivity(intent)
+    override fun onBackPressed() {
+        exitApp()
+    }
 
-        finish()
+    fun exitApp() {
+        finishAffinity()
+        System.runFinalization()
     }
 }
