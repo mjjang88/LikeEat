@@ -6,7 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object LikeEatRetrofit {
-    var gson = GsonBuilder()
+
+    private var gson = GsonBuilder()
         .setLenient()
         .create()
 
@@ -17,12 +18,4 @@ object LikeEatRetrofit {
             .baseUrl("http://likeeat-server.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-
-
-
-    /*var retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .build()*/
 }

@@ -13,6 +13,14 @@ import org.koin.core.context.startKoin
 
 
 class MyApplication : Application() {
+
+    companion object {
+        private var instance: MyApplication? = null
+        fun applicationContext() : Context {
+            return instance!!.applicationContext
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
 
@@ -26,17 +34,14 @@ class MyApplication : Application() {
             modules(appModule)
         }
 
+        initKakaoApi()
+    }
+
+    private fun initKakaoApi() {
         KakaoSDK.init(object : KakaoAdapter() {
             override fun getApplicationConfig(): IApplicationConfig {
                 return IApplicationConfig { this@MyApplication }
             }
         })
-    }
-
-    companion object {
-        private var instance: MyApplication? = null
-        fun applicationContext() : Context {
-            return instance!!.applicationContext
-        }
     }
 }

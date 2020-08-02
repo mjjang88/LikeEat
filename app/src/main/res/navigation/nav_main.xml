@@ -9,7 +9,6 @@
         android:id="@+id/fragment_map"
         android:name="com.fund.likeeat.ui.MapFragment"
         tools:layout="@layout/fragment_map">
-
     </fragment>
 
 </navigation>

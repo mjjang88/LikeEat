@@ -9,15 +9,14 @@ import retrofit2.http.POST
 
 
 interface RetrofitService {
+
     @GET("/")
     fun requestPlace(
     ): Call<List<Place>>
 
     @POST("/users/login/")
-    fun sendUserId(@Body user: User?): Call<String>
-
-
-    /*@POST("/users/new")
-    fun createUser(@Body user: User?): Call<User?>?*/
+    fun sendUserId(
+        @Body user: User?
+    ): Call<String>
 
 }
