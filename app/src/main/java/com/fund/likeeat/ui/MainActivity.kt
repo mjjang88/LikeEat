@@ -1,11 +1,19 @@
 package com.fund.likeeat.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import com.fund.likeeat.R
+import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
 import com.fund.likeeat.network.RetrofitProcedure
+import com.kakao.auth.ApiResponseCallback
+import com.kakao.auth.AuthService
+import com.kakao.auth.network.response.AccessTokenInfoResponse
+import com.kakao.network.ErrorResult
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,10 +23,33 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
 
-        loadData()
+        AuthService.getInstance()
+            .requestAccessTokenInfo(kakaoApiResponseCallback)
     }
 
-    fun loadData() {
-        RetrofitProcedure.getPlace()
+    val kakaoApiResponseCallback = object : ApiResponseCallback<AccessTokenInfoResponse?>() {
+        override fun onSessionClosed(errorResult: ErrorResult) {
+            Log.e("KAKAO_API", "세션이 닫혀 있음: $errorResult")
+
+            startLoginActivity()
+        }
+
+        override fun onFailure(errorResult: ErrorResult) {
+            Log.e("KAKAO_API", "토큰 정보 요청 실패: $errorResult")
+        }
+
+        override fun onSuccess(result: AccessTokenInfoResponse?) {
+            Log.i("KAKAO_API", "사용자 아이디: " + result?.userId)
+            Log.i("KAKAO_API", "남은 시간(s): " + result?.expiresIn)
+
+            result?.let {
+                RetrofitProcedure.sendUserId(User(it.userId))
+            }
+        }
+    }
+
+    private fun startLoginActivity() {
+        intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

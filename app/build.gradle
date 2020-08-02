@@ -70,6 +70,8 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
     implementation "org.koin:koin-androidx-fragment:$rootProject.koinVersion"
     implementation "org.koin:koin-androidx-ext:$rootProject.koinVersion"
+    implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.0'
+    implementation group: 'com.kakao.sdk', name: 'kakaotalk', version: '1.30.0'
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
