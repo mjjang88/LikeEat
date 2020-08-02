@@ -7,6 +7,11 @@ import android.util.Log
 import com.fund.likeeat.R
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
+import com.kakao.network.ErrorResult
+import com.kakao.usermgmt.StringSet.email
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.MeV2ResponseCallback
+import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
 
 class LoginActivity : AppCompatActivity() {
@@ -14,11 +19,13 @@ class LoginActivity : AppCompatActivity() {
     // 세션 콜백 구현
     val sessionCallback: ISessionCallback = object: ISessionCallback {
         override fun onSessionOpened() {
-            Log.i("KAKAO_SESSION", "로그인 성공");
+            Log.i("KAKAO_SESSION", "로그인 성공")
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
         }
 
         override fun onSessionOpenFailed(exception: KakaoException) {
-            Log.e("KAKAO_SESSION", "로그인 실패", exception);
+            Log.e("KAKAO_SESSION", "로그인 실패", exception)
         }
     }
 
