@@ -3,4 +3,9 @@
 
     <string name="add_review">맛집 추가</string>
     <string name="view_review">맛집 보기</string>
+
+    <string name="place_name">맛집명</string>
+    <string name="place_one_line_review">한줄평</string>
+    <string name="place_x">경도</string>
+    <string name="place_y">위도</string>
 </resources>
