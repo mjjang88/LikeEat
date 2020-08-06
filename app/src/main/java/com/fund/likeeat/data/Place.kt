@@ -2,12 +2,20 @@ package com.fund.likeeat.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "places")
 data class Place(
-    @PrimaryKey val id: Int,
-    val name: String,
+    @SerializedName("id")
+    @PrimaryKey val id: Long,
+    // val uid: Long,
+    // val name: String,
+    @SerializedName("comment")
+    val oneLineReview: String,
+    @SerializedName("lat")
     val x: Double,
+    @SerializedName("lng")
     val y: Double
 ) {
+
 }

@@ -2,5 +2,6 @@
     <string name="app_name">LikeEat</string>
 
     <string name="add_review">맛집 추가</string>
-    <string name="view_review">맛집 보기</string>
+    <string name="view_review_me">맛집 보기(me)</string>
+    <string name="view_review_friend">맛집 보기(friend)</string>
 </resources>

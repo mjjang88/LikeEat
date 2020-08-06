@@ -72,6 +72,7 @@ dependencies {
     implementation "org.koin:koin-androidx-ext:$rootProject.koinVersion"
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.0'
     implementation group: 'com.kakao.sdk', name: 'kakaotalk', version: '1.30.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
@@ -83,4 +84,7 @@ dependencies {
     androidTestImplementation "androidx.work:work-testing:$rootProject.workVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "org.koin:koin-test:$rootProject.koinVersion"
+
+    // debug
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

@@ -29,11 +29,20 @@
             android:padding="@dimen/margin_normal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_review_list"
+                android:id="@+id/btn_review_list_me"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/view_review"
+                android:text="@string/view_review_me"
+                style="@style/Button"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_review_list_friend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:text="@string/view_review_friend"
                 style="@style/Button"/>
 
             <com.google.android.material.button.MaterialButton

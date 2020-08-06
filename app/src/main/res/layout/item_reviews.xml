@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="place"
+            type="com.fund.likeeat.data.Place" />
+    </data>
+
+    <!--
+        uid, name, lat, lon, comment
+        string이 아니면 place.uid식으로 안불러와짐.
+        bindingAdapter를 사용할 수 있겠지만(?) 우선은 보여지는 것 까지는 필요가 없으므로
+        viewholder에 일일이 구현해놨음.
+     -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/uid_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="uid"/>
+
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{place.name}"
+            tools:text="placeName"/>-->
+
+        <TextView
+            android:id="@+id/lat_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="latitude"/>
+
+        <TextView
+            android:id="@+id/lon_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="longitude"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{place.oneLineReview}"
+            tools:text="comment"/>
+    </LinearLayout>
+</layout>
