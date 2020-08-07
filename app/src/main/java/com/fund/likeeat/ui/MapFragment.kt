@@ -12,6 +12,7 @@ import com.fund.likeeat.R
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.viewmodels.MapViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -32,20 +33,34 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         val binding = FragmentMapBinding.inflate(inflater, container, false).apply {
             viewModel = mapViewModel
-            btnReviewListMe.setOnClickListener {
-                // 나의 목록만 보는 버튼이므로 지정되어있는 uid 값을 넘겨주기만 하면 된다.
-                // (나중에 다른 사용자의 맛집 목록을 보는 경우에는 다른 방식으로 uid를 넘겨 주어야 함)
-                val intent = Intent(activity, ReviewsActivity::class.java)
-                intent.putExtra("uid", MyApplication.pref.uid)
-                startActivity(intent)
+        }
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
 
-            btnReviewListFriend.setOnClickListener {
-                val intent = Intent(activity, ReviewsActivity::class.java)
-                intent.putExtra("uid", 4545454545)
-                startActivity(intent)
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when(newState) {
+                    BottomSheetBehavior.STATE_EXPANDED -> binding.btnReviewListMe.visibility = View.GONE
+                    else -> binding.btnReviewListMe.visibility = View.VISIBLE
+                }
             }
+
+        })
+
+        binding.btnReviewListMe.setOnClickListener {
+            /*val intent = Intent(activity, ReviewsActivity::class.java)
+            intent.putExtra("uid", MyApplication.pref.uid)
+            startActivity(intent)*/
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
+
+        binding.btnReviewListFriend.setOnClickListener {
+            val intent = Intent(activity, ReviewsActivity::class.java)
+            intent.putExtra("uid", 4545454545)
+            startActivity(intent)
+        }
+
         context ?: return binding.root
 
         mapInit()

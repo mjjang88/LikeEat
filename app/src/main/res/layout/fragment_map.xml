@@ -20,6 +20,7 @@
             android:layout_height="match_parent" />
 
         <LinearLayout
+            android:id="@+id/sample_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,19 +30,10 @@
             android:padding="@dimen/margin_normal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_review_list_me"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/view_review_me"
-                style="@style/Button"/>
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_review_list_friend"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/margin_normal"
                 android:text="@string/view_review_friend"
                 style="@style/Button"/>
 
@@ -55,6 +47,81 @@
                 style="@style/Button"/>
 
         </LinearLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_review_list_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_review_me"
+                android:layout_gravity="center_horizontal"
+                app:layout_anchor="@id/bottomSheet"
+                app:layout_anchorGravity="center|top"
+                style="@style/Button"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottomSheet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/bottom_sheet_behavior"
+                app:behavior_hideable="true"
+                app:behavior_peekHeight="0dp"
+                android:background="?attr/colorSurface">
+
+                <TextView
+                    android:id="@+id/scroll"
+                    android:layout_width="32dp"
+                    android:layout_height="2dp"
+                    android:background="#c4c4c4"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintTop_toBottomOf="@id/scroll"
+                    android:background="#3FF2E1"/>
+
+                <TextView
+                    android:id="@+id/functions"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/buttons"
+                    android:background="#3FF2E1"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/functions"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="16dp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

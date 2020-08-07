@@ -29,8 +29,8 @@ class ReviewsAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(ReviewDiffCal
                  * 서버와 이야기 끝나면 수정 후 삭제
                  * ***/
                 // uidText.text = item.uid.toString()
-                latText.text = item.x.toString()
-                lonText.text = item.y.toString()
+                /*latText.text = item.x.toString()
+                lonText.text = item.y.toString()*/
                 
                 executePendingBindings()
             }
