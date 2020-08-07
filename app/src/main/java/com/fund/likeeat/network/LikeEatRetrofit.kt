@@ -14,6 +14,7 @@ object LikeEatRetrofit {
         .setLenient()
         .create()
 
+    /*** 실제 서비스에서 삭제 ***/
     // For Logging
     private fun okHttpClientBuilder(): OkHttpClient.Builder {
         val okhttpClientBuilder = OkHttpClient.Builder()

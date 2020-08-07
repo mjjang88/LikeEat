@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "places")
-data class Place(
+@Entity(tableName = "reviews")
+data class Review(
     @SerializedName("id")
     @PrimaryKey val id: Long,
     // val uid: Long,

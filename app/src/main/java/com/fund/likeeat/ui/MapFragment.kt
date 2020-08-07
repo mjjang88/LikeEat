@@ -64,11 +64,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     /*private fun subscribeUi() {
-        mapViewModel.place.observe(viewLifecycleOwner, Observer {
-            it.forEach {place ->
+        mapViewModel.review.observe(viewLifecycleOwner, Observer {
+            it.forEach {review ->
                 val marker = Marker()
-                marker.captionText = place.name
-                marker.position = LatLng(place.y, place.x)
+                marker.captionText = review.name
+                marker.position = LatLng(review.y, review.x)
                 marker.map = mNaverMap
             }
         })

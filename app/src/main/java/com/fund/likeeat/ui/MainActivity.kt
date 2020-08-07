@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
-import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.AppDatabase
-import com.fund.likeeat.data.Place
-import com.fund.likeeat.data.PlaceRepository
+import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
-import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
@@ -21,8 +18,6 @@ import com.kakao.auth.AuthService
 import com.kakao.auth.network.response.AccessTokenInfoResponse
 import com.kakao.network.ErrorResult
 import com.kakao.util.helper.Utility
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,9 +31,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("keyHash", keyHash)
         AuthService.getInstance()
             .requestAccessTokenInfo(kakaoApiResponseCallback)
-
-        // 테스트용.. (삭제)
-        AsyncTask.execute { AppDatabase.getInstance(this).placeDao().insertPlace(Place(333333, "comment1", 333.212, 1.333)) }
     }
 
     val kakaoApiResponseCallback = object : ApiResponseCallback<AccessTokenInfoResponse?>() {

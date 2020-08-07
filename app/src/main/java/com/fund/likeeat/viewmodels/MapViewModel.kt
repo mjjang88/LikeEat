@@ -1,15 +1,12 @@
 package com.fund.likeeat.viewmodels
 
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.fund.likeeat.data.Place
-import com.fund.likeeat.data.PlaceRepository
-import kotlinx.coroutines.launch
+import com.fund.likeeat.data.Review
+import com.fund.likeeat.data.ReviewRepository
 
 class MapViewModel internal constructor(
-    placeRepository: PlaceRepository
+    reviewRepository: ReviewRepository
 ) : ViewModel(){
-    val place: LiveData<List<Place>> = placeRepository.getPlaceList()
+    val review: LiveData<List<Review>> = reviewRepository.getReviewList()
 }

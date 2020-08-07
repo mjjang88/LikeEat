@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fund.likeeat.data.Place
-import com.fund.likeeat.data.PlaceRepository
+import com.fund.likeeat.data.Review
+import com.fund.likeeat.data.ReviewRepository
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure
 
@@ -18,26 +18,26 @@ import com.fund.likeeat.network.RetrofitProcedure
  */
 
 class ReviewsViewModel internal constructor(
-    val placeRepository: PlaceRepository,
+    val reviewRepository: ReviewRepository,
     val uid: Long
 ): ViewModel() {
-    var reviewList: MutableLiveData<List<Place>>? = MutableLiveData()
+    var reviewList: MutableLiveData<List<Review>>? = MutableLiveData()
 
-    val review: LiveData<List<Place>>?
+    val review: LiveData<List<Review>>?
         get() {
             when(uid) {
                 MyApplication.pref.uid -> {
-                    return placeRepository.getPlaceList()
+                    return reviewRepository.getReviewList()
                 }
                 else -> {
-                    getPlaceByUid(uid, reviewList)
+                    getReviewByUid(uid, reviewList)
                     return reviewList
                 }
             }
         }
 
-    private fun getPlaceByUid(uid: Long, reviewList: MutableLiveData<List<Place>>?) {
-        RetrofitProcedure.getPlaceByUid(uid, reviewList)
+    private fun getReviewByUid(uid: Long, reviewList: MutableLiveData<List<Review>>?) {
+        RetrofitProcedure.getReviewByUid(uid, reviewList)
         Log.i("UID_RETROFIT", uid.toString())
     }
 

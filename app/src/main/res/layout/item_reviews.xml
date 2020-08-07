@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="place"
-            type="com.fund.likeeat.data.Place" />
+            name="review"
+            type="com.fund.likeeat.data.Review" />
     </data>
 
     <!--
@@ -27,7 +27,7 @@
         <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{place.name}"
+            android:text="@{review.name}"
             tools:text="placeName"/>-->
 
         <TextView
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{place.oneLineReview}"
+            android:text="@{review.oneLineReview}"
             tools:text="comment"/>
     </LinearLayout>
 </layout>

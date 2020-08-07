@@ -8,11 +8,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.fund.likeeat.utilities.DATABASE_NAME
-import com.fund.likeeat.workers.PlaceTempDatabaseWorker
 
-@Database(entities = [Place::class], version = 1, exportSchema = false)
+@Database(entities = [Review::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun placeDao(): PlaceDao
+    abstract fun reviewDao(): ReviewDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null
@@ -28,7 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-                        /*val request = OneTimeWorkRequestBuilder<PlaceTempDatabaseWorker>().build()
+                        /*val request = OneTimeWorkRequestBuilder<ReviewTempDatabaseWorker>().build()
                         WorkManager.getInstance(context).enqueue(request)*/
                     }
                 })
