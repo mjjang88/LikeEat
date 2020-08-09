@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface RetrofitKaKaoService {
 
-    @Headers("Authorization: KakaoAK 0d32d9da9b3c910fc0b6b91015428cb1")
+    @Headers("Authorization: KakaoAK 314516590d0e85cfd96bfaf8935c83ec")
     @GET("/v2/local/search/keyword.json?category_group_code=FD6")
     suspend fun getPlace(
         @Query("query") searchWord: String
