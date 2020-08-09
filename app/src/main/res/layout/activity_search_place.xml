@@ -43,7 +43,9 @@
             android:layout_marginLeft="@dimen/margin_normal"
             android:layout_marginRight="@dimen/margin_normal"
             android:drawablePadding="@dimen/margin_half"
-            android:drawableLeft="@drawable/ic_baseline_search_24" />
+            android:drawableLeft="@drawable/ic_baseline_search_24" >
+            <requestFocus />
+        </EditText>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_place"
