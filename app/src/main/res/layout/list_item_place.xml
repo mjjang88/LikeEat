@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="place"
+            type="com.fund.likeeat.data.Place" />
+    </data>
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_half"
+        android:onClick="@{clickListener}">
+        
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{place.name}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            style="@style/TextListBig"/>
+
+        <TextView
+            android:id="@+id/text_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{place.address}"
+            android:layout_marginTop="@dimen/margin_one_eighth"
+            app:layout_constraintTop_toBottomOf="@id/text_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            style="@style/TextListNormal"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</layout>

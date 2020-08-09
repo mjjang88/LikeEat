@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/regist_place"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/margin_double"
+            android:layout_marginLeft="@dimen/margin_normal"
+            style="@style/TextTitle"/>
+
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close_24"
+            android:background="@null"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/margin_double"
+            android:layout_marginRight="@dimen/margin_normal"/>
+        
+        <EditText
+            android:id="@+id/edit_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_place_hint"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:drawablePadding="@dimen/margin_half"
+            android:drawableLeft="@drawable/ic_baseline_search_24" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_place"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_half"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:context="com.fund.likeeat.ui.SearchPlaceActivity"
+            tools:listitem="@layout/list_item_place"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

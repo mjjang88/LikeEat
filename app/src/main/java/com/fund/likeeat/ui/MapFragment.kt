@@ -1,5 +1,6 @@
 package com.fund.likeeat.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         context ?: return binding.root
 
         mapInit()
+
+        binding.btnAddReview.setOnClickListener {
+            startActivity(Intent(requireContext(), SearchPlaceActivity::class.java))
+        }
 
         return binding.root
     }

@@ -1,6 +1,6 @@
 package com.fund.likeeat.network
 
-import com.fund.likeeat.data.Place
+import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.User
 import retrofit2.Call
 import retrofit2.http.Body
@@ -11,8 +11,8 @@ import retrofit2.http.POST
 interface RetrofitService {
 
     @GET("/")
-    fun requestPlace(
-    ): Call<List<Place>>
+    fun requestReview(
+    ): Call<List<Review>>
 
     @POST("/users/login/")
     fun sendUserId(

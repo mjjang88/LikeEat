@@ -37,8 +37,21 @@
     <style name="Button">
         <item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
         <item name="android:padding">@dimen/margin_half</item>
+    </style>
+
+    <style name="TextListBig">
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextListNormal">
+        <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
 </resources>

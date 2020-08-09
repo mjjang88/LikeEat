@@ -7,10 +7,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface PlaceDao {
-    @Query("SELECT * FROM places")
-    fun getPlaceList(): LiveData<List<Place>>
+interface ReviewDao {
+    @Query("SELECT * FROM reviews")
+    fun getPlaceList(): LiveData<List<Review>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(matchs: List<Place>)
+    suspend fun insertAll(matchs: List<Review>)
 }
