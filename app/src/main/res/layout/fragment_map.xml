@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.fund.likeeat.data.Place"/>
+        <import type="com.fund.likeeat.data.Review"/>
         <variable
             name="viewModel"
             type="com.fund.likeeat.viewmodels.MapViewModel" />
@@ -18,6 +18,27 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_review"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/margin_normal"
+            style="@style/Button" />
+
+        <ImageButton
+            android:id="@+id/btn_add_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_add_circle_outline_48"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

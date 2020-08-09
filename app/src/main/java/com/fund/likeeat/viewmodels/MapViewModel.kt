@@ -2,11 +2,11 @@ package com.fund.likeeat.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.fund.likeeat.data.Place
-import com.fund.likeeat.data.PlaceRepository
+import com.fund.likeeat.data.Review
+import com.fund.likeeat.data.ReviewRepository
 
 class MapViewModel internal constructor(
-    placeRepository: PlaceRepository
+    placeRepository: ReviewRepository
 ) : ViewModel(){
-    val place: LiveData<List<Place>> = placeRepository.getPlaceList()
+    val place: LiveData<List<Review>> = placeRepository.getPlaceList()
 }

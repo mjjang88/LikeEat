@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">LikeEat</string>
+
+    <string name="add_review">맛집 추가</string>
+    <string name="view_review">목록 보기</string>
+
+    <string name="regist_place">맛집 등록하기</string>
+
+    <string name="search_place_hint">맛집 상호명, 주소 검색</string>
 </resources>
