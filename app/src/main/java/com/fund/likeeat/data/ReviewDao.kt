@@ -14,4 +14,7 @@ interface ReviewDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(matchs: List<Review>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertReview(review: Review)
 }

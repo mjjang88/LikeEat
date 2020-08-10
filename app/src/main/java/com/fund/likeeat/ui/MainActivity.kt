@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         Log.d("keyHash", keyHash)
         AuthService.getInstance()
             .requestAccessTokenInfo(kakaoApiResponseCallback)
+
+        AsyncTask.execute { AppDatabase.getInstance(this).reviewDao().insertReview(Review(333333, "comment1", 333.212, 1.333)) }
     }
 
     val kakaoApiResponseCallback = object : ApiResponseCallback<AccessTokenInfoResponse?>() {

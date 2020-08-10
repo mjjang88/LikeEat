@@ -19,7 +19,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <!-- 검색 Test -->
         <LinearLayout
+            android:id="@+id/search_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/friend_list_button"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/ic_launcher"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="이름, 주소, 태그 검색"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/ic_launcher"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/friend_list_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/search_layout"
+            android:src="@mipmap/ic_launcher"/>
+
+
+        <!--<LinearLayout
             android:id="@+id/sample_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,12 +82,12 @@
                 android:text="@string/add_review"
                 style="@style/Button"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/search_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:visibility="visible">
 
@@ -84,7 +120,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/buttons"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -100,28 +136,23 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@id/buttons"
-                    android:background="#3FF2E1"/>
+                    android:background="#3FF2E1"/>-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintTop_toBottomOf="@id/functions"
+                    app:layout_constraintTop_toBottomOf="@id/scroll"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="16dp" />
+                    android:layout_marginTop="16dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.05" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
