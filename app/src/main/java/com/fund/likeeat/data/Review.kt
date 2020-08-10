@@ -8,14 +8,16 @@ import com.google.gson.annotations.SerializedName
 data class Review(
     @SerializedName("id")
     @PrimaryKey val id: Long,
-    // val uid: Long,
-    // val name: String,
+    val uid: Long,
+    val name: String,
+    val address: String,
     @SerializedName("comment")
     val oneLineReview: String,
     @SerializedName("lat")
     val x: Double,
     @SerializedName("lng")
-    val y: Double
+    val y: Double,
+    val imageUri: String
 ) {
 
 }

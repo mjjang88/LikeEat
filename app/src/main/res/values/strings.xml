@@ -4,4 +4,6 @@
     <string name="add_review">맛집 추가</string>
     <string name="view_review_me">맛집 보기(me)</string>
     <string name="view_review_friend">맛집 보기(friend)</string>
+
+    <string name="search_hint">이름, 주소, 태그 검색</string>
 </resources>

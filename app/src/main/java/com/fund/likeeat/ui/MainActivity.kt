@@ -32,7 +32,16 @@ class MainActivity : AppCompatActivity() {
         AuthService.getInstance()
             .requestAccessTokenInfo(kakaoApiResponseCallback)
 
-        AsyncTask.execute { AppDatabase.getInstance(this).reviewDao().insertReview(Review(333333, "comment1", 333.212, 1.333)) }
+        AsyncTask.execute { AppDatabase.getInstance(this).reviewDao().insertReview(Review(
+            333333,
+            12331233,
+            "최강피자",
+            "서울 서초구 태봉로 2길 60 (양재동)",
+            "맛있다",
+            3.33123,
+            4.1112,
+            "https://www.hapskorea.com/wp-content/uploads/2019/08/black-angus-lobster-ball-pizza.jpg"
+        )) }
     }
 
     val kakaoApiResponseCallback = object : ApiResponseCallback<AccessTokenInfoResponse?>() {

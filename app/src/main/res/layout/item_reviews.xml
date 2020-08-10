@@ -17,10 +17,11 @@
             android:id="@+id/review_image"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:src="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageFromUri="@{review.imageUri}"/>
 
         <TextView
             android:id="@+id/review_name"
@@ -31,7 +32,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/review_image"
-            android:text="@{review.oneLineReview}"
+            android:text="@{review.name}"
             tools:text="팔라피자" />
 
         <TextView
@@ -42,6 +43,7 @@
             app:layout_constraintTop_toBottomOf="@id/review_name"
             android:layout_marginTop="4dp"
             android:textSize="12sp"
+            android:text="@{review.address}"
             tools:text="서울 서초구 양재천로7길 13" />
 
         <TextView
