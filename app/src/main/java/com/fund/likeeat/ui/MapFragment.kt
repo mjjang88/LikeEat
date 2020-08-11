@@ -48,23 +48,26 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 when(newState) {
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         binding.searchLayoutParent.setBackgroundColor(Color.WHITE)
-                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_gray)
+                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_round_gray)
 
+                        binding.bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
                         binding.friendListButton.visibility = View.GONE
                         binding.scroll.visibility = View.GONE
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        binding.btnReviewListMe.hide()
                         binding.friendListButton.visibility = View.VISIBLE
                         binding.scroll.visibility = View.VISIBLE
                     }
                     BottomSheetBehavior.STATE_HIDDEN -> {
-                        binding.btnReviewListMe.visibility = View.VISIBLE
+                        binding.btnReviewListMe.show()
                         binding.friendListButton.visibility = View.VISIBLE
                         binding.scroll.visibility = View.VISIBLE
                     }
                     else -> {
+                        binding.bottomSheet.setBackgroundResource(R.drawable.item_border_top_round_shadow)
                         binding.searchLayoutParent.setBackgroundColor(Color.TRANSPARENT)
-                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_shadow)
+                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_round_shadow)
                     }
                 }
             }
@@ -76,7 +79,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         subscribeUi(adapter)
 
         binding.btnReviewListMe.setOnClickListener {
-            binding.btnReviewListMe.visibility = View.GONE
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         }
 
