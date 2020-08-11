@@ -9,6 +9,7 @@ import com.fund.likeeat.R
 import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
 import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
 import com.kakao.auth.ISessionCallback
@@ -16,12 +17,13 @@ import com.kakao.auth.Session
 import com.kakao.auth.network.response.AccessTokenInfoResponse
 import com.kakao.network.ErrorResult
 import com.kakao.util.exception.KakaoException
-import kotlin.system.exitProcess
 
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        DataUtils.detachMyUid()
 
         DataBindingUtil.setContentView<ActivityMainBinding>(
             this,
@@ -62,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
 
             result?.let {
                 RetrofitProcedure.sendUserId(User(it.userId))
+                DataUtils.attachMyUid(result.userId)
             }
         }
     }

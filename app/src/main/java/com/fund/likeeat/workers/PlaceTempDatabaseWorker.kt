@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import kotlinx.coroutines.coroutineScope
 
-class PlaceTempDatabaseWorker(
+class ReviewTempDatabaseWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
@@ -20,11 +20,11 @@ class PlaceTempDatabaseWorker(
         try {
             applicationContext.assets.open(PLACE_DATA_FILENAME).use { inputStream ->
                 JsonReader(inputStream.reader()).use { jsonReader ->
-                    val placeType = object : TypeToken<List<Review>>() {}.type
-                    val placeList: List<Review> = Gson().fromJson(jsonReader, placeType)
+                    val reviewType = object : TypeToken<List<Review>>() {}.type
+                    val reviewList: List<Review> = Gson().fromJson(jsonReader, reviewType)
 
                     val database = AppDatabase.getInstance(applicationContext)
-                    database.reviewDao().insertAll(placeList)
+                    database.reviewDao().insertAll(reviewList)
 
                     Result.success()
                 }
@@ -36,6 +36,6 @@ class PlaceTempDatabaseWorker(
     }
 
     companion object {
-        private val TAG = PlaceTempDatabaseWorker::class.java.simpleName
+        private val TAG = ReviewTempDatabaseWorker::class.java.simpleName
     }
 }

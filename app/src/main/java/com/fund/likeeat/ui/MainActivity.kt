@@ -1,18 +1,23 @@
 package com.fund.likeeat.ui
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import com.fund.likeeat.R
+import com.fund.likeeat.data.AppDatabase
+import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
 import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
 import com.kakao.auth.network.response.AccessTokenInfoResponse
 import com.kakao.network.ErrorResult
+import com.kakao.util.helper.Utility
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView<ActivityMainBinding>(this,
             R.layout.activity_main
         )
-
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("keyHash", keyHash)
         AuthService.getInstance()
             .requestAccessTokenInfo(kakaoApiResponseCallback)
     }
@@ -44,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
             result?.let {
                 RetrofitProcedure.sendUserId(User(it.userId))
+                DataUtils.attachMyUid(result.userId)
             }
         }
     }

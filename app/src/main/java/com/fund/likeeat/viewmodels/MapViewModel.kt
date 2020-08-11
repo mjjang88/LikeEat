@@ -6,7 +6,7 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.ReviewRepository
 
 class MapViewModel internal constructor(
-    placeRepository: ReviewRepository
+    reviewRepository: ReviewRepository
 ) : ViewModel(){
-    val place: LiveData<List<Review>> = placeRepository.getPlaceList()
+    val review: LiveData<List<Review>> = reviewRepository.getReviewList()
 }

@@ -7,4 +7,9 @@
     <string name="regist_place">맛집 등록하기</string>
 
     <string name="search_place_hint">맛집 상호명, 주소 검색</string>
+
+    <string name="view_my_review_list">목록 보기</string>
+    <string name="view_review_friend">맛집 보기(friend)</string>
+
+    <string name="search_hint">이름, 주소, 태그 검색</string>
 </resources>

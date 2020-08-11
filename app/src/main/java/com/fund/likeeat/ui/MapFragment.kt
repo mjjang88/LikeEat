@@ -1,28 +1,33 @@
 package com.fund.likeeat.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.lifecycle.observe
 import com.fund.likeeat.R
+import com.fund.likeeat.adapter.ReviewsAdapter
 import com.fund.likeeat.databinding.FragmentMapBinding
+import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.viewmodels.MapViewModel
-import com.naver.maps.geometry.LatLng
+import com.fund.likeeat.viewmodels.ReviewsViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.overlay.Marker
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mNaverMap : NaverMap
 
     private val mapViewModel: MapViewModel by inject()
+    private val reviewViewModel: ReviewsViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +37,52 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val binding = FragmentMapBinding.inflate(inflater, container, false).apply {
             viewModel = mapViewModel
         }
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
+        bottomSheetBehavior.halfExpandedRatio = 0.45f
+        bottomSheetBehavior.isFitToContents = false
+        bottomSheetBehavior.skipCollapsed = true
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when(newState) {
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        binding.searchLayoutParent.setBackgroundColor(Color.WHITE)
+                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_round_gray)
+
+                        binding.bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
+                        binding.friendListButton.visibility = View.GONE
+                        binding.scroll.visibility = View.GONE
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        binding.btnReviewListMe.hide()
+                        binding.friendListButton.visibility = View.VISIBLE
+                        binding.scroll.visibility = View.VISIBLE
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        binding.btnReviewListMe.show()
+                        binding.friendListButton.visibility = View.VISIBLE
+                        binding.scroll.visibility = View.VISIBLE
+                    }
+                    else -> {
+                        binding.bottomSheet.setBackgroundResource(R.drawable.item_border_top_round_shadow)
+                        binding.searchLayoutParent.setBackgroundColor(Color.TRANSPARENT)
+                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_round_shadow)
+                    }
+                }
+            }
+
+        })
+
+        val adapter = ReviewsAdapter()
+        binding.recycler.adapter = adapter
+        subscribeUi(adapter)
+
+        binding.btnReviewListMe.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        }
+
         context ?: return binding.root
 
         mapInit()
@@ -53,16 +104,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    private fun subscribeUi() {
-        mapViewModel.place.observe(viewLifecycleOwner, Observer {
-            it.forEach {place ->
+    /*private fun subscribeUi() {
+        mapViewModel.review.observe(viewLifecycleOwner, Observer {
+            it.forEach {review ->
                 val marker = Marker()
-                marker.captionText = place.name
-                marker.position = LatLng(place.y, place.x)
+                marker.captionText = review.name
+                marker.position = LatLng(review.y, review.x)
                 marker.map = mNaverMap
             }
         })
-    }
+    }*/
 
     override fun onMapReady(p0: NaverMap) {
         mNaverMap = p0
@@ -71,6 +122,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initAfterMapReady() {
-        subscribeUi()
+        // subscribeUi()
     }
+
+    private fun subscribeUi(adapter: ReviewsAdapter) {
+        reviewViewModel.review?.observe(viewLifecycleOwner) { result ->
+            adapter.submitList(result)
+        }
+    }
+
 }
