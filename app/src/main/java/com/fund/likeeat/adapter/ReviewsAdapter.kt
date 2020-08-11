@@ -22,16 +22,6 @@ class ReviewsAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(ReviewDiffCal
         fun bind(item: Review) {
             binding.apply {
                 review = item
-
-                /***
-                 * Test Code
-                 * 단순히 뷰에 데이터가 뿌려지는지 확인하기 위한 코드. 나중에 다 지워야됨
-                 * 서버와 이야기 끝나면 수정 후 삭제
-                 * ***/
-                // uidText.text = item.uid.toString()
-                /*latText.text = item.x.toString()
-                lonText.text = item.y.toString()*/
-                
                 executePendingBindings()
             }
         }

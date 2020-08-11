@@ -79,35 +79,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <!--<LinearLayout
-            android:id="@+id/sample_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/design_default_color_surface"
-            android:padding="@dimen/margin_normal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_review_list_friend"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/view_review_friend"
-                style="@style/Button"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_add_review"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:text="@string/add_review"
-                style="@style/Button"/>
-
-        </LinearLayout>-->
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -144,24 +115,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <!--<TextView
-                    android:id="@+id/buttons"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="32dp"
-                    app:layout_constraintTop_toBottomOf="@id/scroll"
-                    android:background="#3FF2E1"/>
-
-                <TextView
-                    android:id="@+id/functions"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/buttons"
-                    android:background="#3FF2E1"/>-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"

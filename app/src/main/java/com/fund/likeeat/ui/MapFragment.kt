@@ -82,12 +82,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         }
 
-       /* binding.btnReviewListFriend.setOnClickListener {
-            val intent = Intent(activity, ReviewsActivity::class.java)
-            intent.putExtra("uid", 4545454545)
-            startActivity(intent)
-        }*/
-
         context ?: return binding.root
 
         mapInit()
