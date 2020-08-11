@@ -3,9 +3,9 @@ package com.fund.likeeat.data
 import androidx.lifecycle.LiveData
 
 class ReviewRepository (
-    private val placeDao: ReviewDao
+    private val reviewDao: ReviewDao
 ){
-    fun getPlaceList(): LiveData<List<Review>> {
-        return placeDao.getPlaceList()
+    fun getReviewList(): LiveData<List<Review>> {
+        return reviewDao.getReviewList()
     }
 }
