@@ -1,9 +1,11 @@
 package com.fund.likeeat.network
 
+import android.os.AsyncTask
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.data.AppDatabase
 import com.fund.likeeat.data.Review
+import com.fund.likeeat.data.Theme
 import com.fund.likeeat.data.User
 import com.fund.likeeat.manager.MyApplication
 import kotlinx.coroutines.GlobalScope
@@ -64,4 +66,26 @@ object RetrofitProcedure {
             }
         })
     }
+
+    fun sendThemeToServer(uid: Long, theme: Theme) {
+        LikeEatRetrofit.getService().requestThemeByUid(uid, theme).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "서버 접속 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful) {
+                    // 아래 코드 처리점 (AsyncTack 대체....)
+                    AsyncTask.execute {
+                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(theme)
+                    }
+                } else {
+                    Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        })
+    }
+
+
 }

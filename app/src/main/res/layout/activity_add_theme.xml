@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp">
+
+    <ImageView
+        android:id="@+id/add_theme_submit"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/theme_card_sample"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <com.mikhaellopez.circleview.CircleView
+                android:id="@+id/theme_icon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:cv_color="@android:color/black"
+                app:cv_border="false"
+                app:cv_shadow="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!--<TextView
+                android:id="@+id/theme_icon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/item_circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <TextView
+                android:id="@+id/theme_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:textSize="@dimen/text_size_big"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/theme_count"
+                app:layout_constraintStart_toEndOf="@id/theme_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="테마 제목" />
+
+            <TextView
+                android:id="@+id/theme_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/theme_icon"
+                app:layout_constraintTop_toBottomOf="@id/theme_name"
+                android:text="0개" />
+
+            <TextView
+                android:id="@+id/theme_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/theme_count"
+                app:layout_constraintTop_toBottomOf="@id/theme_name"
+                android:text="비공개"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/image_more"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이름"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/theme_add_name"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/theme_add_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="내가 저장한 맛집 (기본)"
+        app:layout_constraintBottom_toTopOf="@id/tv2" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아이콘"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/theme_color_picker"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/theme_color_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="색상선택"
+        app:layout_constraintBottom_toTopOf="@id/tv3"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <!--<RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/tv3"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/radio_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="빨강" />
+
+        <RadioButton
+            android:id="@+id/radio_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="초록" />
+
+        <RadioButton
+            android:id="@+id/radio_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="파랑" />
+    </RadioGroup>-->
+
+
+    <!--<TextView
+        android:id="@+id/theme_add_icon1"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/item_circle"
+        app:layout_constraintBottom_toTopOf="@id/tv3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/theme_add_icon2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/item_circle"
+        app:layout_constraintBottom_toTopOf="@id/tv3"
+        app:layout_constraintStart_toEndOf="@id/theme_add_icon1" />
+
+    <TextView
+        android:id="@+id/theme_add_icon3"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/item_circle"
+        app:layout_constraintBottom_toTopOf="@id/tv3"
+        app:layout_constraintStart_toEndOf="@id/theme_add_icon2" />-->
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="공개 여부"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/theme_add_public" />
+
+    <CheckBox
+        android:id="@+id/theme_add_public"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="공개"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

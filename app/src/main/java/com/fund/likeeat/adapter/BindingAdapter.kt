@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
+import com.mikhaellopez.circleview.CircleView
 
 @BindingAdapter("imageFromUri")
 fun bindImageFromUri(view: ImageView, imageUri: String?) {
@@ -17,4 +17,9 @@ fun bindImageFromUri(view: ImageView, imageUri: String?) {
             .transform(CenterCrop(), RoundedCorners(16))
             .into(view)
     }
+}
+
+@BindingAdapter("colorCode")
+fun bindIconColor(view: CircleView, colorCode: Int) {
+    view.circleColor = colorCode
 }
