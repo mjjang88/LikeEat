@@ -36,6 +36,7 @@ buildscript {
         converterGsonVersion = '2.6.0'
         naverMapSdkVersion = '3.8.0'
         koinVersion = '2.1.6'
+        kakaoUserVersion = '2.0.0'
     }
 
     repositories {

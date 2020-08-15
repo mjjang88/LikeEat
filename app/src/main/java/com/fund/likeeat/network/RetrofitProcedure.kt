@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.data.AppDatabase
 import com.fund.likeeat.data.Review
-import com.fund.likeeat.data.User
 import com.fund.likeeat.manager.MyApplication
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -13,20 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object RetrofitProcedure {
-
-    fun sendUserId(user: User) {
-        LikeEatRetrofit.getService().sendUserId(user).enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(MyApplication.applicationContext(), "Fail Send User ID", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(MyApplication.applicationContext(), "Success Send User ID", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-    }
 
     fun getReview() {
         LikeEatRetrofit.getService().requestReview().enqueue(object : Callback<List<Review>> {
