@@ -1,17 +1,12 @@
 package com.fund.likeeat.ui
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import com.fund.likeeat.R
-import com.fund.likeeat.data.AppDatabase
-import com.fund.likeeat.data.Review
-import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
-import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
@@ -49,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("KAKAO_API", "남은 시간(s): " + result?.expiresIn)
 
             result?.let {
-                RetrofitProcedure.sendUserId(User(it.userId))
                 DataUtils.attachMyUid(result.userId)
             }
         }

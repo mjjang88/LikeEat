@@ -3,12 +3,14 @@ package com.fund.likeeat.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
-import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
@@ -16,7 +18,9 @@ import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.auth.network.response.AccessTokenInfoResponse
 import com.kakao.network.ErrorResult
+import com.kakao.sdk.user.UserApiClient
 import com.kakao.util.exception.KakaoException
+import kotlinx.coroutines.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -41,11 +45,50 @@ class LoginActivity : AppCompatActivity() {
             AuthService.getInstance()
                 .requestAccessTokenInfo(kakaoApiResponseCallback)
 
-            finish()
+            sendUserInfo()
         }
 
         override fun onSessionOpenFailed(exception: KakaoException) {
             Log.e("KAKAO_SESSION", "로그인 실패", exception)
+        }
+    }
+
+    fun sendUserInfo() {
+        try {
+            UserApiClient.instance.me { user, error ->
+                if (error != null) {
+                    Toast.makeText(this@LoginActivity, "사용자 정보를 얻어올 수 없습니다", Toast.LENGTH_LONG).show()
+                } else if (user != null) {
+                    val userInfo = User(user.id,
+                        user.kakaoAccount?.profile?.nickname ?: "",
+                        user.kakaoAccount?.profile?.thumbnailImageUrl ?: "")
+
+                    var bSendUserInfoSuccess = false
+                    GlobalScope.launch(Dispatchers.Default) {
+                        try {
+                            LikeEatRetrofit.getService().sendUserInfo(userInfo).apply {
+                                if (isSuccessful) {
+                                    bSendUserInfoSuccess = true
+                                }
+                            }
+                        } catch (e: Throwable) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                    lifecycleScope.launch(Dispatchers.Default) {
+                        while (!bSendUserInfoSuccess) {
+                            delay(1000)
+                        }
+
+                        withContext(Dispatchers.Main) {
+                            finish()
+                        }
+                    }
+                }
+            }
+        } catch (e:Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -63,7 +106,6 @@ class LoginActivity : AppCompatActivity() {
             Log.i("KAKAO_API", "남은 시간(s): " + result?.expiresIn)
 
             result?.let {
-                RetrofitProcedure.sendUserId(User(it.userId))
                 DataUtils.attachMyUid(result.userId)
             }
         }

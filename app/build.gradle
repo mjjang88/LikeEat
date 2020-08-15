@@ -73,6 +73,7 @@ dependencies {
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.0'
     implementation group: 'com.kakao.sdk', name: 'kakaotalk', version: '1.30.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    implementation "com.kakao.sdk:v2-user:$rootProject.kakaoUserVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
