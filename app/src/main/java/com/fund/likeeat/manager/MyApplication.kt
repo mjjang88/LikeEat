@@ -8,6 +8,7 @@ import com.fund.likeeat.utilities.appModule
 import com.kakao.auth.IApplicationConfig
 import com.kakao.auth.KakaoAdapter
 import com.kakao.auth.KakaoSDK
+import com.kakao.sdk.common.KakaoSdk
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -46,5 +47,7 @@ class MyApplication : Application() {
                 return IApplicationConfig { this@MyApplication }
             }
         })
+
+        KakaoSdk.init(this, "5c58af63b020655e89596b05a75123b9")
     }
 }
