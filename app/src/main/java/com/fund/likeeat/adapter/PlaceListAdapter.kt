@@ -1,14 +1,15 @@
 package com.fund.likeeat.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fund.likeeat.databinding.ListItemPlaceBinding
-import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.data.Place
+import com.fund.likeeat.databinding.ListItemPlaceBinding
+import com.fund.likeeat.ui.AddReviewActivity
+import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 
 class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiffCallback()) {
 
@@ -29,16 +30,17 @@ class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiff
         private val binding: ListItemPlaceBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.setClickListener {
-                Toast.makeText(MyApplication.applicationContext(), "항목 선택됨. 이름 : " + binding.place?.name + ", 주소 : " + binding.place?.address, Toast.LENGTH_LONG).show()
-            }
-        }
-
         fun bind(item: Place) {
             binding.apply {
                 place = item
                 executePendingBindings()
+            }
+
+            binding.setClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, AddReviewActivity::class.java)
+                intent.putExtra(INTENT_KEY_PLACE, item)
+                context.startActivity(intent)
             }
         }
     }

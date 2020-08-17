@@ -26,4 +26,9 @@ interface RetrofitService {
     fun requestReviewByUid(
         /*@Query("uid") uid: Long*/
     ): Call<List<Review>>
+
+    @POST("/reviews/")
+    suspend fun addReview(
+        @Body review: Review?
+    ): Response<String>
 }
