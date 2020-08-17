@@ -8,9 +8,9 @@ import androidx.room.Query
 
 @Dao
 interface ThemeDao {
-    @Query("SELECT * FROM theme")
-    fun getThemeList(): LiveData<List<Theme>>
+    @Query("SELECT * FROM theme WHERE uid=:uid")
+    fun getThemeList(uid: Long): LiveData<List<Theme>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTheme(list: Theme)
+    suspend fun insertTheme(list: List<Theme>?)
 }

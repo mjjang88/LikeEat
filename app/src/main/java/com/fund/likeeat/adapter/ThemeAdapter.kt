@@ -31,7 +31,7 @@ class ThemeAdapter: ListAdapter<Theme, RecyclerView.ViewHolder>(ThemeDiffCallbac
 
 private class ThemeDiffCallback: DiffUtil.ItemCallback<Theme>() {
     override fun areItemsTheSame(oldItem: Theme, newItem: Theme): Boolean {
-        return oldItem.id == newItem.id
+        return (oldItem.uid.toString() + oldItem.name) == (newItem.uid.toString() + newItem.name)
     }
 
     override fun areContentsTheSame(oldItem: Theme, newItem: Theme): Boolean {

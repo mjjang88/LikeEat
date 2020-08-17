@@ -36,8 +36,7 @@ class AddThemeActivity : AppCompatActivity() {
                 colorSelected,
                 theme_add_public.isChecked
             )
-
-            RetrofitProcedure.sendThemeToServer(MyApplication.pref.uid, theme)
+            RetrofitProcedure.sendThemeToServer(theme)
             finish()
         }
 
@@ -49,7 +48,8 @@ class AddThemeActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(result: CharSequence?, start: Int, before: Int, count: Int) {
-                theme_name.text = result
+                if(result.isNullOrEmpty()) theme_name.text = "내가 저장한 맛집 (기본)"
+                else theme_name.text = result
             }
         })
 

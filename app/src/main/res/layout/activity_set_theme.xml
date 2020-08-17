@@ -42,7 +42,7 @@
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="@id/recycler"
             app:layout_constraintBottom_toBottomOf="@id/recycler"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_baseline_add_circle_outline_48"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,14 +8,14 @@ import androidx.lifecycle.observe
 import com.fund.likeeat.R
 import com.fund.likeeat.adapter.ThemeAdapter
 import com.fund.likeeat.databinding.ActivitySetThemeBinding
-import com.fund.likeeat.utilities.UID_DETACHED
+import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.viewmodels.ThemeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class SetThemeActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySetThemeBinding
-    private val themeViewModel: ThemeViewModel by viewModel { parametersOf(intent.getLongExtra("uid", UID_DETACHED)) }
+    private val themeViewModel: ThemeViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

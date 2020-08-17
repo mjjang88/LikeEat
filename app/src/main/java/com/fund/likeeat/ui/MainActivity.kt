@@ -1,17 +1,14 @@
 package com.fund.likeeat.ui
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import com.fund.likeeat.R
-import com.fund.likeeat.data.AppDatabase
-import com.fund.likeeat.data.Theme
 import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
+import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
@@ -32,19 +29,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("keyHash", keyHash)
         AuthService.getInstance()
             .requestAccessTokenInfo(kakaoApiResponseCallback)
-
-        AsyncTask.execute {
-            for(i in 0 until 5) {
-                AppDatabase.getInstance(this).themeDao().insertTheme(
-                    Theme(
-                        i.toLong(),
-                        "테마입니다$i",
-                        if(i % 2 == 0) Color.BLUE else Color.YELLOW,
-                        i % 2 == 0
-                    )
-                )
-            }
-        }
     }
 
     val kakaoApiResponseCallback = object : ApiResponseCallback<AccessTokenInfoResponse?>() {
@@ -63,8 +47,9 @@ class MainActivity : AppCompatActivity() {
             Log.i("KAKAO_API", "남은 시간(s): " + result?.expiresIn)
 
             result?.let {
-                RetrofitProcedure.sendUserId(User(it.userId))
                 DataUtils.attachMyUid(result.userId)
+                RetrofitProcedure.sendUserId(User(it.userId))
+                RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
             }
         }
     }

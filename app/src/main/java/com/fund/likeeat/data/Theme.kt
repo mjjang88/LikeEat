@@ -1,12 +1,10 @@
 package com.fund.likeeat.data
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "theme")
+@Entity(tableName = "theme", primaryKeys = ["uid", "name"])
 data class Theme(
-    @PrimaryKey
-    val id: Long,
+    val uid: Long,
     val name: String,
     val color: Int,
     val isPublic: Boolean

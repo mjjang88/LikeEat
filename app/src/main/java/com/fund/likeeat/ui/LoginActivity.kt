@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.fund.likeeat.R
 import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
+import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
@@ -63,8 +64,9 @@ class LoginActivity : AppCompatActivity() {
             Log.i("KAKAO_API", "남은 시간(s): " + result?.expiresIn)
 
             result?.let {
-                RetrofitProcedure.sendUserId(User(it.userId))
                 DataUtils.attachMyUid(result.userId)
+                RetrofitProcedure.sendUserId(User(it.userId))
+                RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
             }
         }
     }

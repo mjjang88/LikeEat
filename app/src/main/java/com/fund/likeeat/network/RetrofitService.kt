@@ -5,10 +5,9 @@ import com.fund.likeeat.data.Theme
 import com.fund.likeeat.data.User
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.POST
-
+import retrofit2.http.Query
 
 interface RetrofitService {
 
@@ -28,13 +27,16 @@ interface RetrofitService {
         /*@Query("uid") uid: Long*/
     ): Call<List<Review>>
 
-    @GET("/theme/")
+    // http://likeeat-server.herokuapp.com/themes/?uid=UID
+    @GET("/themes/")
     fun requestThemeByUid(
-        @Field("uid") uid: Long,
+        @Query("uid") uid: Long
+    ): Call<List<Theme>>
+
+    // method: POST
+    // url: http://likeeat-server.herokuapp.com/themes/
+    @POST("/themes/")
+    fun sendTheme(
         @Body theme: Theme
-        /*@Field("uid") uid: Long,
-        @Field("name") name: String,
-        @Field("color") color: String,
-        @Field("isPublic") isPublic: Boolean*/
-    ): Call<String> // 무엇을 돌려받을까?
+    ): Call<Theme>
 }

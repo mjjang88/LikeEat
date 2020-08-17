@@ -10,7 +10,7 @@
         android:id="@+id/add_theme_submit"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_check"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <com.mikhaellopez.circleview.CircleView
                 android:id="@+id/theme_icon"
@@ -57,7 +57,7 @@
                 app:layout_constraintBottom_toTopOf="@id/theme_count"
                 app:layout_constraintStart_toEndOf="@id/theme_icon"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="테마 제목" />
+                android:text="내가 저장한 맛집 (기본)" />
 
             <TextView
                 android:id="@+id/theme_count"
@@ -87,7 +87,7 @@
                 android:id="@+id/image_more"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/carbon_overflow_menu_horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -1,6 +1,5 @@
 package com.fund.likeeat.network
 
-import android.os.AsyncTask
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.data.AppDatabase
@@ -8,6 +7,8 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.data.User
 import com.fund.likeeat.manager.MyApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -67,20 +68,35 @@ object RetrofitProcedure {
         })
     }
 
-    fun sendThemeToServer(uid: Long, theme: Theme) {
-        LikeEatRetrofit.getService().requestThemeByUid(uid, theme).enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(MyApplication.applicationContext(), "서버 접속 실패", Toast.LENGTH_SHORT).show()
+    fun sendThemeToServer(theme: Theme) {
+        LikeEatRetrofit.getService().sendTheme(theme).enqueue(object : Callback<Theme> {
+            override fun onFailure(call: Call<Theme>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
+            override fun onResponse(call: Call<Theme>, response: Response<Theme>) {
                 if(response.isSuccessful) {
-                    // 아래 코드 처리점 (AsyncTack 대체....)
-                    AsyncTask.execute {
-                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(theme)
-                    }
+                    Toast.makeText(MyApplication.applicationContext(), "테마 등록 완료!", Toast.LENGTH_SHORT).show()
+                    CoroutineScope(Dispatchers.IO).launch { AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(listOf(theme)) }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        })
+    }
+
+    fun getThemeByUid(uid: Long) {
+        LikeEatRetrofit.getService().requestThemeByUid(uid).enqueue(object: Callback<List<Theme>> {
+            override fun onFailure(call: Call<List<Theme>>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "테마 로드 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<List<Theme>>, response: Response<List<Theme>>) {
+                if(response.isSuccessful) {
+                    CoroutineScope(Dispatchers.IO).launch { AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(response.body()) }
+                } else {
+                    Toast.makeText(MyApplication.applicationContext(), "테마 로드 실패", Toast.LENGTH_SHORT).show()
                 }
             }
 
