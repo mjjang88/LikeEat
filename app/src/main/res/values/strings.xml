@@ -4,7 +4,7 @@
     <string name="add_review">맛집 추가</string>
     <string name="view_review">목록 보기</string>
 
-    <string name="regist_place">맛집 등록하기</string>
+    <string name="regist_place">맛집 등록</string>
 
     <string name="search_place_hint">맛집 상호명, 주소 검색</string>
 
@@ -12,4 +12,15 @@
     <string name="view_review_friend">맛집 보기(friend)</string>
 
     <string name="search_hint">이름, 주소, 태그 검색</string>
+    
+    <string name="only_me_can_see">나만보기</string>
+
+    <string name="edit_comment_hint">코멘트를 작성하세요. # 태그를 이용하면 등록한 # 태그로 맛집을 검색할 때 사용할 수 있습니다.</string>
+    
+    <string name="visit_date">방문일</string>
+    <string name="evaluation">총평</string>
+    <string name="companion">누구랑</string>
+    <string name="price">가격대</string>
+    <string name="restroom">화장실</string>
+    <string name="re_visit">재방문</string>
 </resources>
