@@ -7,9 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.fund.likeeat.utilities.DATABASE_NAME
 
-@Database(entities = [Review::class], version = 1, exportSchema = false)
+@Database(entities = [Review::class, Theme::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reviewDao(): ReviewDao
+    abstract fun themeDao(): ThemeDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null

@@ -91,6 +91,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             startActivity(Intent(requireContext(), SearchPlaceActivity::class.java))
         }
 
+        binding.testButton.setOnClickListener {
+            val intent = Intent(requireContext(), SetThemeActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
