@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="@dimen/padding_normal">
 
     <com.mikhaellopez.circleview.CircleView
         android:id="@+id/theme_circle"
@@ -18,7 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="@dimen/margin_normal"
         android:layout_gravity="center_vertical"
         tools:text="혼자가서 먹고오기 좋은 곳"/>
 </LinearLayout>

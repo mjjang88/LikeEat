@@ -129,63 +129,6 @@
         android:text="색상선택"
         app:layout_constraintBottom_toTopOf="@id/tv3"
         app:layout_constraintStart_toStartOf="parent"/>
-    <!--<RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/tv3"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <RadioButton
-            android:id="@+id/radio_red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="빨강" />
-
-        <RadioButton
-            android:id="@+id/radio_green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="초록" />
-
-        <RadioButton
-            android:id="@+id/radio_blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="파랑" />
-    </RadioGroup>-->
-
-
-    <!--<TextView
-        android:id="@+id/theme_add_icon1"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/item_circle"
-        app:layout_constraintBottom_toTopOf="@id/tv3"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/theme_add_icon2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/item_circle"
-        app:layout_constraintBottom_toTopOf="@id/tv3"
-        app:layout_constraintStart_toEndOf="@id/theme_add_icon1" />
-
-    <TextView
-        android:id="@+id/theme_add_icon3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/item_circle"
-        app:layout_constraintBottom_toTopOf="@id/tv3"
-        app:layout_constraintStart_toEndOf="@id/theme_add_icon2" />-->
 
     <TextView
         android:id="@+id/tv3"

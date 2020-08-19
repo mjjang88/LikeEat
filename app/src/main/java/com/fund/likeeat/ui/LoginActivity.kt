@@ -109,7 +109,6 @@ class LoginActivity : AppCompatActivity() {
 
             result?.let {
                 DataUtils.attachMyUid(result.userId)
-                RetrofitProcedure.sendUserId(User(it.userId))
                 RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
             }
         }

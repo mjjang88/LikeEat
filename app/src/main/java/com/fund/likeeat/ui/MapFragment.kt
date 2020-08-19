@@ -3,7 +3,6 @@ package com.fund.likeeat.ui
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.fund.likeeat.R
 import com.fund.likeeat.adapter.ReviewsAdapter
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.utilities.DataUtils
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.fund.likeeat.viewmodels.ReviewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior

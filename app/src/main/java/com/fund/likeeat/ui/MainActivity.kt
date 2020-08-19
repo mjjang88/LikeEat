@@ -16,7 +16,6 @@ import com.kakao.auth.network.response.AccessTokenInfoResponse
 import com.kakao.network.ErrorResult
 import com.kakao.util.helper.Utility
 
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 
             result?.let {
                 DataUtils.attachMyUid(result.userId)
-                RetrofitProcedure.sendUserId(User(it.userId))
                 RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
             }
         }
