@@ -114,16 +114,7 @@
             app:layout_constraintTop_toBottomOf="@id/search_layout_parent"
             tools:visibility="visible">
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/btn_review_list_me"
-                style="@style/ExtendedFloatingActionButtonOnlyText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/view_my_review_list"
-                android:layout_marginBottom="@dimen/margin_double"
-                app:layout_anchor="@id/bottomSheet"
-                app:layout_anchorGravity="center|top" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottomSheet"
@@ -131,8 +122,8 @@
                 android:layout_height="match_parent"
                 android:background="?attr/colorSurface"
                 app:behavior_hideable="true"
-                app:behavior_peekHeight="@dimen/bottom_sheet_collapsed"
                 app:layout_behavior="@string/bottom_sheet_behavior">
+                <!-- app:behavior_peekHeight="@dimen/bottom_sheet_collapsed" -->
 
                 <TextView
                     android:id="@+id/scroll"
@@ -174,6 +165,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btn_review_and_map"
+            style="@style/ExtendedFloatingActionButtonOnlyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/view_my_review_list"
+            android:layout_marginBottom="@dimen/margin_double"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

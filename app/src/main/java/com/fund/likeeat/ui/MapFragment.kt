@@ -35,11 +35,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var isReviewListOpen = false
         val binding = FragmentMapBinding.inflate(inflater, container, false).apply {
             viewModel = mapViewModel
         }
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
+            skipCollapsed = true
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 }
@@ -53,20 +55,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
                                 friendListButton.visibility = View.GONE
                                 scroll.visibility = View.GONE
-                            }
-                            BottomSheetBehavior.STATE_COLLAPSED -> {
-                                btnReviewListMe.hide()
-                                friendListButton.visibility = View.VISIBLE
-                            }
-                            BottomSheetBehavior.STATE_HIDDEN -> {
-                                btnReviewListMe.show()
-                                friendListButton.visibility = View.VISIBLE
+                                btnReviewAndMap.text = "지도 보기"
+                                isReviewListOpen = true
                             }
                             else -> {
+                                friendListButton.visibility = View.VISIBLE
                                 scroll.visibility = View.VISIBLE
                                 bottomSheet.setBackgroundResource(R.drawable.item_border_top_round_shadow)
                                 searchLayoutParent.setBackgroundColor(Color.TRANSPARENT)
                                 searchLayout.setBackgroundResource(R.drawable.item_border_round_shadow)
+                                btnReviewAndMap.text = "목록 보기"
+                                isReviewListOpen = false
                             }
                         }
                     }
@@ -78,8 +77,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.recycler.adapter = adapter
         subscribeUi(adapter)
 
-        binding.btnReviewListMe.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        binding.btnReviewAndMap.setOnClickListener {
+            if(isReviewListOpen) bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            else bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
        /* binding.btnReviewListFriend.setOnClickListener {
