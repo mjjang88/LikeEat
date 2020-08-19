@@ -87,6 +87,7 @@ dependencies {
     androidTestImplementation "androidx.work:work-testing:$rootProject.workVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "org.koin:koin-test:$rootProject.koinVersion"
+    implementation 'com.mikhaellopez:circleview:1.3.2'
 
     // debug
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'

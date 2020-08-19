@@ -9,28 +9,38 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_layout"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginVertical="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_normal">
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/review_image"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:imageFromUri="@{review.imageUri}"/>
+            app:imageFromUri="@{review.imageUri}"/>-->
+        
+        <ImageView
+            android:id="@+id/review_concept_image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/review_name"
+            app:layout_constraintBottom_toBottomOf="@id/review_address"/>
 
         <TextView
             android:id="@+id/review_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_big"
             android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/review_image"
+            android:layout_marginStart="@dimen/margin_normal"
+            app:layout_constraintStart_toEndOf="@+id/review_concept_image"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@{review.name}"
             tools:text="팔라피자" />
 
@@ -38,10 +48,10 @@
             android:id="@+id/review_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/review_name"
             app:layout_constraintTop_toBottomOf="@id/review_name"
             android:layout_marginTop="4dp"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_normal"
             android:text="@{review.address}"
             tools:text="서울 서초구 양재천로7길 13" />
 
@@ -51,8 +61,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/review_address"
-            android:textSize="16sp"
-            tools:text="3명의 친한친구"/>
+            android:textSize="@dimen/text_size_small"
+            tools:text="3명의 핀"/>
 
         <ImageView
             android:layout_width="14dp"
@@ -61,6 +71,14 @@
             android:layout_marginEnd="4dp"
             app:layout_constraintTop_toTopOf="@id/review_name"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/review_theme_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            app:layout_constraintTop_toBottomOf="@id/review_address"
+            android:background="@drawable/item_fill_gray_round"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
