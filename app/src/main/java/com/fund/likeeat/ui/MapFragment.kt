@@ -2,6 +2,7 @@ package com.fund.likeeat.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.fund.likeeat.R
 import com.fund.likeeat.adapter.ReviewsAdapter
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.utilities.DataUtils
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.fund.likeeat.viewmodels.ReviewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -33,53 +35,51 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var isReviewListOpen = false
         val binding = FragmentMapBinding.inflate(inflater, container, false).apply {
             viewModel = mapViewModel
         }
-        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
-        bottomSheetBehavior.halfExpandedRatio = 0.45f
-        bottomSheetBehavior.isFitToContents = false
-        bottomSheetBehavior.skipCollapsed = true
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet).apply {
+            state = BottomSheetBehavior.STATE_HIDDEN
+            skipCollapsed = true
+            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                }
 
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                        binding.searchLayoutParent.setBackgroundColor(Color.WHITE)
-                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_round_gray)
-
-                        binding.bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
-                        binding.friendListButton.visibility = View.GONE
-                        binding.scroll.visibility = View.GONE
-                    }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                        binding.btnReviewListMe.hide()
-                        binding.friendListButton.visibility = View.VISIBLE
-                        binding.scroll.visibility = View.VISIBLE
-                    }
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                        binding.btnReviewListMe.show()
-                        binding.friendListButton.visibility = View.VISIBLE
-                        binding.scroll.visibility = View.VISIBLE
-                    }
-                    else -> {
-                        binding.bottomSheet.setBackgroundResource(R.drawable.item_border_top_round_shadow)
-                        binding.searchLayoutParent.setBackgroundColor(Color.TRANSPARENT)
-                        binding.searchLayout.setBackgroundResource(R.drawable.item_border_round_shadow)
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    binding.apply {
+                        when (newState) {
+                            BottomSheetBehavior.STATE_EXPANDED -> {
+                                searchLayoutParent.setBackgroundColor(Color.WHITE)
+                                searchLayout.setBackgroundResource(R.drawable.item_border_round_gray)
+                                bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
+                                friendListButton.visibility = View.GONE
+                                scroll.visibility = View.GONE
+                                btnReviewAndMap.text = "지도 보기"
+                                isReviewListOpen = true
+                            }
+                            else -> {
+                                friendListButton.visibility = View.VISIBLE
+                                scroll.visibility = View.VISIBLE
+                                bottomSheet.setBackgroundResource(R.drawable.item_border_top_round_shadow)
+                                searchLayoutParent.setBackgroundColor(Color.TRANSPARENT)
+                                searchLayout.setBackgroundResource(R.drawable.item_border_round_shadow)
+                                btnReviewAndMap.text = "목록 보기"
+                                isReviewListOpen = false
+                            }
+                        }
                     }
                 }
-            }
-
-        })
+            })
+        }
 
         val adapter = ReviewsAdapter()
         binding.recycler.adapter = adapter
         subscribeUi(adapter)
 
-        binding.btnReviewListMe.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        binding.btnReviewAndMap.setOnClickListener {
+            if(isReviewListOpen) bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            else bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
         context ?: return binding.root
@@ -122,6 +122,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun subscribeUi(adapter: ReviewsAdapter) {
         reviewViewModel.review?.observe(viewLifecycleOwner) { result ->
+            // 거리 순 정렬을 어디서 어떻게 해야하지
             adapter.submitList(result)
         }
     }
