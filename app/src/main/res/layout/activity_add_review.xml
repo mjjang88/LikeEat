@@ -109,16 +109,15 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_theme"
+            <Spinner
+                android:id="@+id/spinner_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/theme_text_background_shape"
                 app:layout_constraintTop_toBottomOf="@id/layout_category"
                 android:layout_marginTop="@dimen/margin_1.5_times"
                 android:layout_marginLeft="@dimen/margin_normal"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:text=""/>
+                android:layout_marginRight="@dimen/margin_normal"/>
 
             <EditText
                 android:id="@+id/edit_comment"
@@ -128,7 +127,7 @@
                 android:minHeight="@dimen/review_edit_text_min_height"
                 android:gravity="top|left"
                 android:padding="@dimen/margin_normal"
-                app:layout_constraintTop_toBottomOf="@id/text_theme"
+                app:layout_constraintTop_toBottomOf="@id/spinner_theme"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_marginRight="@dimen/margin_normal"
