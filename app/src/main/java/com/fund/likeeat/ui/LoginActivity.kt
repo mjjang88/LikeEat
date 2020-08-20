@@ -11,6 +11,8 @@ import com.fund.likeeat.R
 import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
 import com.fund.likeeat.network.LikeEatRetrofit
+import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
@@ -107,6 +109,8 @@ class LoginActivity : AppCompatActivity() {
 
             result?.let {
                 DataUtils.attachMyUid(result.userId)
+                RetrofitProcedure.sendUserId(User(it.userId))
+                RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
             }
         }
     }

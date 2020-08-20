@@ -1,13 +1,14 @@
 package com.fund.likeeat.network
 
 import com.fund.likeeat.data.Review
+import com.fund.likeeat.data.Theme
 import com.fund.likeeat.data.User
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-
+import retrofit2.http.Query
 
 interface RetrofitService {
 
@@ -31,4 +32,17 @@ interface RetrofitService {
     suspend fun addReview(
         @Body review: Review?
     ): Response<String>
+
+    // http://likeeat-server.herokuapp.com/themes/?uid=UID
+    @GET("/themes/")
+    fun requestThemeByUid(
+        @Query("uid") uid: Long
+    ): Call<List<Theme>>
+
+    // method: POST
+    // url: http://likeeat-server.herokuapp.com/themes/
+    @POST("/themes/")
+    fun sendTheme(
+        @Body theme: Theme
+    ): Call<Theme>
 }
