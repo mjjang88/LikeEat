@@ -19,7 +19,7 @@ data class Review(
     val toliets: String?,
     val priceRange: String?,
     val serviceQuality: String?,
-    val themeIds: List<Int>,
+    val themeIds: String?,
     val name: String,
     val address: String,
     val imageUri: String?

@@ -118,7 +118,7 @@ class AddReviewActivity : AppCompatActivity()  {
         val toliets = edit_restroom.text.toString()
         val priceRange = edit_price.text.toString()
         val serviceQuality = edit_evaluation.text.toString()
-        val themeIds: List<Int> = listOf(1,2)
+        val themeIds = "1,2"
         val name = mPlace.name
         val address = mPlace.address
 
