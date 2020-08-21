@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             result?.let {
                 DataUtils.attachMyUid(result.userId)
                 RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
+                RetrofitProcedure.getReviewByUid(MyApplication.pref.uid)
             }
         }
     }

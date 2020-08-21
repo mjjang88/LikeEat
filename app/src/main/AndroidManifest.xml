@@ -27,6 +27,7 @@
         <activity android:name=".ui.ReviewsActivity" />
         <activity android:name=".ui.SearchPlaceActivity" />
         <activity android:name=".ui.AddReviewActivity"/>
+        <activity android:name=".ui.ViewReviewActivity"/>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

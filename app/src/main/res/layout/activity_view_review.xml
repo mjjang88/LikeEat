@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="review"
+            type="com.fund.likeeat.data.Review" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/layout_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double">
+
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                    android:background="@null"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/view_review"
+                    android:gravity="center"
+                    style="@style/TextTitle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_place_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_title"
+                android:layout_marginTop="@dimen/margin_double"
+                android:layout_marginLeft="@dimen/margin_1.5_times"
+                android:layout_marginRight="@dimen/margin_1.5_times">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{review.name}"
+                        style="@style/TextNormal"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{review.address}"
+                        style="@style/TextSmall"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_place_name"
+                android:layout_marginTop="@dimen/margin_1.5_times"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double">
+
+                <CheckBox
+                    android:id="@+id/check_is_public"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/only_me_can_see"
+                    android:checked="@{!review.isPublic}"
+                    android:button="@null"
+                    android:drawableTop="@drawable/ic_visibility_selector"
+                    android:clickable="false"/>
+
+                <View
+                    android:layout_marginLeft="@dimen/margin_1.5_times"
+                    style="@style/HorizontalDivider"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layout_category"
+                android:layout_marginTop="@dimen/margin_1.5_times"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"/>
+
+            <TextView
+                android:id="@+id/edit_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_comment_background_shape"
+                android:minHeight="@dimen/review_edit_text_min_height"
+                android:gravity="top|left"
+                android:padding="@dimen/margin_normal"
+                android:text="@{review.comment}"
+                app:layout_constraintTop_toBottomOf="@id/list_theme"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                style="@style/TextNormal"
+                android:clickable="false"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_detail_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/edit_comment"
+                android:layout_marginTop="@dimen/margin_1.5_times">
+
+                <LinearLayout
+                    android:id="@+id/layout_visit_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="@dimen/review_text_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/visit_date"
+                        style="@style/TextEditMenu"/>
+
+                    <TextView
+                        android:layout_width="@dimen/date_picker_btn_width"
+                        android:layout_height="@dimen/date_picker_btn_height"
+                        android:text="@{review.visitedDayYmd}"
+                        android:background="@drawable/edit_comment_background_shape"
+                        android:layout_marginLeft="@dimen/margin_half"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_evaluation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/layout_visit_date"
+                    android:layout_marginTop="@dimen/margin_double">
+
+                    <TextView
+                        android:layout_width="@dimen/review_text_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/evaluation"
+                        style="@style/TextEditMenu"/>
+
+                    <TextView
+                        android:id="@+id/edit_evaluation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{review.serviceQuality}"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_companion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/layout_evaluation"
+                    android:layout_marginTop="@dimen/margin_normal">
+
+                    <TextView
+                        android:layout_width="@dimen/review_text_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/companion"
+                        style="@style/TextEditMenu"/>
+
+                    <TextView
+                        android:id="@+id/edit_companion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{review.companions}"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/layout_companion"
+                    android:layout_marginTop="@dimen/margin_normal">
+
+                    <TextView
+                        android:layout_width="@dimen/review_text_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/price"
+                        style="@style/TextEditMenu"/>
+
+                    <TextView
+                        android:id="@+id/edit_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{review.priceRange}"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_restroom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/layout_price"
+                    android:layout_marginTop="@dimen/margin_normal">
+
+                    <TextView
+                        android:layout_width="@dimen/review_text_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/restroom"
+                        style="@style/TextEditMenu"/>
+
+                    <TextView
+                        android:id="@+id/edit_restroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{review.toliets}"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/re_visit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/layout_restroom"
+                    android:layout_marginTop="@dimen/margin_normal">
+
+                    <TextView
+                        android:layout_width="@dimen/review_text_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/re_visit"
+                        style="@style/TextEditMenu"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
