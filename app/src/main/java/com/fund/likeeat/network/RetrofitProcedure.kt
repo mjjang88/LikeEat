@@ -37,8 +37,27 @@ object RetrofitProcedure {
         })
     }
 
+    fun getReviewByUid(uid: Long) {
+        LikeEatRetrofit.getService().requestReviewByUid(uid).enqueue(object : Callback<List<Review>> {
+            override fun onFailure(call: Call<List<Review>>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "데이터 로드 실패", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<List<Review>>, response: Response<List<Review>>) {
+                if (response.isSuccessful) {
+                    GlobalScope.launch {
+                        response.body()?.let {
+                            val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
+                            response.body()?.let { database.reviewDao().insertAll(it) }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
     fun getReviewByUid(uid: Long, liveData: MutableLiveData<List<Review>>?) {
-        LikeEatRetrofit.getService().requestReviewByUid(/*uid*/).enqueue(object : Callback<List<Review>> {
+        LikeEatRetrofit.getService().requestReviewByUid(uid).enqueue(object : Callback<List<Review>> {
             override fun onFailure(call: Call<List<Review>>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "데이터 로드 실패", Toast.LENGTH_LONG).show()
             }

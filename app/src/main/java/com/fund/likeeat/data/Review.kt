@@ -1,9 +1,12 @@
 package com.fund.likeeat.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "reviews")
 data class Review(
     @SerializedName("id")
@@ -20,8 +23,8 @@ data class Review(
     val priceRange: String?,
     val serviceQuality: String?,
     val themeIds: String?,
-    val name: String,
-    val address: String,
+    val name: String?,
+    val address: String?,
     val imageUri: String?
-) {
+) : Parcelable {
 }

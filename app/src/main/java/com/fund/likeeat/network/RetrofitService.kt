@@ -25,7 +25,7 @@ interface RetrofitService {
     // 나중에 https://likeeat-server.herokuapp.com/reviews?uid=1234567890 식으로 데이터 가져올 때 사용하면 될듯
     @GET("/reviews/")
     fun requestReviewByUid(
-        /*@Query("uid") uid: Long*/
+        @Query("uid") uid: Long
     ): Call<List<Review>>
 
     @POST("/reviews/")

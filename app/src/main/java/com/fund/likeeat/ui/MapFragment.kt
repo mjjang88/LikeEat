@@ -15,9 +15,11 @@ import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.fund.likeeat.viewmodels.ReviewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -107,16 +109,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    /*private fun subscribeUi() {
-        mapViewModel.review.observe(viewLifecycleOwner, Observer {
+    private fun subscribeUi() {
+        mapViewModel.review.observe(viewLifecycleOwner) {
             it.forEach {review ->
                 val marker = Marker()
-                marker.captionText = review.name
-                marker.position = LatLng(review.y, review.x)
+                marker.captionText = review.name ?: "Null"
+                marker.position = LatLng(review.lat, review.lng)
                 marker.map = mNaverMap
             }
-        })
-    }*/
+        }
+    }
 
     override fun onMapReady(p0: NaverMap) {
         mNaverMap = p0
@@ -125,7 +127,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initAfterMapReady() {
-        // subscribeUi()
+        subscribeUi()
     }
 
     private fun subscribeUi(adapter: ReviewsAdapter) {
