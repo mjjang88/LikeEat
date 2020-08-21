@@ -3,10 +3,7 @@ package com.fund.likeeat.utilities
 import com.fund.likeeat.data.AppDatabase
 import com.fund.likeeat.data.ReviewRepository
 import com.fund.likeeat.data.ThemeRepository
-import com.fund.likeeat.viewmodels.MapViewModel
-import com.fund.likeeat.viewmodels.ReviewsViewModel
-import com.fund.likeeat.viewmodels.SearchPlaceViewModel
-import com.fund.likeeat.viewmodels.ThemeViewModel
+import com.fund.likeeat.viewmodels.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -29,4 +26,5 @@ val appModule = module {
     viewModel { (uid: Long) -> ReviewsViewModel(get(), uid) }
     viewModel { (uid: Long) -> ThemeViewModel(get(), uid) }
     viewModel { SearchPlaceViewModel() }
+    viewModel { (uid: Long) -> AddReviewViewModel(get(), uid) }
 }

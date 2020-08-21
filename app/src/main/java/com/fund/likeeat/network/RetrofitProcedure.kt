@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.data.AppDatabase
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.Theme
+import com.fund.likeeat.data.User
 import com.fund.likeeat.manager.MyApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import com.fund.likeeat.R
+import com.fund.likeeat.data.User
 import com.fund.likeeat.databinding.ActivityMainBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure

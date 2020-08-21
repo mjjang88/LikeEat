@@ -1,13 +1,12 @@
 package com.fund.likeeat.data
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.fund.likeeat.utilities.DATABASE_NAME
 
 @Database(entities = [Review::class, Theme::class], version = 1, exportSchema = false)
+@TypeConverters(RoomConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reviewDao(): ReviewDao
     abstract fun themeDao(): ThemeDao

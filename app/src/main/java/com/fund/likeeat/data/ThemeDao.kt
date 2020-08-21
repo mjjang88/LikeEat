@@ -11,6 +11,9 @@ interface ThemeDao {
     @Query("SELECT * FROM theme WHERE uid=:uid")
     fun getThemeList(uid: Long): LiveData<List<Theme>>
 
+    @Query("SELECT * FROM theme WHERE uid=:uid")
+    suspend fun getThemeList2(uid: Long): List<Theme>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTheme(list: List<Theme>?)
 }

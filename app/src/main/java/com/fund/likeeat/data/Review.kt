@@ -9,15 +9,19 @@ data class Review(
     @SerializedName("id")
     @PrimaryKey val id: Long,
     val uid: Long,
+    val lat: Double,
+    val lng: Double,
+    val isPublic: Boolean,
+    val category: String?,
+    val comment: String?,
+    val visitedDayYmd: String?,
+    val companions: String?,
+    val toliets: String?,
+    val priceRange: String?,
+    val serviceQuality: String?,
+    val themeIds: String?,
     val name: String,
     val address: String,
-    @SerializedName("comment")
-    val oneLineReview: String,
-    @SerializedName("lat")
-    val x: Double,
-    @SerializedName("lng")
-    val y: Double,
-    val imageUri: String
+    val imageUri: String?
 ) {
-
 }

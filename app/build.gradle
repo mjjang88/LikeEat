@@ -7,8 +7,8 @@ apply plugin: 'koin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
     defaultConfig {
         applicationId "com.fund.likeeat"
@@ -32,6 +32,9 @@ android {
     // work-runtime-ktx 2.1.0 and above now requires Java 8
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    androidExtensions {
+        experimental = true
     }
 }
 

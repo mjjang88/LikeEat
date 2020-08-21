@@ -1,8 +1,11 @@
 package com.fund.likeeat.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Place(
     @SerializedName("id")
     @Expose
@@ -40,5 +43,5 @@ data class Place(
     @SerializedName("distance")
     @Expose
     val distance : String?
-) {
+) : Parcelable{
 }

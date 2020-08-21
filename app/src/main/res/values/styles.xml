@@ -19,19 +19,28 @@
         <item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_size_title</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
     <style name="TextBig">
         <item name="android:textAppearance">?attr/textAppearanceBody1</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="TextNormal">
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
     <style name="TextSmall">
         <item name="android:textAppearance">?attr/textAppearanceBody2</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
     <style name="Button">
@@ -59,6 +68,19 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:paddingHorizontal">16dp</item>
         <item name="android:paddingVertical">10dp</item>
+    </style>
+
+    <style name="HorizontalDivider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+    
+    <style name="TextEditMenu">
+        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
