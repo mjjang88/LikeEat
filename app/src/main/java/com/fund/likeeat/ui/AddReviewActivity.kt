@@ -1,5 +1,6 @@
 package com.fund.likeeat.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -98,7 +99,10 @@ class AddReviewActivity : AppCompatActivity()  {
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@AddReviewActivity, "리뷰 추가 완료", Toast.LENGTH_LONG).show()
-                finish()
+                val intent = Intent(this@AddReviewActivity, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+                startActivity(intent)
             }
         }
 
