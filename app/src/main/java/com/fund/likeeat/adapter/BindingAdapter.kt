@@ -29,3 +29,8 @@ fun bindIconColor(view: CircleView, colorCode: Int) {
 fun bindTextIsPublic(view: TextView, isPublic: Boolean) {
     if(isPublic) view.text = "" else view.text = "비공개"
 }
+
+@BindingAdapter("reviewsCount")
+fun bindReviewCountToString(view: TextView, reviewsCount: Int) {
+    view.text = "${reviewsCount}개"
+}

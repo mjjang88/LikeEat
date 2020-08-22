@@ -23,7 +23,7 @@ class SetThemeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView<ActivitySetThemeBinding>(this, R.layout.activity_set_theme)
         binding.lifecycleOwner = this
 
-        val adapter = ThemeAdapter()
+        val adapter = ThemeAdapter(supportFragmentManager)
         binding.recycler.adapter = adapter
         subscribeUi(adapter)
 

@@ -27,4 +27,5 @@ val appModule = module {
     viewModel { (uid: Long) -> ThemeViewModel(get(), uid) }
     viewModel { SearchPlaceViewModel() }
     viewModel { (uid: Long) -> AddReviewViewModel(get(), uid) }
+    viewModel { (id: Long) -> SetThemeBottomSheetViewModel(get(), id) }
 }

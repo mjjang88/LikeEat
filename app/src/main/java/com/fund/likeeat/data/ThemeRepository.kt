@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 class ThemeRepository (
     private val themeDao: ThemeDao
 ){
+    fun getTheme(id: Long) = themeDao.getTheme(id)
 
     fun getThemeList(): LiveData<List<Theme>> {
         return themeDao.getThemeList()
