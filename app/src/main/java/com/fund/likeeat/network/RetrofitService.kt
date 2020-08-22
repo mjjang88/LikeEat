@@ -2,6 +2,7 @@ package com.fund.likeeat.network
 
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.Theme
+import com.fund.likeeat.data.ThemeRequest
 import com.fund.likeeat.data.User
 import retrofit2.Call
 import retrofit2.Response
@@ -43,6 +44,6 @@ interface RetrofitService {
     // url: http://likeeat-server.herokuapp.com/themes/
     @POST("/themes/")
     fun sendTheme(
-        @Body theme: Theme
+        @Body theme: ThemeRequest
     ): Call<Theme>
 }

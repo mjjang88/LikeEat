@@ -9,5 +9,5 @@ class ThemeViewModel internal constructor(
     themeRepository: ThemeRepository,
     uid: Long
 ): ViewModel() {
-    val themeList: LiveData<List<Theme>> = themeRepository.getThemeList(uid)
+    val themeList: LiveData<List<Theme>> = themeRepository.getThemeList()
 }

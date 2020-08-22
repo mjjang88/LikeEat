@@ -1,11 +1,9 @@
 package com.fund.likeeat.network
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.fund.likeeat.data.AppDatabase
-import com.fund.likeeat.data.Review
-import com.fund.likeeat.data.Theme
-import com.fund.likeeat.data.User
+import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +71,7 @@ object RetrofitProcedure {
         })
     }
 
-    fun sendThemeToServer(theme: Theme) {
+    fun sendThemeToServer(theme: ThemeRequest) {
         LikeEatRetrofit.getService().sendTheme(theme).enqueue(object : Callback<Theme> {
             override fun onFailure(call: Call<Theme>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
@@ -82,7 +80,9 @@ object RetrofitProcedure {
             override fun onResponse(call: Call<Theme>, response: Response<Theme>) {
                 if(response.isSuccessful) {
                     Toast.makeText(MyApplication.applicationContext(), "테마 등록 완료!", Toast.LENGTH_SHORT).show()
-                    CoroutineScope(Dispatchers.IO).launch { AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(listOf(theme)) }
+                    GlobalScope.launch {
+                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(listOf(response.body()!!))
+                    }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
                 }
@@ -99,7 +99,9 @@ object RetrofitProcedure {
 
             override fun onResponse(call: Call<List<Theme>>, response: Response<List<Theme>>) {
                 if(response.isSuccessful) {
-                    CoroutineScope(Dispatchers.IO).launch { AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(response.body()) }
+                    GlobalScope.launch {
+                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(response.body())
+                    }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 로드 실패", Toast.LENGTH_SHORT).show()
                 }
@@ -107,6 +109,5 @@ object RetrofitProcedure {
 
         })
     }
-
 
 }

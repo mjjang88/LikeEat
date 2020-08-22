@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.fund.likeeat.R
 import com.fund.likeeat.data.Theme
+import com.fund.likeeat.data.ThemeRequest
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.ColorList
@@ -30,7 +31,7 @@ class AddThemeActivity : AppCompatActivity() {
         }
 
         add_theme_submit.setOnClickListener {
-            val theme = Theme(
+            val theme = ThemeRequest(
                 MyApplication.pref.uid,
                 theme_add_name.text.toString(),
                 colorSelected,

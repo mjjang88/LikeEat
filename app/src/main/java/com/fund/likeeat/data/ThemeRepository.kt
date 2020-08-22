@@ -6,8 +6,8 @@ class ThemeRepository (
     private val themeDao: ThemeDao
 ){
 
-    fun getThemeList(uid: Long): LiveData<List<Theme>> {
-        return themeDao.getThemeList(uid)
+    fun getThemeList(): LiveData<List<Theme>> {
+        return themeDao.getThemeList()
     }
 
     suspend fun getThemeList2(uid: Long): List<Theme> {
