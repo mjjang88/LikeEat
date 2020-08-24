@@ -14,6 +14,7 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ActivityAddReviewBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
+import com.fund.likeeat.network.ReviewNWWrite
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import kotlinx.android.synthetic.main.activity_add_review.*
@@ -109,11 +110,9 @@ class AddReviewActivity : AppCompatActivity()  {
 
     }
 
-    private fun makeReview(): Review {
+    private fun makeReview(): ReviewNWWrite {
 
         val uid = MyApplication.pref.uid
-        val lat = mPlace.y
-        val lng = mPlace.x
         val isPublic = !check_is_public.isChecked
         val category = "맛집"
         val comment = edit_comment.text.toString()
@@ -122,15 +121,12 @@ class AddReviewActivity : AppCompatActivity()  {
         val toliets = edit_restroom.text.toString()
         val priceRange = edit_price.text.toString()
         val serviceQuality = edit_evaluation.text.toString()
+        val revisit = edit_revisit.text.toString()
         val themeIds = "1,2"
-        val name = mPlace.name
-        val address = mPlace.address
 
-        return Review(
+        return ReviewNWWrite(
             -1,
             uid,
-            lat,
-            lng,
             isPublic,
             category,
             comment,
@@ -139,9 +135,9 @@ class AddReviewActivity : AppCompatActivity()  {
             toliets,
             priceRange,
             serviceQuality,
+            revisit,
             themeIds,
-            name.toString(),
-            address.toString(),
+            mPlace,
             null
         )
     }

@@ -45,7 +45,7 @@
             android:layout_marginStart="@dimen/margin_normal"
             app:layout_constraintStart_toEndOf="@+id/review_concept_image"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{review.name}"
+            android:text="@{review.place_name}"
             tools:text="팔라피자" />
 
         <TextView
@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/review_name"
             android:layout_marginTop="4dp"
             android:textSize="@dimen/text_size_normal"
-            android:text="@{review.address}"
+            android:text="@{review.address_name}"
             tools:text="서울 서초구 양재천로7길 13" />
 
         <TextView

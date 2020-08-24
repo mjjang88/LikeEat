@@ -30,7 +30,7 @@ interface RetrofitService {
 
     @POST("/reviews/")
     suspend fun addReview(
-        @Body review: Review?
+        @Body reviewNWWrite: ReviewNWWrite?
     ): Response<Unit>
 
     // http://likeeat-server.herokuapp.com/themes/?uid=UID

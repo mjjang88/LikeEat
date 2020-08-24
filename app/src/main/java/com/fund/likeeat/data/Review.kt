@@ -12,8 +12,6 @@ data class Review(
     @SerializedName("id")
     @PrimaryKey val id: Long,
     val uid: Long,
-    val lat: Double,
-    val lng: Double,
     val isPublic: Boolean,
     val category: String?,
     val comment: String?,
@@ -22,9 +20,13 @@ data class Review(
     val toliets: String?,
     val priceRange: String?,
     val serviceQuality: String?,
-    val themeIds: String?,
-    val name: String?,
-    val address: String?,
-    val imageUri: String?
+    val revisit: String?,
+    val imageUri: String?,
+
+    val x: Double?,
+    val y: Double?,
+    val place_name: String?,
+    val address_name: String?,
+    val phone: String
 ) : Parcelable {
 }
