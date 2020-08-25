@@ -1,13 +1,8 @@
 package com.fund.likeeat.network
 
-import com.fund.likeeat.data.Place
 import com.google.gson.annotations.Expose
 
-data class ReviewNWWrite(
-    @Expose
-    val id: Long,
-    @Expose
-    val uid: Long,
+data class ReviewServerWrite(
     @Expose
     val isPublic: Boolean,
     @Expose
@@ -25,12 +20,12 @@ data class ReviewNWWrite(
     @Expose
     val serviceQuality: String?,
     @Expose
-    val revisit: String?,
-    @Expose
     val themeIds: String?,
     @Expose
-    val place: Place?,
+    val uid: Long,
     @Expose
-    val imageUri: String?
+    val revisit: String?,
+    @Expose
+    val place: PlaceServerWrite?
 ) {
 }

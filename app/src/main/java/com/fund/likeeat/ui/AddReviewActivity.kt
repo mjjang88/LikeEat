@@ -10,11 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.Place
-import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ActivityAddReviewBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
-import com.fund.likeeat.network.ReviewNWWrite
+import com.fund.likeeat.network.PlaceServerWrite
+import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import kotlinx.android.synthetic.main.activity_add_review.*
@@ -110,7 +110,7 @@ class AddReviewActivity : AppCompatActivity()  {
 
     }
 
-    private fun makeReview(): ReviewNWWrite {
+    private fun makeReview(): ReviewServerWrite {
 
         val uid = MyApplication.pref.uid
         val isPublic = !check_is_public.isChecked
@@ -124,9 +124,7 @@ class AddReviewActivity : AppCompatActivity()  {
         val revisit = edit_revisit.text.toString()
         val themeIds = "1,2"
 
-        return ReviewNWWrite(
-            -1,
-            uid,
+        return ReviewServerWrite(
             isPublic,
             category,
             comment,
@@ -135,10 +133,10 @@ class AddReviewActivity : AppCompatActivity()  {
             toliets,
             priceRange,
             serviceQuality,
-            revisit,
             themeIds,
-            mPlace,
-            null
+            uid,
+            revisit,
+            PlaceServerWrite(mPlace)
         )
     }
 }
