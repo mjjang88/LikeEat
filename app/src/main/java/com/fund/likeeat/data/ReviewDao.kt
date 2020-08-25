@@ -1,10 +1,7 @@
 package com.fund.likeeat.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ReviewDao {
@@ -13,4 +10,13 @@ interface ReviewDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(matchs: List<Review>)
+
+    @Query("DELETE FROM reviews")
+    suspend fun deleteAll()
+
+    @Transaction
+    suspend fun deleteAndInsertAll(matchs: List<Review>) {
+        deleteAll()
+        insertAll(matchs)
+    }
 }

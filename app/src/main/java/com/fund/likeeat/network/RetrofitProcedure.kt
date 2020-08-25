@@ -2,10 +2,7 @@ package com.fund.likeeat.network
 
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.fund.likeeat.data.AppDatabase
-import com.fund.likeeat.data.Review
-import com.fund.likeeat.data.Theme
-import com.fund.likeeat.data.User
+import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,18 +34,52 @@ object RetrofitProcedure {
         })
     }
 
-    fun getReviewByUid(uid: Long) {
-        LikeEatRetrofit.getService().requestReviewByUid(uid).enqueue(object : Callback<List<Review>> {
-            override fun onFailure(call: Call<List<Review>>, t: Throwable) {
+    fun getUserReview(uid: Long) {
+        LikeEatRetrofit.getService().requestUserReview(uid).enqueue(object : Callback<List<ReviewServerRead>> {
+            override fun onFailure(call: Call<List<ReviewServerRead>>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "데이터 로드 실패", Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(call: Call<List<Review>>, response: Response<List<Review>>) {
+            override fun onResponse(call: Call<List<ReviewServerRead>>, response: Response<List<ReviewServerRead>>) {
                 if (response.isSuccessful) {
                     GlobalScope.launch {
                         response.body()?.let {
+
+                            val reviewList = ArrayList<Review>()
+                            val reviewThemeLinkList = ArrayList<ReviewThemeLink>()
+
+                            for (item in it) {
+                                Review(
+                                    item.id,
+                                    item.uid,
+                                    item.isPublic,
+                                    item.category,
+                                    item.comment,
+                                    item.visitedDayYmd,
+                                    item.companions,
+                                    item.toliets,
+                                    item.priceRange,
+                                    item.serviceQuality,
+                                    item.revisit,
+                                    null,
+                                    item.place?.lng,
+                                    item.place?.lat,
+                                    item.place?.name,
+                                    item.place?.address,
+                                    item.place?.phoneNumber
+                                ).let { review -> reviewList.add(review) }
+
+                                for (theme in item.themes) {
+                                    ReviewThemeLink(
+                                        item.id,
+                                        theme.id
+                                    ).let { reviewThemeLink -> reviewThemeLinkList.add(reviewThemeLink) }
+                                }
+                            }
+
                             val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
-                            response.body()?.let { database.reviewDao().insertAll(it) }
+                            database.reviewDao().deleteAndInsertAll(reviewList)
+                            database.reviewThemeLinkDao().deleteAndInsertAll(reviewThemeLinkList)
                         }
                     }
                 }
@@ -56,7 +87,7 @@ object RetrofitProcedure {
         })
     }
 
-    fun getReviewByUid(uid: Long, liveData: MutableLiveData<List<Review>>?) {
+    fun getUserReview(uid: Long, liveData: MutableLiveData<List<Review>>?) {
         LikeEatRetrofit.getService().requestReviewByUid(uid).enqueue(object : Callback<List<Review>> {
             override fun onFailure(call: Call<List<Review>>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "데이터 로드 실패", Toast.LENGTH_LONG).show()

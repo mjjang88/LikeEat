@@ -28,9 +28,14 @@ interface RetrofitService {
         @Query("uid") uid: Long
     ): Call<List<Review>>
 
+    @GET("/reviews/")
+    fun requestUserReview(
+        @Query("uid") uid: Long
+    ): Call<List<ReviewServerRead>>
+
     @POST("/reviews/")
     suspend fun addReview(
-        @Body review: Review?
+        @Body reviewNWWrite: ReviewServerWrite?
     ): Response<Unit>
 
     // http://likeeat-server.herokuapp.com/themes/?uid=UID

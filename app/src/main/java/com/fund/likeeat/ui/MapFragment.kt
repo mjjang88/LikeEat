@@ -113,8 +113,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapViewModel.review.observe(viewLifecycleOwner) {
             it.forEach {review ->
                 val marker = Marker()
-                marker.captionText = review.name ?: "Null"
-                marker.position = LatLng(review.lat, review.lng)
+                marker.captionText = review.place_name ?: "Null"
+                marker.position = LatLng(review.y!!, review.x!!)
                 marker.map = mNaverMap
             }
         }

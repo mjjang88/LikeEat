@@ -29,7 +29,7 @@ class ReviewsViewModel internal constructor(
         }
 
     private fun getReviewByUid(uid: Long, reviewList: MutableLiveData<List<Review>>?) {
-        RetrofitProcedure.getReviewByUid(uid, reviewList)
+        RetrofitProcedure.getUserReview(uid, reviewList)
         Log.i("UID_RETROFIT", uid.toString())
     }
 
