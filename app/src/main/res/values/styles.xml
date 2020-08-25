@@ -15,6 +15,14 @@
     </style>
 
 
+    <style name="TextBigTitle">
+        <item name="android:textAppearance">?attr/textAppearanceHeadline1</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_big_title</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextTitle">
         <item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
         <item name="android:gravity">start|center_vertical</item>
@@ -81,6 +89,11 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ImageButton">
+        <item name="android:minWidth">@dimen/image_btn_min_width</item>
+        <item name="android:minHeight">@dimen/image_btn_min_height</item>
     </style>
 
 </resources>

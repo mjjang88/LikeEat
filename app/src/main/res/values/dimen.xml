@@ -16,6 +16,7 @@
     <dimen name="padding_quarter">4dp</dimen>
     <dimen name="padding_one_eighth">2dp</dimen>
 
+    <dimen name="text_size_big_title">28sp</dimen>
     <dimen name="text_size_title">18sp</dimen>
     <dimen name="text_size_big">16sp</dimen>
     <dimen name="text_size_normal">14sp</dimen>
@@ -35,5 +36,10 @@
     <dimen name="item_review_height">240dp</dimen>
 
     <dimen name="corner_radius_theme_mini">4dp</dimen>
+
+    <dimen name="edit_text_min_height">52dp</dimen>
+
+    <dimen name="image_btn_min_width">48dp</dimen>
+    <dimen name="image_btn_min_height">48dp</dimen>
 
 </resources>
