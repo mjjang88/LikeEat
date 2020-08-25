@@ -27,6 +27,6 @@ data class Review(
     val y: Double?,
     val place_name: String?,
     val address_name: String?,
-    val phone: String
+    val phone: String?
 ) : Parcelable {
 }

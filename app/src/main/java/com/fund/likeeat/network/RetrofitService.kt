@@ -28,6 +28,11 @@ interface RetrofitService {
         @Query("uid") uid: Long
     ): Call<List<Review>>
 
+    @GET("/reviews/")
+    fun requestUserReview(
+        @Query("uid") uid: Long
+    ): Call<List<ReviewServerRead>>
+
     @POST("/reviews/")
     suspend fun addReview(
         @Body reviewNWWrite: ReviewServerWrite?

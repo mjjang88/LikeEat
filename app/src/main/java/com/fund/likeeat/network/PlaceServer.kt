@@ -2,7 +2,7 @@ package com.fund.likeeat.network
 
 import com.fund.likeeat.data.Place
 
-class PlaceServerWrite(
+class PlaceServer(
     val lat: Double,
     val lng: Double,
     val address: String,

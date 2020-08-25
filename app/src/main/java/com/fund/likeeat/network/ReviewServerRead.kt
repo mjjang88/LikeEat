@@ -2,7 +2,13 @@ package com.fund.likeeat.network
 
 import com.google.gson.annotations.Expose
 
-data class ReviewServerWrite(
+class ReviewServerRead(
+    @Expose
+    val themes: List<ThemeServerRead>,
+    @Expose
+    val themesCount: Int,
+    @Expose
+    val uid: Long,
     @Expose
     val isPublic: Boolean,
     @Expose
@@ -20,11 +26,9 @@ data class ReviewServerWrite(
     @Expose
     val serviceQuality: String?,
     @Expose
-    val themeIds: String?,
-    @Expose
-    val uid: Long,
-    @Expose
     val revisit: String?,
+    @Expose
+    val id: Long,
     @Expose
     val place: PlaceServer?
 ) {

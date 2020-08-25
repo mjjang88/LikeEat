@@ -16,6 +16,7 @@ val appModule = module {
     single { AppDatabase.getInstance(androidApplication()) }
     single(createdAtStart = false) { get<AppDatabase>().reviewDao() }
     single(createdAtStart = false) { get<AppDatabase>().themeDao() }
+    single(createdAtStart = false) { get<AppDatabase>().reviewThemeLinkDao() }
     single { ReviewRepository(get()) }
     single { ThemeRepository(get()) }
 

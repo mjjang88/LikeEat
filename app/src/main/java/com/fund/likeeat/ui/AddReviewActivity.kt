@@ -13,7 +13,7 @@ import com.fund.likeeat.data.Place
 import com.fund.likeeat.databinding.ActivityAddReviewBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
-import com.fund.likeeat.network.PlaceServerWrite
+import com.fund.likeeat.network.PlaceServer
 import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
@@ -136,7 +136,7 @@ class AddReviewActivity : AppCompatActivity()  {
             themeIds,
             uid,
             revisit,
-            PlaceServerWrite(mPlace)
+            PlaceServer(mPlace)
         )
     }
 }
