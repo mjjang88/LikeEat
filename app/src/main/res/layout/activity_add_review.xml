@@ -123,7 +123,7 @@
                 android:id="@+id/edit_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_comment_background_shape"
+                android:background="@drawable/edit_background_shape"
                 android:minHeight="@dimen/review_edit_text_min_height"
                 android:gravity="top|left"
                 android:padding="@dimen/margin_normal"
@@ -176,7 +176,7 @@
                     <TextView
                         android:layout_width="@dimen/date_picker_btn_width"
                         android:layout_height="@dimen/date_picker_btn_height"
-                        android:background="@drawable/edit_comment_background_shape"
+                        android:background="@drawable/edit_background_shape"
                         android:layout_marginLeft="@dimen/margin_half"/>
 
                     <ImageButton

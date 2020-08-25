@@ -23,4 +23,8 @@
     <string name="price">가격대</string>
     <string name="restroom">화장실</string>
     <string name="re_visit">재방문</string>
+
+    <string name="search_filter_distance_by_location">현위치 기준 거리순</string>
+    <string name="search_filter_distance_by_map">지도 기준 거리순</string>
+    <string name="search_filter_match">정확도순</string>
 </resources>
