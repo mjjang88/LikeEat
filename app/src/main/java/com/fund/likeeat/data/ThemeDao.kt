@@ -1,10 +1,7 @@
 package com.fund.likeeat.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ThemeDao {
@@ -19,4 +16,10 @@ interface ThemeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTheme(list: List<Theme>?)
+
+    @Query("UPDATE theme SET name=:name, color=:color, isPublic=:isPublic WHERE id=:id")
+    suspend fun updateTheme(id: Long, name: String, color: Int, isPublic: Boolean)
+
+    @Query("DELETE FROM theme WHERE id=:id")
+    suspend fun deleteTheme(id: Long)
 }

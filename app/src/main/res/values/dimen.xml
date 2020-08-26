@@ -35,5 +35,6 @@
     <dimen name="item_review_height">240dp</dimen>
 
     <dimen name="corner_radius_theme_mini">4dp</dimen>
+    <dimen name="corner_radius_dialog_delete_theme">18dp</dimen>
 
 </resources>

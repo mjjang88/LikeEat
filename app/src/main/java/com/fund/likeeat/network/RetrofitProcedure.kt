@@ -1,12 +1,10 @@
 package com.fund.likeeat.network
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.fund.likeeat.utilities.UID_DETACHED
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -81,7 +79,19 @@ object RetrofitProcedure {
                 if(response.isSuccessful) {
                     Toast.makeText(MyApplication.applicationContext(), "테마 등록 완료!", Toast.LENGTH_SHORT).show()
                     GlobalScope.launch {
-                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(listOf(response.body()!!))
+                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(
+                            listOf(
+                                Theme(
+                                    response.body()?.id!!,
+                                    theme.uid,
+                                    response.body()?.reviewsCount!!,
+                                    theme.name,
+                                    theme.color,
+                                    theme.isPublic
+                                )
+                            )
+                        )
+                        // AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(listOf(response.body()!!))
                     }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
@@ -92,6 +102,8 @@ object RetrofitProcedure {
     }
 
     fun getThemeByUid(uid: Long) {
+        if(MyApplication.pref.uid == UID_DETACHED) return
+
         LikeEatRetrofit.getService().requestThemeByUid(uid).enqueue(object: Callback<List<Theme>> {
             override fun onFailure(call: Call<List<Theme>>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "테마 로드 실패", Toast.LENGTH_SHORT).show()
@@ -104,6 +116,42 @@ object RetrofitProcedure {
                     }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 로드 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        })
+    }
+
+    fun updateThemeById(id: Long, themeChanged: ThemeChanged) {
+        LikeEatRetrofit.getService().updateTheme(id, themeChanged).enqueue(object :Callback<Theme> {
+            override fun onFailure(call: Call<Theme>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "테마 수정 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Theme>, response: Response<Theme>) {
+                if(response.isSuccessful) {
+                    GlobalScope.launch {
+                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().updateTheme(id, themeChanged.name, themeChanged.color, themeChanged.isPublic)
+                        Toast.makeText(MyApplication.applicationContext(), "테마 수정 완료", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        })
+    }
+
+    fun deleteThemeById(id: Long) {
+        LikeEatRetrofit.getService().deleteTheme(id).enqueue(object: Callback<Theme> {
+            override fun onFailure(call: Call<Theme>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "테마 삭제 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Theme>, response: Response<Theme>) {
+                if(response.isSuccessful) {
+                    GlobalScope.launch {
+                        AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().deleteTheme(id)
+                        Toast.makeText(MyApplication.applicationContext(), "테마 삭제 완료", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 

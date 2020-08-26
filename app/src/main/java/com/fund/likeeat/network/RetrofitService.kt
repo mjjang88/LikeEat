@@ -1,15 +1,9 @@
 package com.fund.likeeat.network
 
-import com.fund.likeeat.data.Review
-import com.fund.likeeat.data.Theme
-import com.fund.likeeat.data.ThemeRequest
-import com.fund.likeeat.data.User
+import com.fund.likeeat.data.*
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RetrofitService {
 
@@ -45,5 +39,16 @@ interface RetrofitService {
     @POST("/themes/")
     fun sendTheme(
         @Body theme: ThemeRequest
+    ): Call<Theme>
+
+    @PUT("/themes/")
+    fun updateTheme(
+        @Path("id") id: Long,
+        @Body themeChanged: ThemeChanged
+    ): Call<Theme>
+
+    @DELETE("/themes/{id}")
+    fun deleteTheme(
+        @Path("id") id: Long
     ): Call<Theme>
 }

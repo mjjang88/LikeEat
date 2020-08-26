@@ -13,8 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.AddThemeActivity"
-            android:parentActivityName=".ui.SetThemeActivity"></activity>
+        <activity android:name=".ui.ChangeThemeNameActivity"></activity>
+        <activity
+            android:name=".ui.AddThemeActivity"
+            android:parentActivityName=".ui.SetThemeActivity" />
         <activity android:name=".ui.SetThemeActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
@@ -26,8 +28,8 @@
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.ReviewsActivity" />
         <activity android:name=".ui.SearchPlaceActivity" />
-        <activity android:name=".ui.AddReviewActivity"/>
-        <activity android:name=".ui.ViewReviewActivity"/>
+        <activity android:name=".ui.AddReviewActivity" />
+        <activity android:name=".ui.ViewReviewActivity" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

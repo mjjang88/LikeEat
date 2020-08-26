@@ -9,13 +9,13 @@ import com.fund.likeeat.R
 import com.fund.likeeat.adapter.ThemeAdapter
 import com.fund.likeeat.databinding.ActivitySetThemeBinding
 import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.viewmodels.ThemeViewModel
+import com.fund.likeeat.viewmodels.AllThemesViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class SetThemeActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySetThemeBinding
-    private val themeViewModel: ThemeViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

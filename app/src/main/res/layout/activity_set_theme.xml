@@ -7,7 +7,7 @@
     <data>
         <variable
             name="themeViewModel"
-            type="com.fund.likeeat.viewmodels.ThemeViewModel" />
+            type="com.fund.likeeat.viewmodels.AllThemesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

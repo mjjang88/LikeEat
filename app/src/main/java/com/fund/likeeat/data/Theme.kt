@@ -22,3 +22,11 @@ data class ThemeRequest(
 ) {
 
 }
+
+data class ThemeChanged(
+    val name: String,
+    val color: Int,
+    val isPublic: Boolean
+){
+    
+}
