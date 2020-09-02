@@ -10,10 +10,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.Place
+import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityAddReviewBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.PlaceServer
+import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
@@ -27,6 +29,8 @@ class AddReviewActivity : AppCompatActivity()  {
     private val addReviewViewModel: AddReviewViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
     lateinit var mPlace: Place
+
+    var themeList: List<Theme>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +54,13 @@ class AddReviewActivity : AppCompatActivity()  {
     private fun initComponent(binding: ActivityAddReviewBinding) {
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val spinnerAdapter = ArrayAdapter<String>(this@AddReviewActivity, android.R.layout.simple_spinner_dropdown_item, addReviewViewModel.getThemeList().map { theme -> theme.name })
+            themeList = addReviewViewModel.getThemeList()
+            themeList?.let {
+                val spinnerAdapter = ArrayAdapter<String>(this@AddReviewActivity, android.R.layout.simple_spinner_dropdown_item, it.map { theme -> theme.name })
 
-            withContext(Dispatchers.Main) {
-                binding.spinnerTheme.adapter = spinnerAdapter
+                withContext(Dispatchers.Main) {
+                    binding.spinnerTheme.adapter = spinnerAdapter
+                }
             }
         }
 
@@ -104,10 +111,9 @@ class AddReviewActivity : AppCompatActivity()  {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
                 startActivity(intent)
+                RetrofitProcedure.getUserReview(MyApplication.pref.uid)
             }
         }
-
-
     }
 
     private fun makeReview(): ReviewServerWrite {
@@ -122,7 +128,7 @@ class AddReviewActivity : AppCompatActivity()  {
         val priceRange = edit_price.text.toString()
         val serviceQuality = edit_evaluation.text.toString()
         val revisit = edit_revisit.text.toString()
-        val themeIds = "1,2"
+        val themeIds = themeList?.get(spinner_theme.selectedItemPosition)?.id.toString()
 
         return ReviewServerWrite(
             isPublic,

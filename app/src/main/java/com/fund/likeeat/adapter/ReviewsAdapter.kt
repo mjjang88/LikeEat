@@ -24,6 +24,7 @@ class ReviewsAdapter: ListAdapter<ReviewFull, RecyclerView.ViewHolder>(ReviewDif
             binding.apply {
                 reviewFull = item
 
+                chipGroupTag.removeAllViews()
                 item.theme.forEach {theme ->
                     val chip = Chip(root.context).apply {
                         text = theme.name

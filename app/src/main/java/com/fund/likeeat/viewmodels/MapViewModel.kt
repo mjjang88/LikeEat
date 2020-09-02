@@ -21,11 +21,10 @@ class MapViewModel internal constructor(
 
     val reviewFull = MutableLiveData<ArrayList<ReviewFull>>().apply { value = arrayListOf() }
 
-    fun getReviewFullList() {
+    fun getReviewFullList(reviewList: List<Review>) {
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val reviewList = reviewRepository.getReviewList2()
                 val themeList = themeDao.getThemeList2(uid)
                 val reviewThemeLinkList = reviewThemeLinkDao.getList()
 

@@ -120,6 +120,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 marker.position = LatLng(review.y!!, review.x!!)
                 marker.map = mNaverMap
             }
+
+            mapViewModel.getReviewFullList(it)
         }
     }
 
@@ -141,8 +143,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             // 거리 순 정렬을 어디서 어떻게 해야하지
             adapter.submitList(result)
         }
-
-        mapViewModel.getReviewFullList()
     }
 
     val STATE_MAP = 0x000000
