@@ -10,7 +10,7 @@ class ThemeRepository (
         return themeDao.getThemeList(uid)
     }
 
-    suspend fun getThemeList2(uid: Long): List<Theme> {
+    fun getThemeList2(uid: Long): List<Theme> {
         return themeDao.getThemeList2(uid)
     }
 }

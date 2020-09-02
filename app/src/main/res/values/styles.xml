@@ -78,6 +78,12 @@
         <item name="android:paddingVertical">10dp</item>
     </style>
 
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
     <style name="HorizontalDivider">
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -94,6 +100,8 @@
     <style name="ImageButton">
         <item name="android:minWidth">@dimen/image_btn_min_width</item>
         <item name="android:minHeight">@dimen/image_btn_min_height</item>
+        <item name="android:inset">0dp</item>
+        <item name="android:background">@null</item>
     </style>
 
 </resources>

@@ -31,8 +31,8 @@ class ReviewsActivity: AppCompatActivity() {
     }
 
     private fun subscribeUi(adapter: ReviewsAdapter) {
-        reviewViewModel.review?.observe(this) { result ->
+        /*reviewViewModel.review?.observe(this) { result ->
             adapter.submitList(result)
-        }
+        }*/
     }
 }

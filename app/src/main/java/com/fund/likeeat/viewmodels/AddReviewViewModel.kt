@@ -8,7 +8,7 @@ class AddReviewViewModel internal constructor(
     val themeRepository: ThemeRepository,
     val uid: Long
 ): ViewModel() {
-    suspend fun getThemeList(): List<Theme> {
+    fun getThemeList(): List<Theme> {
         return themeRepository.getThemeList2(uid)
     }
 }

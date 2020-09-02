@@ -13,14 +13,13 @@ import com.fund.likeeat.adapter.ReviewsAdapter
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.viewmodels.MapViewModel
-import com.fund.likeeat.viewmodels.ReviewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
-import org.koin.android.ext.android.inject
+import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -28,8 +27,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mNaverMap : NaverMap
 
-    private val mapViewModel: MapViewModel by inject()
-    private val reviewViewModel: ReviewsViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val mapViewModel: MapViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +38,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val binding = FragmentMapBinding.inflate(inflater, container, false).apply {
             viewModel = mapViewModel
         }
-        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet).apply {
+        context ?: return binding.root
+
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetViewReviewList).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
             skipCollapsed = true
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -54,13 +54,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 searchLayoutParent.setBackgroundColor(Color.WHITE)
                                 searchLayout.setBackgroundResource(R.drawable.item_border_round_gray)
                                 bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
-                                friendListButton.visibility = View.GONE
+                                //friendListButton.visibility = View.GONE
                                 scroll.visibility = View.GONE
                                 btnReviewAndMap.text = "지도 보기"
                                 isReviewListOpen = true
                             }
                             else -> {
-                                friendListButton.visibility = View.VISIBLE
+                                //friendListButton.visibility = View.VISIBLE
                                 scroll.visibility = View.VISIBLE
                                 bottomSheet.setBackgroundResource(R.drawable.item_border_top_round_shadow)
                                 searchLayoutParent.setBackgroundColor(Color.TRANSPARENT)
@@ -74,16 +74,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             })
         }
 
-        val adapter = ReviewsAdapter()
-        binding.recycler.adapter = adapter
-        subscribeUi(adapter)
+        initReviewList(binding)
 
         binding.btnReviewAndMap.setOnClickListener {
-            if(isReviewListOpen) bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-            else bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            when (currentState) {
+                STATE_MAP -> changeState(STATE_REVIEW_LIST)
+                STATE_REVIEW_LIST -> changeState(STATE_MAP)
+            }
         }
 
-        context ?: return binding.root
+        /*binding.btnReviewAndMap.setOnClickListener {
+            if(isReviewListOpen) bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            else bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }*/
 
         mapInit()
 
@@ -130,11 +133,42 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         subscribeUi()
     }
 
-    private fun subscribeUi(adapter: ReviewsAdapter) {
-        reviewViewModel.review?.observe(viewLifecycleOwner) { result ->
+    private fun initReviewList(binding: FragmentMapBinding) {
+        val adapter = ReviewsAdapter()
+        binding.recyclerViewReviewList.adapter = adapter
+
+        mapViewModel.reviewFull.observe(viewLifecycleOwner) { result ->
             // 거리 순 정렬을 어디서 어떻게 해야하지
             adapter.submitList(result)
         }
+
+        mapViewModel.getReviewFullList()
     }
 
+    val STATE_MAP = 0x000000
+    val STATE_REVIEW_LIST = 0x000001
+    val STATE_REVIEW_DETAIL = 0x000002
+    var currentState = STATE_MAP
+    private fun changeState(changeState: Int) {
+        when (currentState) {
+            STATE_MAP -> {
+                when (changeState) {
+                    STATE_REVIEW_LIST -> {
+                        btn_review_and_map.text = "지도 보기"
+                        layout_view_review_list.visibility = View.VISIBLE
+                    }
+                }
+            }
+            STATE_REVIEW_LIST -> {
+                when (changeState) {
+                    STATE_MAP -> {
+                        btn_review_and_map.text = "목록 보기"
+                        layout_view_review_list.visibility = View.GONE
+                    }
+                }
+            }
+        }
+
+        currentState = changeState
+    }
 }

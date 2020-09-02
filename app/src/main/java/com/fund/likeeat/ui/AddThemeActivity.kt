@@ -31,6 +31,7 @@ class AddThemeActivity : AppCompatActivity() {
 
         add_theme_submit.setOnClickListener {
             val theme = Theme(
+                -1,
                 MyApplication.pref.uid,
                 theme_add_name.text.toString(),
                 colorSelected,

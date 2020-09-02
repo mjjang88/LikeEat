@@ -8,4 +8,8 @@ class ReviewRepository (
     fun getReviewList(): LiveData<List<Review>> {
         return reviewDao.getReviewList()
     }
+
+    fun getReviewList2(): List<Review> {
+        return reviewDao.getReviewList2()
+    }
 }
