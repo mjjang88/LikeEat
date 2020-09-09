@@ -23,8 +23,8 @@ val appModule = module {
     /**
      * ViewModel Module
      */
-    viewModel { MapViewModel(get()) }
-    viewModel { (uid: Long) -> ReviewsViewModel(get(), uid) }
+    viewModel { (uid: Long) -> MapViewModel(get(), get(), get(), uid) }
+    viewModel { (uid: Long) -> ReviewsViewModel(get(), get(), get(), uid) }
     viewModel { (uid: Long) -> ThemeViewModel(get(), uid) }
     viewModel { SearchPlaceViewModel() }
     viewModel { (uid: Long) -> AddReviewViewModel(get(), uid) }

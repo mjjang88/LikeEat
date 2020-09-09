@@ -4,10 +4,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -130,7 +127,8 @@ object RetrofitProcedure {
 
             override fun onResponse(call: Call<List<Theme>>, response: Response<List<Theme>>) {
                 if(response.isSuccessful) {
-                    CoroutineScope(Dispatchers.IO).launch { AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(response.body()) }
+                    CoroutineScope(Dispatchers.IO).launch { AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(
+                        response.body()?.map { it.copy(uid = uid) }) }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 로드 실패", Toast.LENGTH_SHORT).show()
                 }
