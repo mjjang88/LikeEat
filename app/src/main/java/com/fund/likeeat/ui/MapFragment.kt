@@ -17,6 +17,7 @@ import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
 import com.fund.likeeat.utilities.GpsTracker
+import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
@@ -62,10 +63,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapInit()
 
         binding.btnAddReview.setOnClickListener {
-            startActivity(Intent(requireContext(), SearchPlaceActivity::class.java))
+            val intent = Intent(requireContext(), SearchPlaceActivity::class.java)
+            intent.putExtra(INTENT_KEY_LOCATION, mNaverMap.cameraPosition.target)
+            startActivity(intent)
         }
         binding.btnAddReviewHighlight.setOnClickListener {
-            startActivity(Intent(requireContext(), SearchPlaceActivity::class.java))
+            val intent = Intent(requireContext(), SearchPlaceActivity::class.java)
+            intent.putExtra(INTENT_KEY_LOCATION, mNaverMap.cameraPosition.target)
+            startActivity(intent)
         }
 
         binding.btnCurrentLocation.setOnClickListener {

@@ -11,7 +11,10 @@ interface RetrofitKaKaoService {
     @Headers("Authorization: KakaoAK 314516590d0e85cfd96bfaf8935c83ec")
     @GET("/v2/local/search/keyword.json?category_group_code=FD6")
     suspend fun getPlace(
-        @Query("query") searchWord: String
+        @Query("query") searchWord: String,
+        @Query("x") x: Double?,
+        @Query("y") y: Double?,
+        @Query("radius") radius: Int
     ): Response<KaKaoRetrofit.KakaoSearchPlaceResult>
 
 }
