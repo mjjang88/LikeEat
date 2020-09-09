@@ -3,18 +3,87 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_view_review_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#61D869">
+        android:background="?attr/colorSurface">
+
+        <ImageButton
+            android:id="@+id/btn_back_view_review_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginLeft="@dimen/margin_normal"
+            style="@style/ImageButton"/>
+
+        <TextView
+            android:id="@+id/text_title_view_review_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/btn_back_view_review_list"
+            android:layout_marginTop="@dimen/margin_normal"
+            style="@style/TextTitle"/>
+
+        <LinearLayout
+            android:id="@+id/layout_search_view_review_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_min_height"
+            android:orientation="horizontal"
+            android:background="@drawable/edit_background_shape"
+            app:layout_constraintTop_toBottomOf="@id/text_title_view_review_list"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal">
+
+            <EditText
+                android:id="@+id/edit_search_view_review_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/search_place_hint"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:layout_marginLeft="@dimen/margin_normal">
+                <requestFocus />
+            </EditText>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_close_24"
+                android:background="@null"
+                android:layout_gravity="center"
+                style="@style/ImageButton"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_search_24"
+                android:background="@null"
+                android:layout_gravity="center"
+                style="@style/ImageButton"/>
+
+        </LinearLayout>
+
+        <View
+            app:layout_constraintTop_toBottomOf="@id/layout_search_view_review_list"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            style="@style/Divider"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/review_list"
+            android:id="@+id/recycler_view_review_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/margin_1.5_times"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context=".ui.MainActivity"
-            tools:listitem="@layout/item_reviews" />
-    </FrameLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_search_view_review_list"
+            android:layout_marginTop="@dimen/margin_1.5_times"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

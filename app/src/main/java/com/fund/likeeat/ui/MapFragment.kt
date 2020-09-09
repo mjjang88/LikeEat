@@ -1,24 +1,29 @@
 package com.fund.likeeat.ui
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
 import com.fund.likeeat.adapter.ReviewsAdapter
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.manager.PermissionManager
+import com.fund.likeeat.utilities.GpsTracker
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.*
 import com.naver.maps.map.MapFragment
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -28,6 +33,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mNaverMap : NaverMap
 
     private val mapViewModel: MapViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+
+    private var highlightMarker: Marker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,47 +47,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         context ?: return binding.root
 
-        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetViewReviewList).apply {
-            state = BottomSheetBehavior.STATE_HIDDEN
-            skipCollapsed = true
-            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                }
-
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    binding.apply {
-                        when (newState) {
-                            BottomSheetBehavior.STATE_EXPANDED -> {
-                                searchLayoutParent.setBackgroundColor(Color.WHITE)
-                                searchLayout.setBackgroundResource(R.drawable.item_border_round_gray)
-                                bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
-                                //friendListButton.visibility = View.GONE
-                                scroll.visibility = View.GONE
-                                btnReviewAndMap.text = "지도 보기"
-                                isReviewListOpen = true
-                            }
-                            else -> {
-                                //friendListButton.visibility = View.VISIBLE
-                                scroll.visibility = View.VISIBLE
-                                bottomSheet.setBackgroundResource(R.drawable.item_border_top_round_shadow)
-                                searchLayoutParent.setBackgroundColor(Color.TRANSPARENT)
-                                searchLayout.setBackgroundResource(R.drawable.item_border_round_shadow)
-                                btnReviewAndMap.text = "목록 보기"
-                                isReviewListOpen = false
-                            }
-                        }
-                    }
-                }
-            })
-        }
-
-        initReviewList(binding)
+        PermissionManager.checkPermissionWhenOnCreate(requireActivity())
 
         binding.btnReviewAndMap.setOnClickListener {
-            when (currentState) {
-                STATE_MAP -> changeState(STATE_REVIEW_LIST)
-                STATE_REVIEW_LIST -> changeState(STATE_MAP)
-            }
+            val intent = Intent(requireContext(), ReviewsActivity::class.java)
+            startActivity(intent)
         }
 
         /*binding.btnReviewAndMap.setOnClickListener {
@@ -93,6 +64,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.btnAddReview.setOnClickListener {
             startActivity(Intent(requireContext(), SearchPlaceActivity::class.java))
         }
+        binding.btnAddReviewHighlight.setOnClickListener {
+            startActivity(Intent(requireContext(), SearchPlaceActivity::class.java))
+        }
+
+        binding.btnCurrentLocation.setOnClickListener {
+            val gpsTracker = GpsTracker(requireContext())
+            moveToPoi(LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
+        }
+        binding.btnCurrentLocationHighlight.setOnClickListener {
+            val gpsTracker = GpsTracker(requireContext())
+            moveToPoi(LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
+        }
 
         binding.testButton.setOnClickListener {
             val intent = Intent(requireContext(), SetThemeActivity::class.java)
@@ -100,6 +83,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
 
         return binding.root
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            PermissionManager.GPS_ENABLE_REQUEST_CODE -> {
+                if (PermissionManager.checkLocationServicesStatus(requireContext())) {
+                    PermissionManager.checkRunTimePermission(requireActivity())
+                }
+            }
+        }
     }
 
     private fun mapInit() {
@@ -118,6 +113,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 val marker = Marker()
                 marker.captionText = review.place_name ?: "Null"
                 marker.position = LatLng(review.y!!, review.x!!)
+                marker.icon = OverlayImage.fromResource(R.drawable.marker_base)
+                marker.setOnClickListener {
+                    highlightMarker?.map = null
+                    val highLightMarker = Marker()
+                    highLightMarker.position = LatLng(review.y, review.x)
+                    highLightMarker.icon = OverlayImage.fromResource(R.drawable.marker_base_highlight)
+                    highLightMarker.map = mNaverMap
+                    highlightMarker = highLightMarker
+                    changeState(STATE_HIGHLIGHT)
+
+                    text_highlight_place_name.text = review.place_name
+                    text_highlight_place_address.text = review.address_name
+
+                    true
+                }
                 marker.map = mNaverMap
             }
 
@@ -127,6 +137,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(p0: NaverMap) {
         mNaverMap = p0
+        mNaverMap.setOnMapClickListener { pointF, latLng ->
+            highlightMarker?.map = null
+            changeState(STATE_NORMAL)
+        }
 
         initAfterMapReady()
     }
@@ -135,40 +149,57 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         subscribeUi()
     }
 
-    private fun initReviewList(binding: FragmentMapBinding) {
-        val adapter = ReviewsAdapter()
-        binding.recyclerViewReviewList.adapter = adapter
-
-        mapViewModel.reviewFull.observe(viewLifecycleOwner) { result ->
-            // 거리 순 정렬을 어디서 어떻게 해야하지
-            adapter.submitList(result)
+    val STATE_NORMAL = false
+    val STATE_HIGHLIGHT = true
+    private fun changeState(state: Boolean) {
+        when (state) {
+            STATE_NORMAL -> {
+                layout_fab_none_highlight.visibility = View.VISIBLE
+                layout_fab_highlight.visibility = View.GONE
+                btn_review_and_map.visibility = View.VISIBLE
+            }
+            STATE_HIGHLIGHT -> {
+                layout_fab_none_highlight.visibility = View.GONE
+                layout_fab_highlight.visibility = View.VISIBLE
+                btn_review_and_map.visibility = View.GONE
+            }
         }
     }
 
-    val STATE_MAP = 0x000000
-    val STATE_REVIEW_LIST = 0x000001
-    val STATE_REVIEW_DETAIL = 0x000002
-    var currentState = STATE_MAP
-    private fun changeState(changeState: Int) {
-        when (currentState) {
-            STATE_MAP -> {
-                when (changeState) {
-                    STATE_REVIEW_LIST -> {
-                        btn_review_and_map.text = "지도 보기"
-                        layout_view_review_list.visibility = View.VISIBLE
-                    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PermissionManager.PERMISSIONS_REQUEST_CODE &&
+            grantResults.size == PermissionManager.REQUIRED_PERMISSIONS.size) {
+
+            var check_result = true
+
+            for (result in grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    check_result = false
+                    break
                 }
             }
-            STATE_REVIEW_LIST -> {
-                when (changeState) {
-                    STATE_MAP -> {
-                        btn_review_and_map.text = "목록 보기"
-                        layout_view_review_list.visibility = View.GONE
-                    }
+
+            if (!check_result) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), PermissionManager.REQUIRED_PERMISSIONS[0]) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), PermissionManager.REQUIRED_PERMISSIONS[1])) {
+                    Toast.makeText(requireContext(), "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(requireContext(), "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.", Toast.LENGTH_LONG).show()
                 }
             }
         }
+    }
 
-        currentState = changeState
+    fun moveToPoi(latLng: LatLng) {
+        val cameraUpdate = CameraUpdate.scrollTo(latLng)
+            .animate(CameraAnimation.Linear)
+            .finishCallback {
+                mNaverMap.cameraPosition = CameraPosition(latLng, 16.0)
+            }
+        mNaverMap.moveCamera(cameraUpdate)
     }
 }

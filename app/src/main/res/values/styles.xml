@@ -71,11 +71,26 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
+    <style name="FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:backgroundTint">?attr/colorSurface</item>
+        <item name="android:minWidth">@dimen/floating_btn_min_width</item>
+        <item name="android:minHeight">@dimen/floating_btn_min_height</item>
+        <item name="shapeAppearanceOverlay">@style/SmallComponentRect</item>
+    </style>
+
+    <style name="SmallComponentRect" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
     <style name="ExtendedFloatingActionButtonOnlyText" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="android:backgroundTint">?attr/colorSurface</item>
-        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:paddingHorizontal">16dp</item>
         <item name="android:paddingVertical">10dp</item>
+        <item name="android:minWidth">@dimen/floating_btn_min_width</item>
+        <item name="android:minHeight">@dimen/floating_btn_min_height</item>
     </style>
 
     <style name="Divider">

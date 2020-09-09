@@ -44,4 +44,7 @@
 
     <dimen name="collapse_layout_height">250dp</dimen>
 
+    <dimen name="floating_btn_min_width">56dp</dimen>
+    <dimen name="floating_btn_min_height">56dp</dimen>
+
 </resources>
