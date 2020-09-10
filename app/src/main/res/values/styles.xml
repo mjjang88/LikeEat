@@ -125,4 +125,18 @@
         <item name="chipMinHeight">40dp</item>
     </style>
 
+    <style name="ConfirmButton">
+        <item name="android:textColor">?attr/colorSurface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/item_border_round_shadow</item>
+        <item name="android:backgroundTint">?attr/colorOnSurface</item>
+        <item name="android:drawableTint">?attr/colorSurface</item>
+        <item name="android:minHeight">@dimen/confirm_btn_min_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
 </resources>

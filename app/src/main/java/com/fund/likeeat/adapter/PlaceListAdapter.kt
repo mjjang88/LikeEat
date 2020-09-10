@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.data.Place
 import com.fund.likeeat.databinding.ListItemPlaceBinding
 import com.fund.likeeat.ui.AddReviewActivity
+import com.fund.likeeat.ui.MapPreviewActivity
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 
 class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiffCallback()) {
@@ -38,7 +39,7 @@ class PlaceListAdapter() : ListAdapter<Place, RecyclerView.ViewHolder>(PlaceDiff
 
             binding.setClickListener {
                 val context = binding.root.context
-                val intent = Intent(context, AddReviewActivity::class.java)
+                val intent = Intent(context, MapPreviewActivity::class.java)
                 intent.putExtra(INTENT_KEY_PLACE, item)
                 context.startActivity(intent)
             }
