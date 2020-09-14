@@ -28,4 +28,7 @@
     <string name="delete_theme_content">선택된 테마를 완전히 삭제합니다.\n계속하시겠습니까?</string>
     <string name="delete_theme_cancel">취소</string>
     <string name="delete_theme_ok">삭제</string>
+
+
+    <string name="review_count">num개의 맛집</string>
 </resources>

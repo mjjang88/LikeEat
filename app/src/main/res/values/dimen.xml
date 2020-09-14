@@ -16,6 +16,7 @@
     <dimen name="padding_quarter">4dp</dimen>
     <dimen name="padding_one_eighth">2dp</dimen>
 
+    <dimen name="text_size_biggest">28sp</dimen>
     <dimen name="text_size_title">18sp</dimen>
     <dimen name="text_size_big">16sp</dimen>
     <dimen name="text_size_normal">14sp</dimen>

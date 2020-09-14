@@ -27,7 +27,7 @@ class SetThemeActivity : AppCompatActivity() {
         binding.recycler.adapter = adapter
         subscribeUi(adapter)
 
-        binding.themeAdd.setOnClickListener {
+        binding.actionAddNewTheme.setOnClickListener {
             startActivity(Intent(this@SetThemeActivity, AddThemeActivity::class.java))
         }
     }

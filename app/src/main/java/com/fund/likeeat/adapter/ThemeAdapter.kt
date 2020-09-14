@@ -25,7 +25,7 @@ class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, Rec
         fun bind(item: Theme) {
             binding.imageMore.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putLong("THEME_ID", item.id) // TODO
+                bundle.putLong("THEME_ID", item.id)
 
                 val bottomSheetFragment = SetThemeBottomSheet()
                 bottomSheetFragment.arguments = bundle

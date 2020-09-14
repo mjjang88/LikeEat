@@ -4,12 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.fund.likeeat.manager.MyApplication
 
-@Entity(tableName = "theme"
-    // , primaryKeys = ["uid", "name"]
-)
+@Entity(tableName = "theme")
 data class Theme(
     @PrimaryKey val id: Long,
-    val pk: Long,
     val uid: Long = MyApplication.pref.uid,
     val reviewsCount: Int,
     val name: String,

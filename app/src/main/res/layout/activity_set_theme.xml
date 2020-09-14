@@ -13,36 +13,84 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.SetThemeActivity"
-        android:padding="32dp">
+        tools:context=".ui.SetThemeActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/action_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back_24"/>
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <TextView
             android:id="@+id/theme_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="나의 맛집 테마설정"
-            android:textSize="@dimen/text_size_title"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:padding="@dimen/padding_double"
+            android:text="나의 맛집 테마"
+            android:textSize="@dimen/text_size_biggest"
             android:textStyle="bold"/>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black06"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            app:layout_constraintTop_toBottomOf="@id/theme_title"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/theme_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/margin_normal"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        
-        <ImageView
-            android:id="@+id/theme_add"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintEnd_toEndOf="@id/recycler"
-            app:layout_constraintBottom_toBottomOf="@id/recycler"
-            android:src="@drawable/ic_baseline_add_circle_outline_48"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/action_add_new_theme"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            app:layout_constraintTop_toBottomOf="@id/recycler"
+            android:paddingHorizontal="@dimen/padding_double">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="새로운 테마 등록"
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/theme_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_add_24"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/separator2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black06"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            app:layout_constraintTop_toBottomOf="@id/action_add_new_theme"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

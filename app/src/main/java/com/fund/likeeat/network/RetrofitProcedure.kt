@@ -77,21 +77,13 @@ object RetrofitProcedure {
             }
 
             override fun onResponse(call: Call<Theme>, response: Response<Theme>) {
-                if(response.isSuccessful) {
-
-                    Log.d("LOG_THEME_PK", "pk : " + response.body()?.pk?.toString())
-                    Log.d("LOG_THEME_UID", "uid : " + response.body()?.uid?.toString())
-                    Log.d("LOG_THEME_NAME", "name : " + response.body()?.name)
-                    Log.d("LOG_THEME_COLOR", "color : " + response.body()?.color?.toString())
-                    Log.d("LOG_THEME_ISPUBLIC", "isPublic : " + response.body()?.isPublic)
-
+                if(response.isSuccessful)  {
                     Toast.makeText(MyApplication.applicationContext(), "테마 등록 완료!", Toast.LENGTH_SHORT).show()
                     GlobalScope.launch {
                         AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(
                             listOf(
                                 Theme(
-                                    response.body()?.pk!!,
-                                    response.body()?.pk!!,
+                                    response.body()?.id!!,
                                     response.body()?.uid!!,
                                     response.body()?.reviewsCount!!,
                                     theme.name,
@@ -100,7 +92,6 @@ object RetrofitProcedure {
                                 )
                             )
                         )
-                        // AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(listOf(response.body()!!))
                     }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
@@ -120,16 +111,6 @@ object RetrofitProcedure {
 
             override fun onResponse(call: Call<List<Theme>>, response: Response<List<Theme>>) {
                 if(response.isSuccessful) {
-
-                    Log.d("LOG_THEME_UID", "넘겨준 UID : " + uid.toString())
-                    for(theme in response.body()!!) {
-                        Log.d("LOG_THEME_PK", "pk : " + theme.id.toString())
-                        Log.d("LOG_THEME_UID", "uid : " + theme.uid.toString())
-                        Log.d("LOG_THEME_NAME", "name : " + theme.name)
-                        Log.d("LOG_THEME_COLOR", "color : " + theme.color.toString())
-                        Log.d("LOG_THEME_ISPUBLIC", "isPublic : " + theme.isPublic.toString())
-                    }
-
                     GlobalScope.launch {
                         AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().insertTheme(response.body())
                     }

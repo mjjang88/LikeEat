@@ -87,7 +87,7 @@
                 android:id="@+id/image_more"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/carbon_overflow_menu_horizontal"
+                android:src="@drawable/ic_more_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
