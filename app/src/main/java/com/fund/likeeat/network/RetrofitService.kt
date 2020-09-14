@@ -41,7 +41,7 @@ interface RetrofitService {
         @Body theme: ThemeRequest
     ): Call<Theme>
 
-    @PUT("/themes/")
+    @PUT("/themes/{id}")
     fun updateTheme(
         @Path("id") id: Long,
         @Body themeChanged: ThemeChanged
