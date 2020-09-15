@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface ThemeDao {
     @Query("SELECT * FROM theme")
-    fun getThemeList(): LiveData<List<Theme>>
+    fun getThemeList(): LiveData<MutableList<Theme>>
 
     @Query("SELECT * FROM theme WHERE uid=:uid")
     suspend fun getThemeList2(uid: Long): List<Theme>

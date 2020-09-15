@@ -12,6 +12,7 @@
 
     <dimen name="padding_double">32dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_1.5_times">24dp</dimen>
     <dimen name="padding_half">8dp</dimen>
     <dimen name="padding_quarter">4dp</dimen>
     <dimen name="padding_one_eighth">2dp</dimen>
@@ -36,6 +37,7 @@
     <dimen name="item_review_height">240dp</dimen>
 
     <dimen name="corner_radius_theme_mini">4dp</dimen>
+    <dimen name="corner_radius_normal">8dp</dimen>
     <dimen name="corner_radius_dialog_delete_theme">18dp</dimen>
 
 </resources>

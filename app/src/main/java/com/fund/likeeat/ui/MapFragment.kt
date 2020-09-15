@@ -52,7 +52,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         when (newState) {
                             BottomSheetBehavior.STATE_EXPANDED -> {
                                 searchLayoutParent.setBackgroundColor(Color.WHITE)
-                                searchLayout.setBackgroundResource(R.drawable.item_border_round_gray)
+                                searchLayout.setBackgroundResource(R.drawable.item_border_round_black05)
                                 bottomSheet.setBackgroundResource(R.drawable.item_border_top_gray)
                                 friendListButton.visibility = View.GONE
                                 scroll.visibility = View.GONE

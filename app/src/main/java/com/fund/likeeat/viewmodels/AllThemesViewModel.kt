@@ -9,5 +9,5 @@ class AllThemesViewModel internal constructor(
     themeRepository: ThemeRepository,
     uid: Long
 ): ViewModel() {
-    val themeList: LiveData<List<Theme>> = themeRepository.getThemeList()
+    val themeList: LiveData<MutableList<Theme>> = themeRepository.getThemeList()
 }

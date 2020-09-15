@@ -7,7 +7,7 @@ class ThemeRepository (
 ){
     fun getTheme(id: Long) = themeDao.getTheme(id)
 
-    fun getThemeList(): LiveData<List<Theme>> {
+    fun getThemeList(): LiveData<MutableList<Theme>> {
         return themeDao.getThemeList()
     }
 

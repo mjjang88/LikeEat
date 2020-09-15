@@ -1,150 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp">
+    android:fitsSystemWindows="true">
 
-    <ImageView
-        android:id="@+id/add_theme_submit"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_check"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/theme_card_sample"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="120dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardUseCompatPadding="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="12dp">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:contentInsetStart="0dp">
 
-            <com.mikhaellopez.circleview.CircleView
-                android:id="@+id/theme_icon"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:cv_color="@android:color/black"
-                app:cv_border="false"
-                app:cv_shadow="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <!--<TextView
-                android:id="@+id/theme_icon"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:background="@drawable/item_circle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />-->
+                <ImageView
+                    android:id="@+id/action_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/padding_normal"
+                    android:src="@drawable/ic_back_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/theme_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:textSize="@dimen/text_size_big"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/theme_count"
-                app:layout_constraintStart_toEndOf="@id/theme_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="내가 저장한 맛집 (기본)" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/theme_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:textSize="@dimen/text_size_small"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/theme_icon"
-                app:layout_constraintTop_toBottomOf="@id/theme_name"
-                android:text="0개" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
-            <TextView
-                android:id="@+id/theme_public"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:textSize="@dimen/text_size_small"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/theme_count"
-                app:layout_constraintTop_toBottomOf="@id/theme_name"
-                android:text="비공개"
-                tools:visibility="visible" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@id/action_add_new_theme"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <ImageView
-                android:id="@+id/image_more"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_more_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="이름"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/theme_add_name"
-        app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/add_theme_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="새로운 테마 추가"
+                    android:textColor="@color/black01"
+                    android:textSize="@dimen/text_size_biggest"
+                    android:textStyle="bold"
+                    android:padding="@dimen/padding_double"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-    <EditText
-        android:id="@+id/theme_add_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:hint="내가 저장한 맛집 (기본)"
-        app:layout_constraintBottom_toTopOf="@id/tv2" />
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginHorizontal="@dimen/margin_double"
+                    android:text="테마 이름"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/add_theme_title" />
 
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="아이콘"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/theme_color_picker"
-        app:layout_constraintStart_toStartOf="parent" />
+                <EditText
+                    android:id="@+id/theme_add_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_1.5_times"
+                    android:layout_marginTop="@dimen/margin_1.5_times"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/item_border_round_black05"
+                    android:hint="띄어쓰기 포함 20자 이내로 입력해 주세요"
+                    android:padding="@dimen/padding_normal"
+                    app:layout_constraintTop_toBottomOf="@id/tv1" />
 
-    <Button
-        android:id="@+id/theme_color_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="색상선택"
-        app:layout_constraintBottom_toTopOf="@id/tv3"
-        app:layout_constraintStart_toStartOf="parent"/>
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_double"
+                    android:layout_marginTop="72dp"
+                    android:text="테마 색상"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/theme_add_name" />
 
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="공개 여부"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/theme_add_public" />
 
-    <CheckBox
-        android:id="@+id/theme_add_public"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:text="공개"
-        app:layout_constraintBottom_toBottomOf="parent" />
+                <com.mikhaellopez.circleview.CircleView
+                    android:id="@+id/theme_color"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="@dimen/margin_1.5_times"
+                    app:cv_border="false"
+                    app:cv_color="@android:color/black"
+                    app:cv_shadow="false"
+                    app:layout_constraintStart_toStartOf="@id/tv2"
+                    app:layout_constraintTop_toBottomOf="@id/tv2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:id="@+id/separator1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/margin_double"
+                    android:layout_marginTop="72dp"
+                    android:background="@color/black06"
+                    app:layout_constraintTop_toBottomOf="@id/theme_color" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_add_review_in_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/padding_double"
+                    android:paddingVertical="@dimen/padding_1.5_times"
+                    app:layout_constraintTop_toBottomOf="@id/separator1">
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="테마에 맛집 추가"
+                        android:textColor="@color/black01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/theme_review_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/review_count"
+                        android:textColor="@color/black03"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv3" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/separator2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/margin_double"
+                    android:background="@color/black06"
+                    app:layout_constraintTop_toBottomOf="@id/layout_add_review_in_theme" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_theme_set_public"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/padding_double"
+                    android:paddingVertical="@dimen/padding_1.5_times"
+                    app:layout_constraintTop_toBottomOf="@id/separator2">
+
+                    <TextView
+                        android:id="@+id/tv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="테마 공개여부"
+                        android:textColor="@color/black01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/theme_is_public"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="공개"
+                        android:textColor="@color/black03"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv4" />
+
+                    <ImageView
+                        android:id="@+id/image_public"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_eye_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/separator3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/margin_double"
+                    android:background="@color/black06"
+                    app:layout_constraintTop_toBottomOf="@id/layout_theme_set_public" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <ImageView
+            android:id="@+id/action_add_new_theme"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_1.5_times"
+            android:src="@drawable/button_enroll_not_activated"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
