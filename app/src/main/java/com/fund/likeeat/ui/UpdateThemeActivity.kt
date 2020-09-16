@@ -7,21 +7,37 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.data.ThemeRequest
-import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.databinding.ActivityAddReviewBinding
+import com.fund.likeeat.databinding.ActivityAddThemeBinding
+import com.fund.likeeat.databinding.ActivityChangeThemeNameBinding
 import com.fund.likeeat.utilities.ColorList
+import com.fund.likeeat.utilities.UID_DETACHED
+import com.fund.likeeat.viewmodels.OneThemeViewModel
 import dev.sasikanth.colorsheet.ColorSheet
 import kotlinx.android.synthetic.main.activity_add_theme.*
+import kotlinx.android.synthetic.main.activity_change_theme_name.*
+import kotlinx.android.synthetic.main.item_action_add_theme.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
+import java.lang.Exception
 
-class AddThemeActivity : AppCompatActivity() {
-    var isPublic = true
+class UpdateThemeActivity : AppCompatActivity() {
+    private var themeId: Long? = null
     var isFocusingEditText = false
+    var isPublic: Boolean? = null
+
+    private val themeViewModel: OneThemeViewModel by viewModel { parametersOf(themeId) }
+    private lateinit var binding: ActivityAddThemeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_theme)
+        themeId = intent.getLongExtra("THEME_ID", UID_DETACHED)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_theme)
+        binding.lifecycleOwner = this
 
         var colorSelected: Int = Color.BLACK
         theme_color.setOnClickListener {
@@ -33,17 +49,29 @@ class AddThemeActivity : AppCompatActivity() {
                 }).show(supportFragmentManager)
         }
 
-        action_enroll.setOnClickListener {
-            if (!theme_add_name.text.isNullOrEmpty() && theme_add_name.text.toString().length <= 20) {
-                val theme = ThemeRequest(
-                    MyApplication.pref.uid,
-                    theme_add_name.text.toString(),
-                    colorSelected,
-                    isPublic
-                )
-                RetrofitProcedure.sendThemeToServer(theme)
-                finish()
+        add_theme_title.text = "테마 수정"
+        themeViewModel.theme.observe(this) { theme ->
+            theme_add_name.setText(theme.name)
+            theme_color.circleColor = theme.color
+            if(theme.isPublic) {
+                isPublic = true
+                theme_is_public.text = "공개"
+                image_public.setImageResource(R.drawable.ic_eye_24)
+            } else {
+                isPublic = false
+                theme_is_public.text = "비공개"
+                image_public.setImageResource(R.drawable.ic_eye_off_24)
             }
+        }
+
+        action_enroll.setOnClickListener {
+            themeViewModel.updateTheme(
+                themeId!!,
+                name = theme_add_name.text.toString(),
+                color = colorSelected,
+                isPublic = isPublic ?: throw Exception()
+            )
+            finish()
         }
 
         theme_add_name.setOnFocusChangeListener { v, hasFocus ->
@@ -70,14 +98,16 @@ class AddThemeActivity : AppCompatActivity() {
         })
 
         layout_theme_set_public.setOnClickListener {
-            if(isPublic) {
-                theme_is_public.text = "비공개"
-                image_public.setImageResource(R.drawable.ic_eye_off_24)
-            } else {
-                theme_is_public.text = "공개"
-                image_public.setImageResource(R.drawable.ic_eye_24)
+            if(isPublic != null) {
+                if(isPublic!!) {
+                    theme_is_public.text = "비공개"
+                    image_public.setImageResource(R.drawable.ic_eye_off_24)
+                } else {
+                    theme_is_public.text = "공개"
+                    image_public.setImageResource(R.drawable.ic_eye_24)
+                }
+                isPublic = !isPublic!!
             }
-            isPublic = !isPublic
         }
     }
 

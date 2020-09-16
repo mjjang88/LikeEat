@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.ChangeThemeNameActivity"></activity>
+        <activity android:name=".ui.UpdateThemeActivity"></activity>
         <activity
             android:name=".ui.AddThemeActivity"
             android:parentActivityName=".ui.SetThemeActivity" />
