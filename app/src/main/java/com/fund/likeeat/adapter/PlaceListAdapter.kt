@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.data.Place
 import com.fund.likeeat.databinding.ListItemPlaceBinding
-import com.fund.likeeat.ui.AddReviewActivity
 import com.fund.likeeat.ui.MapPreviewActivity
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 

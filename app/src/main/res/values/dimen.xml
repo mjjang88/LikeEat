@@ -49,4 +49,7 @@
 
     <dimen name="confirm_btn_min_height">56dp</dimen>
 
+    <dimen name="bottom_sheet_item_min_width">80dp</dimen>
+    <dimen name="bottom_sheet_item_min_height">104dp</dimen>
+
 </resources>
