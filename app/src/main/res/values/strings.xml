@@ -20,12 +20,17 @@
 
     <string name="edit_comment_hint">#해시태그와 함께 평가를 남기세요</string>
 
+    <string name="only_me_can_see">나만보기</string>
+
+    <string name="edit_comment_hint">코멘트를 작성하세요. # 태그를 이용하면 등록한 # 태그로 맛집을 검색할 때 사용할 수 있습니다.</string>
+
     <string name="visit_date">방문일</string>
     <string name="evaluation">총평</string>
     <string name="companion">누구랑</string>
     <string name="price">가격대</string>
     <string name="restroom">화장실</string>
     <string name="re_visit">재방문</string>
+
     <string name="regist_image">사진등록</string>
 
     <string name="search_filter_distance_by_location">현위치 기준 거리순</string>
@@ -41,4 +46,30 @@
     <string name="visit_record">방문기록</string>
 
     <string name="complete_select">선택완료</string>
+
+    <!-- screen_title -->
+    <string name="title_my_theme">나의 맛집 테마</string>
+    <string name="title_add_new_theme">새로운 테마 추가</string>
+    <string name="title_edit_theme">테마 수정</string>
+
+    <!-- theme_update/delete -->
+    <string name="delete_theme_title">알림</string>
+    <string name="delete_theme_content">등록한 테마를 완전히 삭제합니다\n계속하시겠습니까?</string>
+    <string name="delete_theme_cancel">취소</string>
+    <string name="delete_theme_ok">삭제</string>
+    <string name="update_theme">수정하기</string>
+    <string name="delete_theme">삭제하기</string>
+
+    <!-- theme_resource -->
+    <string name="review_count">num개의 맛집</string>
+    <string name="add_new_theme">새로운 테마 등록</string>
+    <string name="theme_name_title">테마 이름</string>
+    <string name="theme_name_hint">띄어쓰기 포함 20자 이내로 입력해 주세요</string>
+    <string name="theme_color_title">테마 색상</string>
+    <string name="theme_add_review">테마에 맛집 추가</string>
+    <string name="theme_set_public">테마 공개여부</string>
+    <string name="theme_public_open">공개</string>
+    <string name="theme_public_close">비공개</string>
+    <string name="theme_enroll">등록하기</string>
+
 </resources>

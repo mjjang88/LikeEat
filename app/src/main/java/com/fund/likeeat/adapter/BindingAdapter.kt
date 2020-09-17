@@ -7,6 +7,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.fund.likeeat.R
+import com.fund.likeeat.manager.MyApplication
 import com.mikhaellopez.circleview.CircleView
 
 @BindingAdapter("imageFromUri")
@@ -33,4 +35,9 @@ fun bindTextIsPublic(view: TextView, isPublic: Boolean) {
 @BindingAdapter("imageFromId")
 fun bindImageFromId(view: ImageView, imageId: Int) {
     view.setImageResource(imageId)
+}
+
+@BindingAdapter("reviewsCount")
+fun bindReviewCountToString(view: TextView, reviewsCount: Int) {
+    view.text = MyApplication.applicationContext().resources.getString(R.string.review_count).replace("num", reviewsCount.toString())
 }

@@ -14,12 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:screenOrientation="portrait">
         <activity android:name=".ui.MapPreviewActivity"></activity>
+
+        <activity android:name=".ui.UpdateThemeActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.AddThemeActivity"
-            android:parentActivityName=".ui.SetThemeActivity" />
-        <activity android:name=".ui.SetThemeActivity" />
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.ThemeActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
