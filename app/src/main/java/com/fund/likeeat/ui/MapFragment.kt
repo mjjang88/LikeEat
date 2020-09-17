@@ -92,7 +92,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.testButton.setOnClickListener {
-            val intent = Intent(requireContext(), SetThemeActivity::class.java)
+            val intent = Intent(requireContext(), ThemeActivity::class.java)
             startActivity(intent)
         }
 

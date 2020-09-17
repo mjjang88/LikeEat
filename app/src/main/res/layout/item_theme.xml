@@ -17,11 +17,14 @@
 
         <TextView
             android:id="@+id/theme_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{theme.name}"
             android:textSize="@dimen/text_size_big"
             android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_marginEnd="@dimen/margin_normal"
             app:layout_constraintEnd_toStartOf="@id/theme_icon"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

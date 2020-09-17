@@ -16,8 +16,8 @@
         <activity android:name=".ui.UpdateThemeActivity"></activity>
         <activity
             android:name=".ui.AddThemeActivity"
-            android:parentActivityName=".ui.SetThemeActivity" />
-        <activity android:name=".ui.SetThemeActivity" />
+            android:parentActivityName=".ui.ThemeActivity" />
+        <activity android:name=".ui.ThemeActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
