@@ -34,6 +34,8 @@ class ThemeActivity : AppCompatActivity() {
 
         binding.recycler.adapter = adapter
         subscribeUi(adapter)
+
+        binding.actionBack.setOnClickListener { finish() }
     }
 
     private fun subscribeUi(adapter: ThemeAdapter) {

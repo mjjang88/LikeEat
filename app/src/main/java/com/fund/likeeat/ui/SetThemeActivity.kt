@@ -70,6 +70,8 @@ open class SetThemeActivity : AppCompatActivity() {
                 }
                 isPublic = !isPublic
             }
+
+            actionBack.setOnClickListener { finish() }
         }
     }
 

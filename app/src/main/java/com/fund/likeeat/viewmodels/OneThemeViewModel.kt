@@ -1,5 +1,6 @@
 package com.fund.likeeat.viewmodels
 
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import com.fund.likeeat.data.ThemeChanged
 import com.fund.likeeat.data.ThemeRepository
@@ -12,12 +13,14 @@ class OneThemeViewModel(
     val theme = themeRepository.getTheme(themeId)
 
     fun updateTheme(
+        activity: Activity,
         id: Long,
         name: String = theme.value!!.name,
         color: Int = theme.value!!.color,
         isPublic: Boolean = theme.value!!.isPublic
     ) {
         RetrofitProcedure.updateThemeById(
+            activity,
             id,
             ThemeChanged(name, color, isPublic)
         )

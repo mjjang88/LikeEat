@@ -12,11 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".ui.UpdateThemeActivity"></activity>
+        android:usesCleartextTraffic="true"
+        android:screenOrientation="portrait">
+
+        <activity android:name=".ui.UpdateThemeActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.AddThemeActivity"
-            android:parentActivityName=".ui.ThemeActivity" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.ThemeActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>

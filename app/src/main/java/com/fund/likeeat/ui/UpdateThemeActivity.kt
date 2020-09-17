@@ -43,6 +43,7 @@ class UpdateThemeActivity : SetThemeActivity() {
 
     private fun updateTheme() {
         themeViewModel.updateTheme(
+            this,
             themeId!!,
             name = binding.themeName.text.toString(),
             color = colorSelected,

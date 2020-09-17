@@ -45,9 +45,11 @@
     <dimen name="theme_circle_view_size">48dp</dimen>
     <dimen name="image_size_normal">24dp</dimen>
     <dimen name="image_size_small">18dp</dimen>
+
     <dimen name="clickable_button_height">56dp</dimen>
     <dimen name="center_dialog_width">347dp</dimen>
     <dimen name="center_dialog_height">204dp</dimen>
     <dimen name="theme_card_height">96dp</dimen>
+    <dimen name="toast_height">56dp</dimen>
 
 </resources>
