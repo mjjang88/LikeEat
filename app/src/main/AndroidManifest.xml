@@ -3,8 +3,8 @@
     package="com.fund.likeeat">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".manager.MyApplication"
@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.AddThemeActivity"
-            android:parentActivityName=".ui.SetThemeActivity"></activity>
+        <activity android:name=".ui.MapPreviewActivity"></activity>
+        <activity
+            android:name=".ui.AddThemeActivity"
+            android:parentActivityName=".ui.SetThemeActivity" />
         <activity android:name=".ui.SetThemeActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
@@ -28,8 +30,8 @@
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.ReviewsActivity" />
         <activity android:name=".ui.SearchPlaceActivity" />
-        <activity android:name=".ui.AddReviewActivity"/>
-        <activity android:name=".ui.ViewReviewActivity"/>
+        <activity android:name=".ui.AddReviewActivity" />
+        <activity android:name=".ui.ViewReviewActivity" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

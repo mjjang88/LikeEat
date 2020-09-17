@@ -4,28 +4,28 @@ import com.google.gson.annotations.Expose
 
 data class ReviewServerWrite(
     @Expose
-    val isPublic: Boolean,
+    var isPublic: Boolean,
     @Expose
-    val category: String?,
+    var category: String?,
     @Expose
-    val comment: String?,
+    var comment: String?,
     @Expose
-    val visitedDayYmd: String?,
+    var visitedDayYmd: String?,
     @Expose
-    val companions: String?,
+    var companions: String?,
     @Expose
-    val toliets: String?,
+    var toliets: String?,
     @Expose
-    val priceRange: String?,
+    var priceRange: String?,
     @Expose
-    val serviceQuality: String?,
+    var serviceQuality: String?,
     @Expose
-    val themeIds: String?,
+    var themeIds: String?,
     @Expose
-    val uid: Long,
+    var uid: Long,
     @Expose
-    val revisit: String?,
+    var revisit: String?,
     @Expose
-    val place: PlaceServer?
+    var place: PlaceServer?
 ) {
 }

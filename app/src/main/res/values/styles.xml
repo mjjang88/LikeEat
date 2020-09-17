@@ -28,6 +28,7 @@
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_size_title</item>
         <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextBig">
@@ -56,6 +57,23 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_size_big</item>
         <item name="android:padding">@dimen/margin_half</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+    </style>
+
+    <style name="TextButton" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAppearance">?attr/textAppearanceHeadline5</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
     </style>
 
     <style name="TextListBig">
@@ -117,6 +135,26 @@
         <item name="android:minHeight">@dimen/image_btn_min_height</item>
         <item name="android:inset">0dp</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="Chip" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_background_selector</item>
+        <item name="android:textColor">@color/chip_text_selector</item>
+        <item name="chipMinHeight">40dp</item>
+    </style>
+
+    <style name="ConfirmButton">
+        <item name="android:textColor">?attr/colorSurface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/item_border_round_shadow</item>
+        <item name="android:backgroundTint">?attr/colorOnSurface</item>
+        <item name="android:drawableTint">?attr/colorSurface</item>
+        <item name="android:minHeight">@dimen/confirm_btn_min_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 
 </resources>

@@ -92,7 +92,7 @@
                     android:id="@+id/check_is_public"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/only_me_can_see"
+                    android:text="@string/share"
                     android:checked="@{!review.isPublic}"
                     android:button="@null"
                     android:drawableTop="@drawable/ic_visibility_selector"

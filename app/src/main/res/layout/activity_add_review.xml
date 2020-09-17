@@ -19,131 +19,171 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/layout_title"
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                android:background="@null"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/margin_double"
+                android:layout_marginLeft="@dimen/margin_double"/>
+
+            <TextView
+                android:id="@+id/text_place_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{place.name}"
+                app:layout_constraintTop_toBottomOf="@id/btn_back"
+                android:layout_marginTop="@dimen/margin_double"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double"
+                style="@style/TextBigTitle"/>
+
+            <TextView
+                android:id="@+id/text_place_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{place.address}"
+                app:layout_constraintTop_toBottomOf="@id/text_place_name"
+                android:layout_marginTop="@dimen/margin_half"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double"
+                style="@style/TextNormal"/>
+            
+            <Button
+                android:id="@+id/btn_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textColor="?attr/colorPrimary"
+                android:drawableTop="@drawable/btn_plus_red"
+                app:layout_constraintTop_toBottomOf="@id/text_place_address"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/margin_1.5_times"
+                android:layout_marginLeft="@dimen/margin_double"
+                style="@style/TextButton"/>
+
+            <CheckBox
+                android:id="@+id/check_is_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share"
+                android:checked="true"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/ic_share_drawable_selector"
+                android:drawablePadding="@dimen/margin_quarter"
+                app:layout_constraintTop_toTopOf="@id/btn_category"
+                app:layout_constraintLeft_toRightOf="@id/btn_category"
+                android:layout_marginLeft="@dimen/margin_double"
+                style="@style/TextBig"/>
+            
+            <TextView
+                android:id="@+id/text_theme_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/regist_theme"
+                app:layout_constraintTop_toBottomOf="@id/btn_category"
+                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="@dimen/margin_big"
                 android:layout_marginLeft="@dimen/margin_double"
-                android:layout_marginRight="@dimen/margin_double">
-
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_arrow_back_ios_24"
-                    android:background="@null"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/regist_place"
-                    android:gravity="center"
-                    style="@style/TextTitle"/>
-
-                <ImageButton
-                    android:id="@+id/btn_check"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_check_24"
-                    android:background="@null"/>
-
-            </LinearLayout>
+                style="@style/TextTitle"/>
 
             <LinearLayout
-                android:id="@+id/layout_place_name"
+                android:id="@+id/layout_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/layout_title"
-                android:layout_marginTop="@dimen/margin_double"
-                android:layout_marginLeft="@dimen/margin_1.5_times"
-                android:layout_marginRight="@dimen/margin_1.5_times">
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/text_theme_title"
+                android:layout_marginTop="@dimen/margin_1.5_times">
+                
+                <View
+                    style="@style/Divider"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    android:layout_marginRight="@dimen/margin_double"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:id="@+id/layout_add_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    android:layout_marginRight="@dimen/margin_double">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{place.name}"
-                        style="@style/TextNormal"/>
+                        android:layout_weight="1"
+                        android:text="@string/btn_regist_theme"
+                        android:textColor="@color/colorGray"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:layout_marginBottom="@dimen/margin_normal"
+                        style="@style/TextBig"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{place.address}"
-                        style="@style/TextSmall"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/plus"
+                        android:layout_marginRight="@dimen/margin_normal"/>
 
                 </LinearLayout>
 
+                <View
+                    style="@style/Divider"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    android:layout_marginRight="@dimen/margin_double"/>
+                
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_category"
+                android:id="@+id/text_title_visit_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/layout_place_name"
-                android:layout_marginTop="@dimen/margin_1.5_times"
-                android:layout_marginLeft="@dimen/margin_double"
-                android:layout_marginRight="@dimen/margin_double">
+                app:layout_constraintTop_toBottomOf="@id/layout_theme"
+                android:layout_marginTop="@dimen/margin_big">
 
-                <CheckBox
-                    android:id="@+id/check_is_public"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/visit_record"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextTitle"/>
+
+                <com.fund.likeeat.widget.SwitchButton
+                    android:id="@+id/btn_extend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/only_me_can_see"
-                    android:button="@null"
-                    android:drawableTop="@drawable/ic_visibility_selector"/>
-
-                <View
-                    android:layout_marginLeft="@dimen/margin_1.5_times"
-                    style="@style/HorizontalDivider"/>
+                    android:src="@drawable/ic_extend_selector"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    style="@style/ImageButton"/>
 
             </LinearLayout>
-
-            <Spinner
-                android:id="@+id/spinner_theme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/theme_text_background_shape"
-                app:layout_constraintTop_toBottomOf="@id/layout_category"
-                android:layout_marginTop="@dimen/margin_1.5_times"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:layout_marginRight="@dimen/margin_normal"/>
 
             <EditText
                 android:id="@+id/edit_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_background_shape"
+                android:background="@drawable/edit_background_red_shape"
                 android:minHeight="@dimen/review_edit_text_min_height"
                 android:gravity="top|left"
                 android:padding="@dimen/margin_normal"
-                app:layout_constraintTop_toBottomOf="@id/spinner_theme"
+                app:layout_constraintTop_toBottomOf="@id/text_title_visit_record"
                 android:layout_marginTop="@dimen/margin_normal"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_1.5_times"
+                android:layout_marginRight="@dimen/margin_1.5_times"
                 android:hint="@string/edit_comment_hint"
                 style="@style/TextNormal" />
-
-            <ImageButton
-                android:id="@+id/btn_extend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                android:background="@null"
-                app:layout_constraintTop_toBottomOf="@id/edit_comment"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="@dimen/margin_normal"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_detail_page"
@@ -153,158 +193,106 @@
                 android:layout_marginTop="@dimen/margin_1.5_times"
                 android:visibility="gone">
 
-                <LinearLayout
-                    android:id="@+id/layout_visit_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="@dimen/review_text_width"
-                        android:layout_height="match_parent"
-                        android:text="@string/visit_date"
-                        style="@style/TextEditMenu"/>
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
-                        android:background="@null"
-                        android:layout_marginLeft="@dimen/margin_normal"/>
-
-                    <TextView
-                        android:layout_width="@dimen/date_picker_btn_width"
-                        android:layout_height="@dimen/date_picker_btn_height"
-                        android:background="@drawable/edit_background_shape"
-                        android:layout_marginLeft="@dimen/margin_half"/>
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-                        android:background="@null"
-                        android:layout_marginLeft="@dimen/margin_half"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_evaluation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/layout_visit_date"
-                    android:layout_marginTop="@dimen/margin_double">
-
-                    <TextView
-                        android:layout_width="@dimen/review_text_width"
-                        android:layout_height="match_parent"
-                        android:text="@string/evaluation"
-                        style="@style/TextEditMenu"/>
-
-                    <EditText
-                        android:id="@+id/edit_evaluation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_companion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/layout_evaluation"
-                    android:layout_marginTop="@dimen/margin_normal">
-
-                    <TextView
-                        android:layout_width="@dimen/review_text_width"
-                        android:layout_height="match_parent"
-                        android:text="@string/companion"
-                        style="@style/TextEditMenu"/>
-
-                    <EditText
-                        android:id="@+id/edit_companion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/layout_companion"
-                    android:layout_marginTop="@dimen/margin_normal">
-
-                    <TextView
-                        android:layout_width="@dimen/review_text_width"
-                        android:layout_height="match_parent"
-                        android:text="@string/price"
-                        style="@style/TextEditMenu"/>
-
-                    <EditText
-                        android:id="@+id/edit_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_restroom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/layout_price"
-                    android:layout_marginTop="@dimen/margin_normal">
-
-                    <TextView
-                        android:layout_width="@dimen/review_text_width"
-                        android:layout_height="match_parent"
-                        android:text="@string/restroom"
-                        style="@style/TextEditMenu"/>
-
-                    <EditText
-                        android:id="@+id/edit_restroom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/re_visit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/layout_restroom"
-                    android:layout_marginTop="@dimen/margin_normal">
-
-                    <TextView
-                        android:layout_width="@dimen/review_text_width"
-                        android:layout_height="match_parent"
-                        android:text="@string/re_visit"
-                        style="@style/TextEditMenu"/>
-
-                    <EditText
-                        android:id="@+id/edit_revisit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <ImageButton
-                    android:id="@+id/btn_reduce"
+                <Button
+                    android:id="@+id/btn_visit_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
-                    android:background="@null"
-                    app:layout_constraintTop_toBottomOf="@id/re_visit"
+                    android:text="@string/visit_date"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="@dimen/margin_normal"/>
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_evaluation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/evaluation"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/btn_visit_date"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_companion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/companion"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toBottomOf="@id/btn_visit_date"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="@dimen/margin_1.5_times"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="@id/btn_companion"
+                    app:layout_constraintLeft_toRightOf="@id/btn_companion"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_restroom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restroom"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="@id/btn_price"
+                    app:layout_constraintLeft_toRightOf="@id/btn_price"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_re_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/re_visit"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="@id/btn_restroom"
+                    app:layout_constraintLeft_toRightOf="@id/btn_restroom"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_regist_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/regist_image"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_big_black"
+                    app:layout_constraintTop_toBottomOf="@id/btn_companion"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="@dimen/margin_1.5_times"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/regist_place"
+                app:layout_constraintTop_toBottomOf="@id/layout_detail_page"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_1.5_times"
+                style="@style/ConfirmButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

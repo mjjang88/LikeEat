@@ -29,3 +29,8 @@ fun bindIconColor(view: CircleView, colorCode: Int) {
 fun bindTextIsPublic(view: TextView, isPublic: Boolean) {
     if(isPublic) view.text = "" else view.text = "비공개"
 }
+
+@BindingAdapter("imageFromId")
+fun bindImageFromId(view: ImageView, imageId: Int) {
+    view.setImageResource(imageId)
+}
