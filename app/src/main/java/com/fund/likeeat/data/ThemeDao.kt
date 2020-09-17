@@ -9,6 +9,9 @@ interface ThemeDao {
     fun getThemeList(): LiveData<MutableList<Theme>>
 
     @Query("SELECT * FROM theme WHERE uid=:uid")
+    fun getThemeList(uid: Long): LiveData<List<Theme>>
+
+    @Query("SELECT * FROM theme WHERE uid=:uid")
     fun getThemeList2(uid: Long): List<Theme>
 
     @Query("SELECT * FROM theme a, review_theme_link b WHERE a.id = b.themeId AND b.reviewId in (:reviewId)")
