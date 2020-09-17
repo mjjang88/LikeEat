@@ -24,6 +24,7 @@
 
     <string name="visit_date">방문일</string>
     <string name="evaluation">총평</string>
+    <string name="place_evaluation">맛집 총평</string>
     <string name="companion">누구랑</string>
     <string name="price">가격대</string>
     <string name="restroom">화장실</string>

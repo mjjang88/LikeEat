@@ -26,4 +26,29 @@ class AddReviewViewModel internal constructor(
         editedReview.value?.themeIds = themeIds
         editedReview.value = editedReview.value
     }
+
+    fun setEvaluation(eval: String) {
+        editedReview.value?.serviceQuality = eval
+        editedReview.value = editedReview.value
+    }
+
+    fun setCompanion(companion: String) {
+        editedReview.value?.companions = companion
+        editedReview.value = editedReview.value
+    }
+
+    fun setPrice(price: String) {
+        editedReview.value?.priceRange = price
+        editedReview.value = editedReview.value
+    }
+
+    fun setToilet(toilet: String) {
+        editedReview.value?.toliets = toilet
+        editedReview.value = editedReview.value
+    }
+
+    fun setRevisit(revisit: String) {
+        editedReview.value?.revisit = revisit
+        editedReview.value = editedReview.value
+    }
 }
