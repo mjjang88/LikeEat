@@ -45,13 +45,13 @@ class CategorySelectBottomSheetFragment: BottomSheetDialogFragment() {
 }
 
 enum class Category(val categoryName: String, val imageId: Int) {
-    KoreanFood("한식", R.drawable.ic_korean_food),
-    ChineseFood("중식", R.drawable.ic_chinese_food),
-    JapaneseFood("일식", R.drawable.ic_japanese_food),
-    WesternFood("양식", R.drawable.ic_western_food),
-    AsianFood("아시안", R.drawable.ic_asian_food),
-    WorldFood("세계", R.drawable.ic_world_food),
-    SnackBar("분식", R.drawable.ic_snack_bar),
-    Cafe("카페", R.drawable.ic_cafe),
-    FastFood("패스트푸드", R.drawable.ic_fast_food);
+    KoreanFood("한식", R.drawable.ic_frame_category_korea),
+    ChineseFood("중식", R.drawable.ic_frame_category_china),
+    JapaneseFood("일식", R.drawable.ic_frame_category_japan),
+    WesternFood("양식", R.drawable.ic_frame_category_restaurant),
+    AsianFood("아시안", R.drawable.ic_frame_category_asian),
+    WorldFood("세계", R.drawable.ic_frame_category_world),
+    SnackBar("분식", R.drawable.ic_frame_category_snack),
+    Cafe("카페", R.drawable.ic_frame_category_cafe),
+    FastFood("패스트푸드", R.drawable.ic_frame_category_fastfood);
 }

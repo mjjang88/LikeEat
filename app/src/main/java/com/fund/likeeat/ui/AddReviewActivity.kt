@@ -2,6 +2,9 @@ package com.fund.likeeat.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -21,10 +24,7 @@ import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
-import com.fund.likeeat.widget.Category
-import com.fund.likeeat.widget.CategorySelectBottomSheetFragment
-import com.fund.likeeat.widget.SwitchButton
-import com.fund.likeeat.widget.ThemeSelectBottomSheetFragment
+import com.fund.likeeat.widget.*
 import kotlinx.android.synthetic.main.activity_add_review.*
 import kotlinx.android.synthetic.main.layout_image_text.view.*
 import kotlinx.coroutines.*
@@ -94,12 +94,76 @@ class AddReviewActivity : AppCompatActivity()  {
             themeBottomSheetFragment.show(supportFragmentManager, themeBottomSheetFragment.tag)
         }
 
+        binding.btnEvaluation.setOnClickListener {
+            val evalBottomSheetFragment = EvaluationSelectBottomSheetFragment()
+            evalBottomSheetFragment.addReviewViewModel = addReviewViewModel
+            evalBottomSheetFragment.show(supportFragmentManager, evalBottomSheetFragment.tag)
+        }
+
+        binding.btnCompanion.setOnClickListener {
+            val companionBottomSheetFragment = CompanionSelectBottomSheetFragment()
+            companionBottomSheetFragment.addReviewViewModel = addReviewViewModel
+            companionBottomSheetFragment.show(supportFragmentManager, companionBottomSheetFragment.tag)
+        }
+
+        binding.btnPrice.setOnClickListener {
+            val priceBottomSheetFragment = PriceSelectBottomSheetFragment()
+            priceBottomSheetFragment.addReviewViewModel = addReviewViewModel
+            priceBottomSheetFragment.show(supportFragmentManager, priceBottomSheetFragment.tag)
+        }
+
+        binding.btnRestroom.setOnClickListener {
+            val toiletBottomSheetFragment = ToiletSelectBottomSheetFragment()
+            toiletBottomSheetFragment.addReviewViewModel = addReviewViewModel
+            toiletBottomSheetFragment.show(supportFragmentManager, toiletBottomSheetFragment.tag)
+        }
+
+        binding.btnReVisit.setOnClickListener {
+            val revisitBottomSheetFragment = RevisitSelectBottomSheetFragment()
+            revisitBottomSheetFragment.addReviewViewModel = addReviewViewModel
+            revisitBottomSheetFragment.show(supportFragmentManager, revisitBottomSheetFragment.tag)
+        }
+
+        binding.editComment.setOnEditorActionListener { v, actionId, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    if (v.text.toString().isNotBlank()) {
+                        v.background = getDrawable(R.drawable.edit_background_shape)
+                    } else {
+                        v.background = getDrawable(R.drawable.edit_background_red_shape)
+                    }
+                }
+            }
+
+            false
+        }
+
+        binding.editComment.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.length?.let {
+                    if (it > 0) {
+                        binding.editComment.background = getDrawable(R.drawable.edit_background_shape)
+                    } else {
+                        binding.editComment.background = getDrawable(R.drawable.edit_background_red_shape)
+                    }
+                }
+
+                setEnableBtnOk()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
 
         binding.btnOk.setOnClickListener {
-            //doAddingReview()
+            doAddingReview()
         }
     }
 
@@ -142,6 +206,57 @@ class AddReviewActivity : AppCompatActivity()  {
             }
         }
 
+        if (review.serviceQuality.isNullOrBlank()) {
+            val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
+            binding.btnEvaluation.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnEvaluation.text = getString(R.string.evaluation)
+        } else {
+            val drawable = resources.getDrawable(getEvaluationImageByName(review.serviceQuality!!), null)
+            binding.btnEvaluation.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnEvaluation.text = review.serviceQuality
+        }
+
+        if (review.companions.isNullOrBlank()) {
+            val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
+            binding.btnCompanion.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnCompanion.text = getString(R.string.companion)
+        } else {
+            val drawable = resources.getDrawable(getCompanionImageByName(review.companions!!), null)
+            binding.btnCompanion.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnCompanion.text = review.companions
+        }
+
+        if (review.priceRange.isNullOrBlank()) {
+            val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
+            binding.btnPrice.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnPrice.text = getString(R.string.price)
+        } else {
+            val drawable = resources.getDrawable(getPriceImageByName(review.priceRange!!), null)
+            binding.btnPrice.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnPrice.text = review.priceRange
+        }
+
+        if (review.toliets.isNullOrBlank()) {
+            val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
+            binding.btnRestroom.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnRestroom.text = getString(R.string.restroom)
+        } else {
+            val drawable = resources.getDrawable(getToiletImageByName(review.toliets!!), null)
+            binding.btnRestroom.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnRestroom.text = review.toliets
+        }
+
+        if (review.revisit.isNullOrBlank()) {
+            val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
+            binding.btnReVisit.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnReVisit.text = getString(R.string.re_visit)
+        } else {
+            val drawable = resources.getDrawable(getRevisitImageByName(review.revisit!!), null)
+            binding.btnReVisit.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnReVisit.text = review.revisit
+        }
+
+        setEnableBtnOk()
     }
 
     fun getCategoryImageByName(name: String): Int {
@@ -159,7 +274,65 @@ class AddReviewActivity : AppCompatActivity()  {
         }
     }
 
-    /*private fun doAddingReview() {
+    fun getEvaluationImageByName(name: String): Int {
+        return when (name) {
+            "최고야" -> Evaluation.VeryGood.imageId
+            "맛있어" -> Evaluation.Good.imageId
+            "그냥그래" -> Evaluation.Soso.imageId
+            "실망이야" -> Evaluation.Bad.imageId
+            "이게뭐야" -> Evaluation.VeryBad.imageId
+            else -> -1
+        }
+    }
+
+    fun getCompanionImageByName(name: String): Int {
+        return when (name) {
+            "혼자서" -> Companions.Solo.imageId
+            "친구와" -> Companions.Friends.imageId
+            "부모님과" -> Companions.Parents.imageId
+            "여친/남친" -> Companions.Lover.imageId
+            "소개팅" -> Companions.Date.imageId
+            "회식에서" -> Companions.Company.imageId
+            else -> -1
+        }
+    }
+
+    fun getPriceImageByName(name: String): Int {
+        return when (name) {
+            "만원이하" -> Price.Less10000.imageId
+            "만원~" -> Price.More10000.imageId
+            "2만원~" -> Price.More20000.imageId
+            "3만원~" -> Price.More30000.imageId
+            "5만원~" -> Price.More50000.imageId
+            "10만원~" -> Price.More100000.imageId
+            else -> -1
+        }
+    }
+
+    fun getToiletImageByName(name: String): Int {
+        return when (name) {
+            "깨끗해" -> Toilet.Clean.imageId
+            "더러워" -> Toilet.Dirty.imageId
+            "남여공용" -> Toilet.Unisex.imageId
+            "인스타각" -> Toilet.Insta.imageId
+            else -> -1
+        }
+    }
+
+    fun getRevisitImageByName(name: String): Int {
+        return when (name) {
+            "재방문각" -> Revisit.Always.imageId
+            "근처오면" -> Revisit.Sometimes.imageId
+            "다신안와" -> Revisit.Never.imageId
+            else -> -1
+        }
+    }
+
+    fun setEnableBtnOk() {
+        btn_ok.isEnabled = edit_comment.text.length > 0 && !addReviewViewModel.editedReview.value?.category.isNullOrBlank()
+    }
+
+    private fun doAddingReview() {
 
         val review = makeReview()
 
@@ -190,21 +363,21 @@ class AddReviewActivity : AppCompatActivity()  {
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)
             }
         }
-    }*/
+    }
 
-    /*private fun makeReview(): ReviewServerWrite {
+    private fun makeReview(): ReviewServerWrite {
 
         val uid = MyApplication.pref.uid
-        val isPublic = !check_is_public.isChecked
-        val category = "맛집"
+        val isPublic = check_is_public.isChecked
+        val category = addReviewViewModel.editedReview.value?.category?: ""
         val comment = edit_comment.text.toString()
         val visitedDayYmd = "20200808"
-        val companions = edit_companion.text.toString()
-        val toliets = edit_restroom.text.toString()
-        val priceRange = edit_price.text.toString()
-        val serviceQuality = edit_evaluation.text.toString()
-        val revisit = edit_revisit.text.toString()
-        val themeIds = themeList?.get(spinner_theme.selectedItemPosition)?.id.toString()
+        val companions = addReviewViewModel.editedReview.value?.companions?: ""
+        val toliets = addReviewViewModel.editedReview.value?.toliets?: ""
+        val priceRange = addReviewViewModel.editedReview.value?.priceRange?: ""
+        val serviceQuality = addReviewViewModel.editedReview.value?.serviceQuality?: ""
+        val revisit = addReviewViewModel.editedReview.value?.revisit?: ""
+        val themeIds = addReviewViewModel.editedReview.value?.themeIds?: ""
 
         return ReviewServerWrite(
             isPublic,
@@ -220,5 +393,5 @@ class AddReviewActivity : AppCompatActivity()  {
             revisit,
             PlaceServer(mPlace)
         )
-    }*/
+    }
 }
