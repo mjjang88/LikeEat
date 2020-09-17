@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="347dp"
-    android:layout_height="204dp"
+    android:layout_width="@dimen/center_dialog_width"
+    android:layout_height="@dimen/center_dialog_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/item_fill_white_round"
     android:paddingHorizontal="@dimen/padding_normal">
@@ -16,7 +16,8 @@
         android:layout_marginTop="@dimen/margin_1.5_times"
         android:gravity="center"
         android:text="@string/delete_theme_title"
-        android:textSize="20sp"
+        android:textColor="@color/black01"
+        android:textSize="@dimen/text_size_bigger"
         android:textStyle="bold" />
 
     <TextView
@@ -30,12 +31,13 @@
         android:lineSpacingMultiplier="1.2"
         android:gravity="center"
         android:text="@string/delete_theme_content"
-        android:textSize="16sp" />
+        android:textColor="@color/black02"
+        android:textSize="@dimen/text_size_normal" />
 
     <View
         android:id="@+id/seperator"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/separator_height"
         app:layout_constraintBottom_toTopOf="@id/delete_theme_cancel"
         android:background="@color/black06"/>
 
@@ -44,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/delete_theme_cancel"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_bigger"
         android:textStyle="bold"
         android:textColor="@color/black03"
         android:gravity="center"
@@ -60,7 +62,7 @@
         android:gravity="center"
         android:paddingVertical="@dimen/padding_1.5_times"
         android:text="@string/delete_theme_ok"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_bigger"
         android:textStyle="bold"
         android:textColor="@color/primary100"
         app:layout_constraintBottom_toBottomOf="@id/delete_theme_cancel"

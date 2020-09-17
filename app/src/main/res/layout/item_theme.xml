@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="theme"
             type="com.fund.likeeat.data.Theme" />
@@ -12,24 +13,25 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="96dp"
+        android:layout_height="@dimen/theme_card_height"
         android:paddingHorizontal="@dimen/padding_double">
 
         <TextView
             android:id="@+id/theme_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="@{theme.name}"
+            android:textColor="@color/black01"
             android:textSize="@dimen/text_size_big"
             android:textStyle="bold"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:layout_marginEnd="@dimen/margin_normal"
+            app:layout_constraintBottom_toTopOf="@id/theme_count"
             app:layout_constraintEnd_toStartOf="@id/theme_icon"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/theme_count"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="테마 제목" />
 
@@ -38,32 +40,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/review_count"
-            android:textSize="14sp"
-            app:reviewsCount="@{theme.reviewsCount}"
+            android:textColor="@color/black03"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/theme_name"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:reviewsCount="@{theme.reviewsCount}" />
 
         <TextView
             android:id="@+id/theme_public"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
-            android:textSize="14sp"
+            android:textColor="@color/black03"
+            android:textSize="@dimen/text_size_small"
             app:isPublic="@{theme.public}"
-            app:layout_constraintStart_toEndOf="@id/theme_count"
             app:layout_constraintBottom_toBottomOf="@id/theme_count"
+            app:layout_constraintStart_toEndOf="@id/theme_count"
             tools:text="비공개"
             tools:visibility="visible" />
 
         <com.mikhaellopez.circleview.CircleView
             android:id="@+id/theme_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/image_size_normal"
+            android:layout_height="@dimen/image_size_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
             app:colorCode="@{theme.color}"
             app:cv_border="false"
             app:cv_shadow="false"
-            android:layout_marginEnd="@dimen/margin_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/image_more"
             app:layout_constraintTop_toTopOf="parent" />
@@ -79,10 +83,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/separator_height"
             android:background="@color/black06"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

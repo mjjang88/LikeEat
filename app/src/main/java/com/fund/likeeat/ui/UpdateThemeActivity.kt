@@ -13,7 +13,7 @@ class UpdateThemeActivity : SetThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.screenTitle.text = "테마 수정"
+        binding.screenTitle.text = resources.getString(R.string.title_edit_theme)
 
         themeViewModel.theme.observe(this) { theme ->
             binding.themeName.setText(theme.name)
@@ -23,11 +23,11 @@ class UpdateThemeActivity : SetThemeActivity() {
 
             if(theme.isPublic) {
                 isPublic = true
-                theme_is_public.text = "공개"
+                theme_is_public.text = resources.getString(R.string.theme_public_open)
                 image_public.setImageResource(R.drawable.ic_eye_24)
             } else {
                 isPublic = false
-                theme_is_public.text = "비공개"
+                theme_is_public.text = resources.getString(R.string.theme_public_close)
                 image_public.setImageResource(R.drawable.ic_eye_off_24)
             }
         }

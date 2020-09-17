@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.R
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ItemThemeBinding
+import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.ui.SetThemeBottomSheet
 import kotlinx.android.synthetic.main.item_title.view.*
 
@@ -25,7 +26,7 @@ class ThemeAdapter(val fragmentManager: FragmentManager, val listener: OnClickAd
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)) {
-            VIEW_TYPE_TITLE -> (holder as TitleViewHolder).title.text = "나의 맛집 테마"
+            VIEW_TYPE_TITLE -> (holder as TitleViewHolder).title.text = MyApplication.applicationContext().resources.getString(R.string.title_my_theme)
             VIEW_TYPE_CONTENT -> {
                 val theme = getItem(position)
                 (holder as ThemeViewHolder).bind(theme)

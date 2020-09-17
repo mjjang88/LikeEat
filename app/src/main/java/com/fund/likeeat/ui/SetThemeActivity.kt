@@ -62,10 +62,10 @@ open class SetThemeActivity : AppCompatActivity() {
 
             layoutThemeSetPublic.setOnClickListener {
                 if (isPublic) {
-                    themeIsPublic.text = "비공개"
+                    themeIsPublic.text = resources.getString(R.string.theme_public_close)
                     imagePublic.setImageResource(R.drawable.ic_eye_off_24)
                 } else {
-                    themeIsPublic.text = "공개"
+                    themeIsPublic.text = resources.getString(R.string.theme_public_open)
                     imagePublic.setImageResource(R.drawable.ic_eye_24)
                 }
                 isPublic = !isPublic
@@ -73,7 +73,8 @@ open class SetThemeActivity : AppCompatActivity() {
         }
     }
 
-    // TODO 테마 이름을 입력하는 중, 테마 색상 다이얼로그에 바로 접근하면 Focusing이 해제 되지 않는 에러 (+ border 색도 변하지 않음)
+    // TODO 테마 이름을 입력 하다가 다른 곳으로 Focusing 됐을 때, 
+    //  특정 경우에 Focusing이 해제 되지 않는 이슈 (+ border 색도 변하지 않음)
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         val focusView = currentFocus
         if (focusView != null && ev != null && isFocusingEditText) {

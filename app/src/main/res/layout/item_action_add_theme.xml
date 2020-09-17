@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/action_add_new_theme"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
+        android:layout_height="@dimen/theme_card_height"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingHorizontal="@dimen/padding_double">
 
@@ -15,8 +15,9 @@
             android:id="@+id/tv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="새로운 테마 등록"
-            android:textSize="18sp"
+            android:text="@string/add_new_theme"
+            android:textColor="@color/black03"
+            android:textSize="@dimen/text_size_big"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -33,7 +34,7 @@
     <View
         android:id="@+id/separator2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/separator_height"
         android:background="@color/black06"
         android:layout_marginHorizontal="@dimen/margin_double"
         app:layout_constraintTop_toBottomOf="@id/action_add_new_theme"/>

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="margin_big">54dp</dimen>
     <dimen name="margin_double">32dp</dimen>
+    <dimen name="margin_1.5_times">24dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_half">8dp</dimen>
     <dimen name="margin_quarter">4dp</dimen>
     <dimen name="margin_one_eighth">2dp</dimen>
-    <dimen name="margin_big">54dp</dimen>
-    <dimen name="margin_1.5_times">24dp</dimen>
-
 
     <dimen name="padding_double">32dp</dimen>
-    <dimen name="padding_normal">16dp</dimen>
     <dimen name="padding_1.5_times">24dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
     <dimen name="padding_half">8dp</dimen>
     <dimen name="padding_quarter">4dp</dimen>
     <dimen name="padding_one_eighth">2dp</dimen>
 
-    <dimen name="text_size_biggest">28sp</dimen>
-    <dimen name="text_size_title">18sp</dimen>
-    <dimen name="text_size_big">16sp</dimen>
-    <dimen name="text_size_normal">14sp</dimen>
-    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_title">28sp</dimen>
+    <dimen name="text_size_bigger">20sp</dimen>
+    <dimen name="text_size_big">18sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_smaller">12sp</dimen>
 
     <dimen name="line_space">2dp</dimen>
     
@@ -39,5 +39,15 @@
     <dimen name="corner_radius_theme_mini">4dp</dimen>
     <dimen name="corner_radius_normal">8dp</dimen>
     <dimen name="corner_radius_dialog_delete_theme">18dp</dimen>
+
+    <!-- component -->
+    <dimen name="separator_height">1dp</dimen>
+    <dimen name="theme_circle_view_size">48dp</dimen>
+    <dimen name="image_size_normal">24dp</dimen>
+    <dimen name="image_size_small">18dp</dimen>
+    <dimen name="clickable_button_height">56dp</dimen>
+    <dimen name="center_dialog_width">347dp</dimen>
+    <dimen name="center_dialog_height">204dp</dimen>
+    <dimen name="theme_card_height">96dp</dimen>
 
 </resources>
