@@ -129,6 +129,19 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <TextView
+                        android:id="@+id/theme_color_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/layout_tag"
+                        app:layout_constraintEnd_toEndOf="@id/layout_tag"
+                        app:layout_constraintTop_toBottomOf="@id/layout_tag"
+                        android:layout_marginTop="@dimen/margin_half"
+                        android:text="검정색"
+                        android:textSize="@dimen/text_size_big"
+                        android:textStyle="bold"
+                        android:textColor="@color/black02" />
+
 
                     <View
                         android:id="@+id/separator1"
@@ -137,7 +150,7 @@
                         android:layout_marginHorizontal="@dimen/margin_double"
                         android:layout_marginTop="72dp"
                         android:background="@color/black06"
-                        app:layout_constraintTop_toBottomOf="@id/layout_tag" />
+                        app:layout_constraintTop_toBottomOf="@id/theme_color_text" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout

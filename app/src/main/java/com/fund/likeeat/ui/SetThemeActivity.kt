@@ -13,7 +13,7 @@ import com.fund.likeeat.databinding.ActivitySetThemeBinding
 import com.fund.likeeat.utilities.ColorList
 import com.fund.likeeat.utilities.UID_DETACHED
 import com.fund.likeeat.viewmodels.OneThemeViewModel
-import dev.sasikanth.colorsheet.ColorSheet
+import com.fund.likeeat.widget.ThemeColorSelectBottomSheetFragment
 import kotlinx.android.synthetic.main.activity_set_theme.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -94,13 +94,23 @@ open class SetThemeActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-    private fun openColorSheetAndSetThemeColor() {
-        ColorSheet().colorPicker(
-            colors = ColorList.colorList,
-            listener = { color: Int ->
-                colorSelected = color
-                theme_tag.setColorFilter(color)
-            }).show(supportFragmentManager)
+    fun openColorSheetAndSetThemeColor() {
+        val themeColorSelectBottomSheet = ThemeColorSelectBottomSheetFragment()
+        themeColorSelectBottomSheet.setColorSavedListener(object: ThemeColorSelectBottomSheetFragment.ColorSavedListener {
+            override fun onSaved(colorCode: Int) {
+                colorSelected = colorCode
+                theme_tag.setColorFilter(colorCode)
+
+                val list = ColorList.colorList.filter { it.first == colorCode }
+                val colorText = list[0].second
+                theme_color_text.text = colorText
+            }
+        })
+
+        val bundle = Bundle()
+        bundle.putInt("COLOR_SELECTED", colorSelected)
+        themeColorSelectBottomSheet.arguments = bundle  // bundle값으로 현재 지정된 색을 넘겨줌 BottomSheet에 넘겨줌
+        themeColorSelectBottomSheet.show(supportFragmentManager, themeColorSelectBottomSheet.tag)
     }
 
     fun verifyThemeName(name: String?): Boolean =

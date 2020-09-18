@@ -3,9 +3,7 @@ package com.fund.likeeat.ui
 import android.os.Bundle
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.data.ThemeRequest
-import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.utilities.ColorList
 import kotlinx.android.synthetic.main.activity_set_theme.*
 
 class UpdateThemeActivity : SetThemeActivity() {
@@ -16,19 +14,24 @@ class UpdateThemeActivity : SetThemeActivity() {
         binding.screenTitle.text = resources.getString(R.string.title_edit_theme)
 
         themeViewModel.theme.observe(this) { theme ->
+            val list = ColorList.colorList.filter { it.first == theme.color }
+            val colorText = list[0].second
+
             binding.themeName.setText(theme.name)
 
             colorSelected = theme.color
             binding.themeTag.setColorFilter(colorSelected)
 
+            binding.themeColorText.text = colorText
+
             if(theme.isPublic) {
                 isPublic = true
                 theme_is_public.text = resources.getString(R.string.theme_public_open)
-                image_public.setImageResource(R.drawable.ic_eye_24)
+                image_public.setImageResource(R.drawable.ic_baseline_visibility_24)
             } else {
                 isPublic = false
                 theme_is_public.text = resources.getString(R.string.theme_public_close)
-                image_public.setImageResource(R.drawable.ic_eye_off_24)
+                image_public.setImageResource(R.drawable.ic_baseline_visibility_off_24)
             }
         }
 
