@@ -14,6 +14,7 @@ import com.fund.likeeat.utilities.ColorList
 import com.fund.likeeat.utilities.UID_DETACHED
 import com.fund.likeeat.viewmodels.OneThemeViewModel
 import com.fund.likeeat.widget.ThemeColorSelectBottomSheetFragment
+import com.fund.likeeat.widget.ThemePublicSelectBottomSheetFragment
 import kotlinx.android.synthetic.main.activity_set_theme.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -37,7 +38,7 @@ open class SetThemeActivity : AppCompatActivity() {
         binding.apply {
             lifecycleOwner = this@SetThemeActivity
 
-            layoutTag.setOnClickListener { openColorSheetAndSetThemeColor() }
+            layoutTag.setOnClickListener { openColorBottomSheetAndSetThemeColor() }
             themeName.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) {
                     theme_name.setBackgroundResource(R.drawable.item_border_round_primary100)
@@ -60,16 +61,7 @@ open class SetThemeActivity : AppCompatActivity() {
                 }
             })
 
-            layoutThemeSetPublic.setOnClickListener {
-                if (isPublic) {
-                    themeIsPublic.text = resources.getString(R.string.theme_public_close)
-                    imagePublic.setImageResource(R.drawable.ic_baseline_visibility_off_24)
-                } else {
-                    themeIsPublic.text = resources.getString(R.string.theme_public_open)
-                    imagePublic.setImageResource(R.drawable.ic_baseline_visibility_24)
-                }
-                isPublic = !isPublic
-            }
+            layoutThemeSetPublic.setOnClickListener { openPublicBottomSheetAndSetPublicState() }
 
             actionBack.setOnClickListener { finish() }
         }
@@ -94,7 +86,7 @@ open class SetThemeActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-    fun openColorSheetAndSetThemeColor() {
+    private fun openColorBottomSheetAndSetThemeColor() {
         val themeColorSelectBottomSheet = ThemeColorSelectBottomSheetFragment()
         themeColorSelectBottomSheet.setColorSavedListener(object: ThemeColorSelectBottomSheetFragment.ColorSavedListener {
             override fun onSaved(colorCode: Int) {
@@ -111,6 +103,28 @@ open class SetThemeActivity : AppCompatActivity() {
         bundle.putInt("COLOR_SELECTED", colorSelected)
         themeColorSelectBottomSheet.arguments = bundle  // bundle값으로 현재 지정된 색을 넘겨줌 BottomSheet에 넘겨줌
         themeColorSelectBottomSheet.show(supportFragmentManager, themeColorSelectBottomSheet.tag)
+    }
+
+    fun openPublicBottomSheetAndSetPublicState() {
+        ThemePublicSelectBottomSheetFragment().apply {
+            setPublicSavedListener(object: ThemePublicSelectBottomSheetFragment.PublicSavedListener {
+                override fun onSaved(isPublic: Boolean) {
+                    this@SetThemeActivity.isPublic = isPublic
+                    if (isPublic) {
+                        binding.themeIsPublic.text = resources.getString(R.string.theme_public_open)
+                        binding.imagePublic.setImageResource(R.drawable.ic_baseline_visibility_24)
+                    } else {
+                        binding.themeIsPublic.text = resources.getString(R.string.theme_public_close)
+                        binding.imagePublic.setImageResource(R.drawable.ic_baseline_visibility_off_24)
+                    }
+                }
+            })
+
+            val bundle = Bundle()
+            bundle.putBoolean("PUBLIC_SELECTED", isPublic)
+            arguments = bundle
+            show(supportFragmentManager, tag)
+        }
     }
 
     fun verifyThemeName(name: String?): Boolean =

@@ -66,6 +66,7 @@
     <string name="theme_color_title">테마 색상</string>
     <string name="theme_add_review">테마에 맛집 추가</string>
     <string name="theme_set_public">테마 공개여부</string>
+    <string name="theme_is_public">공유여부</string>
     <string name="theme_public_open">공개</string>
     <string name="theme_public_close">비공개</string>
     <string name="theme_enroll">등록하기</string>
