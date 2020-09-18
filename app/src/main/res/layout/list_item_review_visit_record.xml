@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{review.visitedDayYmd}"
+                app:setDate="@{review.visitedDayYmd}"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/margin_1.5_times"
                 style="@style/TextBig"/>

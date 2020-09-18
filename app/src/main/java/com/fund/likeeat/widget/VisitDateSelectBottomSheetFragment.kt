@@ -22,10 +22,10 @@ class VisitDateSelectBottomSheetFragment: BottomSheetDialogFragment() {
 
         binding.btnOk.setOnClickListener {
             addReviewViewModel?.let {
-                val year = binding.datePickerVisitDate.year
+                val year = String.format("%04d", binding.datePickerVisitDate.year)
                 val month = String.format("%02d", binding.datePickerVisitDate.month + 1)
-                val day = binding.datePickerVisitDate.dayOfMonth
-                val date = "$year.$month.$day"
+                val day = String.format("%02d", binding.datePickerVisitDate.dayOfMonth)
+                val date = "$year$month$day"
                 it.setVisitDate(date)
             }
             dismiss()

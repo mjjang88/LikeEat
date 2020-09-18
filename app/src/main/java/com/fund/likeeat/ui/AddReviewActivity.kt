@@ -217,7 +217,7 @@ class AddReviewActivity : AppCompatActivity()  {
         } else {
             val drawable = resources.getDrawable(R.drawable.ic_select_date, null)
             binding.btnVisitDate.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
-            binding.btnVisitDate.text = review.visitedDayYmd?.substring(5)
+            binding.btnVisitDate.text = calcVisitDate(review.visitedDayYmd?: "")
         }
 
         if (review.serviceQuality.isNullOrBlank()) {
@@ -271,6 +271,17 @@ class AddReviewActivity : AppCompatActivity()  {
         }
 
         setEnableBtnOk()
+    }
+
+    fun calcVisitDate(date: String): String {
+        if (date.length == 8) {
+            val year = date.substring(0, 4)
+            val month = date.substring(4, 6)
+            val day = date.substring(6, 8)
+
+            return "$month.$day"
+        }
+        return date
     }
 
     fun setEnableBtnOk() {

@@ -41,3 +41,16 @@ fun bindImageFromId(view: ImageView, imageId: Int) {
 fun bindReviewCountToString(view: TextView, reviewsCount: Int) {
     view.text = MyApplication.applicationContext().resources.getString(R.string.review_count).replace("num", reviewsCount.toString())
 }
+
+@BindingAdapter("setDate")
+fun bindSetDate(view: TextView, date: String?) {
+    date?.let {
+        if (it.length == 8) {
+            val year = it.substring(0, 4)
+            val month = it.substring(4, 6)
+            val day = it.substring(6, 8)
+
+            view.text = "$year.$month.$day"
+        }
+    }
+}
