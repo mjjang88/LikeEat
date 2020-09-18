@@ -16,6 +16,8 @@ import com.fund.likeeat.manager.getCategoryImageByName
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.viewmodels.ReviewDetailViewModel
+import com.fund.likeeat.widget.CategorySelectBottomSheetFragment
+import com.fund.likeeat.widget.ReviewMoreBottomSheetFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -76,6 +78,11 @@ class ReviewDetailActivity : AppCompatActivity() {
         binding.listReview.adapter = reviewAdapter
         reviewDetailViewModel.reviews.observe(this) {
             reviewAdapter.submitList(it)
+        }
+
+        binding.btnMore.setOnClickListener {
+            val reviewMoreBottomSheetFragment = ReviewMoreBottomSheetFragment()
+            reviewMoreBottomSheetFragment.show(supportFragmentManager, reviewMoreBottomSheetFragment.tag)
         }
 
     }

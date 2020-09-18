@@ -27,6 +27,11 @@ class AddReviewViewModel internal constructor(
         editedReview.value = editedReview.value
     }
 
+    fun setVisitDate(date: String) {
+        editedReview.value?.visitedDayYmd = date
+        editedReview.value = editedReview.value
+    }
+
     fun setEvaluation(eval: String) {
         editedReview.value?.serviceQuality = eval
         editedReview.value = editedReview.value

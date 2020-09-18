@@ -92,6 +92,12 @@ class AddReviewActivity : AppCompatActivity()  {
             themeBottomSheetFragment.show(supportFragmentManager, themeBottomSheetFragment.tag)
         }
 
+        binding.btnVisitDate.setOnClickListener {
+            val visitDateBottomSheetFragment = VisitDateSelectBottomSheetFragment()
+            visitDateBottomSheetFragment.addReviewViewModel = addReviewViewModel
+            visitDateBottomSheetFragment.show(supportFragmentManager, visitDateBottomSheetFragment.tag)
+        }
+
         binding.btnEvaluation.setOnClickListener {
             val evalBottomSheetFragment = EvaluationSelectBottomSheetFragment()
             evalBottomSheetFragment.addReviewViewModel = addReviewViewModel
@@ -204,6 +210,16 @@ class AddReviewActivity : AppCompatActivity()  {
             }
         }
 
+        if (review.visitedDayYmd.isNullOrBlank()) {
+            val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
+            binding.btnVisitDate.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnVisitDate.text = getString(R.string.visit_date)
+        } else {
+            val drawable = resources.getDrawable(R.drawable.ic_select_date, null)
+            binding.btnVisitDate.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            binding.btnVisitDate.text = review.visitedDayYmd?.substring(5)
+        }
+
         if (review.serviceQuality.isNullOrBlank()) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnEvaluation.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
@@ -300,7 +316,7 @@ class AddReviewActivity : AppCompatActivity()  {
         val isPublic = check_is_public.isChecked
         val category = addReviewViewModel.editedReview.value?.category?: ""
         val comment = edit_comment.text.toString()
-        val visitedDayYmd = "20200808"
+        val visitedDayYmd = addReviewViewModel.editedReview.value?.visitedDayYmd
         val companions = addReviewViewModel.editedReview.value?.companions?: ""
         val toliets = addReviewViewModel.editedReview.value?.toliets?: ""
         val priceRange = addReviewViewModel.editedReview.value?.priceRange?: ""
