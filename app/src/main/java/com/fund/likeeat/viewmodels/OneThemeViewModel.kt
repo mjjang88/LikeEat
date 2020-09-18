@@ -20,7 +20,6 @@ class OneThemeViewModel(
         isPublic: Boolean = theme.value!!.isPublic
     ) {
         RetrofitProcedure.updateThemeById(
-            activity,
             id,
             ThemeChanged(name, color, isPublic)
         )

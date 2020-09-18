@@ -27,6 +27,6 @@ class AddThemeActivity : SetThemeActivity() {
             colorSelected,
             isPublic
         )
-        RetrofitProcedure.sendThemeToServer(this, theme)
+        RetrofitProcedure.sendThemeToServer(theme)
     }
 }

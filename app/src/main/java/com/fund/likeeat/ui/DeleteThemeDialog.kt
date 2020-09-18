@@ -1,6 +1,5 @@
 package com.fund.likeeat.ui
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +8,7 @@ import com.fund.likeeat.R
 import com.fund.likeeat.network.RetrofitProcedure
 import kotlinx.android.synthetic.main.dialog_delete_theme.*
 
-class DeleteThemeDialog(val activity: Activity, val id: Long) : Dialog(activity) {
+class DeleteThemeDialog(context: Context, val id: Long) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,7 +19,7 @@ class DeleteThemeDialog(val activity: Activity, val id: Long) : Dialog(activity)
         setContentView(R.layout.dialog_delete_theme)
         delete_theme_cancel.setOnClickListener { dismiss() }
         delete_theme_ok.setOnClickListener {
-            RetrofitProcedure.deleteThemeById(activity, id)
+            RetrofitProcedure.deleteThemeById(id)
             dismiss()
         }
     }

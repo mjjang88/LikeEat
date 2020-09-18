@@ -17,18 +17,18 @@
             android:layout_height="wrap_content"
             android:text="@string/add_new_theme"
             android:textColor="@color/black03"
-            android:textSize="@dimen/text_size_big"
+            android:textSize="@dimen/text_size_title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageView
             android:id="@+id/theme_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/image_size_normal"
+            android:layout_height="@dimen/image_size_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_add_24"/>
+            android:src="@drawable/ic_icon_plus"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

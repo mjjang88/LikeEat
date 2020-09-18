@@ -34,7 +34,7 @@ class SetThemeBottomSheet: BottomSheetDialogFragment() {
                 }
 
                 actionDeleteTheme.setOnClickListener {
-                    val dialog = DeleteThemeDialog(requireActivity(), themeId ?: throw Exception())
+                    val dialog = DeleteThemeDialog(requireContext(), themeId ?: throw Exception())
                     dialog.setCancelable(false)
                     dialog.show()
                     dismiss()

@@ -27,6 +27,11 @@ fun bindIconColor(view: CircleView, colorCode: Int) {
     view.circleColor = colorCode
 }
 
+@BindingAdapter("colorTagTint")
+fun bindTagColor(view: ImageView, colorTagTint: Int) {
+    view.setColorFilter(colorTagTint)
+}
+
 @BindingAdapter("isPublic")
 fun bindTextIsPublic(view: TextView, isPublic: Boolean) {
     if(isPublic) view.text = "" else view.text = "비공개"

@@ -19,7 +19,7 @@ class UpdateThemeActivity : SetThemeActivity() {
             binding.themeName.setText(theme.name)
 
             colorSelected = theme.color
-            binding.themeColor.circleColor = colorSelected
+            binding.themeTag.setColorFilter(colorSelected)
 
             if(theme.isPublic) {
                 isPublic = true

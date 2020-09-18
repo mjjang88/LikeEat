@@ -37,7 +37,7 @@ open class SetThemeActivity : AppCompatActivity() {
         binding.apply {
             lifecycleOwner = this@SetThemeActivity
 
-            themeColor.setOnClickListener { openColorSheetAndSetThemeColor() }
+            layoutTag.setOnClickListener { openColorSheetAndSetThemeColor() }
             themeName.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) {
                     theme_name.setBackgroundResource(R.drawable.item_border_round_primary100)
@@ -63,10 +63,10 @@ open class SetThemeActivity : AppCompatActivity() {
             layoutThemeSetPublic.setOnClickListener {
                 if (isPublic) {
                     themeIsPublic.text = resources.getString(R.string.theme_public_close)
-                    imagePublic.setImageResource(R.drawable.ic_eye_off_24)
+                    imagePublic.setImageResource(R.drawable.ic_baseline_visibility_off_24)
                 } else {
                     themeIsPublic.text = resources.getString(R.string.theme_public_open)
-                    imagePublic.setImageResource(R.drawable.ic_eye_24)
+                    imagePublic.setImageResource(R.drawable.ic_baseline_visibility_24)
                 }
                 isPublic = !isPublic
             }
@@ -99,7 +99,7 @@ open class SetThemeActivity : AppCompatActivity() {
             colors = ColorList.colorList,
             listener = { color: Int ->
                 colorSelected = color
-                theme_color.circleColor = color
+                theme_tag.setColorFilter(color)
             }).show(supportFragmentManager)
     }
 

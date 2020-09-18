@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:padding="@dimen/padding_double"
         tools:text="제목"
-        android:textSize="@dimen/text_size_title"
+        android:textSize="@dimen/text_size_big_title"
         android:textColor="@color/black01"
         android:textStyle="bold"/>
     <View
