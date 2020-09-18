@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.fund.likeeat.R
 import com.fund.likeeat.adapter.AddReviewBottomSheetListAdapter
 import com.fund.likeeat.adapter.GridItem
 import com.fund.likeeat.databinding.BottomSheetSelectEvaluationBinding
+import com.fund.likeeat.manager.Evaluation
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -42,12 +42,4 @@ class EvaluationSelectBottomSheetFragment: BottomSheetDialogFragment() {
 
         return binding.root
     }
-}
-
-enum class Evaluation(val evalName: String, val imageId: Int) {
-    VeryGood("최고야", R.drawable.ic_frame_category_korea),
-    Good("맛있어", R.drawable.ic_frame_category_korea),
-    Soso("그냥그래", R.drawable.ic_frame_category_korea),
-    Bad("실망이야", R.drawable.ic_frame_category_korea),
-    VeryBad("이게뭐야", R.drawable.ic_frame_category_korea)
 }

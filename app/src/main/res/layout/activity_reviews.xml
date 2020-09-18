@@ -10,7 +10,7 @@
         android:background="?attr/colorSurface">
 
         <ImageButton
-            android:id="@+id/btn_back_view_review_list"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
@@ -20,58 +20,38 @@
             android:layout_marginLeft="@dimen/margin_normal"
             style="@style/ImageButton"/>
 
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_search"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            style="@style/ImageButton"/>
+
         <TextView
-            android:id="@+id/text_title_view_review_list"
+            android:id="@+id/text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/btn_back_view_review_list"
+            app:layout_constraintTop_toBottomOf="@id/btn_back"
             android:layout_marginTop="@dimen/margin_normal"
             style="@style/TextTitle"/>
 
-        <LinearLayout
-            android:id="@+id/layout_search_view_review_list"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_text_min_height"
-            android:orientation="horizontal"
-            android:background="@drawable/edit_background_shape"
-            app:layout_constraintTop_toBottomOf="@id/text_title_view_review_list"
-            android:layout_marginTop="@dimen/margin_1.5_times"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal">
-
-            <EditText
-                android:id="@+id/edit_search_view_review_list"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/search_place_hint"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
-                android:layout_marginLeft="@dimen/margin_normal">
-                <requestFocus />
-            </EditText>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_close_24"
-                android:background="@null"
-                android:layout_gravity="center"
-                style="@style/ImageButton"/>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_search_24"
-                android:background="@null"
-                android:layout_gravity="center"
-                style="@style/ImageButton"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/text_place_in_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_in_map"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/margin_big"
+            android:layout_marginLeft="@dimen/margin_double"
+            style="@style/TextTitle"/>
 
         <View
-            app:layout_constraintTop_toBottomOf="@id/layout_search_view_review_list"
+            app:layout_constraintTop_toBottomOf="@id/text_place_in_map"
             android:layout_marginTop="@dimen/margin_1.5_times"
             style="@style/Divider"/>
 
@@ -82,8 +62,9 @@
             android:layout_marginHorizontal="@dimen/margin_1.5_times"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_search_view_review_list"
+            app:layout_constraintTop_toBottomOf="@id/text_place_in_map"
             android:layout_marginTop="@dimen/margin_1.5_times"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

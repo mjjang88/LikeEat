@@ -12,17 +12,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
-        android:usesCleartextTraffic="true"
-        android:screenOrientation="portrait">
-        <activity android:name=".ui.MapPreviewActivity"></activity>
-
-        <activity android:name=".ui.UpdateThemeActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.ReviewDetailActivity"></activity>
+        <activity android:name=".ui.MapPreviewActivity" />
+        <activity
+            android:name=".ui.UpdateThemeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.AddThemeActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.ThemeActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>

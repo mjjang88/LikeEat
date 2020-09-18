@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,7 +16,7 @@ import com.fund.likeeat.adapter.AddReviewThemeAdapter
 import com.fund.likeeat.data.Place
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityAddReviewBinding
-import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.manager.*
 import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.PlaceServer
 import com.fund.likeeat.network.RetrofitProcedure
@@ -26,7 +25,6 @@ import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.widget.*
 import kotlinx.android.synthetic.main.activity_add_review.*
-import kotlinx.android.synthetic.main.layout_image_text.view.*
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -257,75 +255,6 @@ class AddReviewActivity : AppCompatActivity()  {
         }
 
         setEnableBtnOk()
-    }
-
-    fun getCategoryImageByName(name: String): Int {
-        return when (name) {
-            "한식" -> Category.KoreanFood.imageId
-            "중식" -> Category.ChineseFood.imageId
-            "일식" -> Category.JapaneseFood.imageId
-            "양식" -> Category.WesternFood.imageId
-            "아시안" -> Category.AsianFood.imageId
-            "세계" -> Category.WorldFood.imageId
-            "분식" -> Category.SnackBar.imageId
-            "카페" -> Category.Cafe.imageId
-            "패스트푸드" -> Category.FastFood.imageId
-            else -> -1
-        }
-    }
-
-    fun getEvaluationImageByName(name: String): Int {
-        return when (name) {
-            "최고야" -> Evaluation.VeryGood.imageId
-            "맛있어" -> Evaluation.Good.imageId
-            "그냥그래" -> Evaluation.Soso.imageId
-            "실망이야" -> Evaluation.Bad.imageId
-            "이게뭐야" -> Evaluation.VeryBad.imageId
-            else -> -1
-        }
-    }
-
-    fun getCompanionImageByName(name: String): Int {
-        return when (name) {
-            "혼자서" -> Companions.Solo.imageId
-            "친구와" -> Companions.Friends.imageId
-            "부모님과" -> Companions.Parents.imageId
-            "여친/남친" -> Companions.Lover.imageId
-            "소개팅" -> Companions.Date.imageId
-            "회식에서" -> Companions.Company.imageId
-            else -> -1
-        }
-    }
-
-    fun getPriceImageByName(name: String): Int {
-        return when (name) {
-            "만원이하" -> Price.Less10000.imageId
-            "만원~" -> Price.More10000.imageId
-            "2만원~" -> Price.More20000.imageId
-            "3만원~" -> Price.More30000.imageId
-            "5만원~" -> Price.More50000.imageId
-            "10만원~" -> Price.More100000.imageId
-            else -> -1
-        }
-    }
-
-    fun getToiletImageByName(name: String): Int {
-        return when (name) {
-            "깨끗해" -> Toilet.Clean.imageId
-            "더러워" -> Toilet.Dirty.imageId
-            "남여공용" -> Toilet.Unisex.imageId
-            "인스타각" -> Toilet.Insta.imageId
-            else -> -1
-        }
-    }
-
-    fun getRevisitImageByName(name: String): Int {
-        return when (name) {
-            "재방문각" -> Revisit.Always.imageId
-            "근처오면" -> Revisit.Sometimes.imageId
-            "다신안와" -> Revisit.Never.imageId
-            else -> -1
-        }
     }
 
     fun setEnableBtnOk() {

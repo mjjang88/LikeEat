@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.fund.likeeat.R
 import com.fund.likeeat.adapter.AddReviewBottomSheetListAdapter
 import com.fund.likeeat.adapter.GridItem
 import com.fund.likeeat.databinding.BottomSheetSelectToiletBinding
+import com.fund.likeeat.manager.Toilet
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -42,11 +42,4 @@ class ToiletSelectBottomSheetFragment: BottomSheetDialogFragment() {
 
         return binding.root
     }
-}
-
-enum class Toilet(val toiletName: String, val imageId: Int) {
-    Clean("깨끗해", R.drawable.ic_frame_category_korea),
-    Dirty("더러워", R.drawable.ic_frame_category_korea),
-    Unisex("남여공용", R.drawable.ic_frame_category_korea),
-    Insta("인스타각", R.drawable.ic_frame_category_korea)
 }

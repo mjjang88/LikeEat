@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.databinding.LayoutImageTextBinding
 
-class AddReviewBottomSheetListAdapter() : ListAdapter<GridItem, RecyclerView.ViewHolder>(GridItemDiffCallback())  {
+class AddReviewBottomSheetListAdapter : ListAdapter<GridItem, RecyclerView.ViewHolder>(GridItemDiffCallback())  {
 
     var selectedPosition : Int = RecyclerView.NO_POSITION
 

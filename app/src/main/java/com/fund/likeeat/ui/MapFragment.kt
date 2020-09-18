@@ -2,7 +2,6 @@ package com.fund.likeeat.ui
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +11,14 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.adapter.ReviewsAdapter
+import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
 import com.fund.likeeat.utilities.GpsTracker
 import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
+import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.viewmodels.MapViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.MapFragment
@@ -36,6 +35,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val mapViewModel: MapViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
     private var highlightMarker: Marker? = null
+    private var highlightReview: Review? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,6 +87,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        binding.layoutHighlightPanel.setOnClickListener {
+            val intent = Intent(requireContext(), ReviewDetailActivity::class.java)
+            intent.putExtra(INTENT_KEY_REVIEW, highlightReview)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
@@ -126,6 +132,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     highLightMarker.icon = OverlayImage.fromResource(R.drawable.marker_base_highlight)
                     highLightMarker.map = mNaverMap
                     highlightMarker = highLightMarker
+                    highlightReview = review
                     changeState(STATE_HIGHLIGHT)
 
                     text_highlight_place_name.text = review.place_name

@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.fund.likeeat.R
 import com.fund.likeeat.adapter.AddReviewBottomSheetListAdapter
 import com.fund.likeeat.adapter.GridItem
 import com.fund.likeeat.databinding.BottomSheetSelectRevisitBinding
-import com.fund.likeeat.databinding.BottomSheetSelectToiletBinding
+import com.fund.likeeat.manager.Revisit
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -43,10 +42,4 @@ class RevisitSelectBottomSheetFragment: BottomSheetDialogFragment() {
 
         return binding.root
     }
-}
-
-enum class Revisit(val revisitName: String, val imageId: Int) {
-    Always("재방문각", R.drawable.ic_frame_category_korea),
-    Sometimes("근처오면", R.drawable.ic_frame_category_korea),
-    Never("다신안와", R.drawable.ic_frame_category_korea)
 }

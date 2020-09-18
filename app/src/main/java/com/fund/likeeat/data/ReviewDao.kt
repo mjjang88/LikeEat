@@ -11,6 +11,9 @@ interface ReviewDao {
     @Query("SELECT * FROM reviews")
     fun getReviewList2(): List<Review>
 
+    @Query("SELECT * FROM reviews WHERE place_name = :placeName AND address_name = :addressName")
+    fun getReviewListBySamePlace(placeName: String, addressName: String): LiveData<List<Review>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(matchs: List<Review>)
 

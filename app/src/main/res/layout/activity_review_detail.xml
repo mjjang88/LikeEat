@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="java.util.ArrayList"/>
+        <import type="com.fund.likeeat.data.Review"/>
+        <variable
+            name="review"
+            type="Review" />
+        <variable
+            name="reviews"
+            type="ArrayList&lt;Review>" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_left"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_normal"
+                style="@style/ImageButton"/>
+            
+            <ImageButton
+                android:id="@+id/btn_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_more"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                style="@style/ImageButton"/>
+
+            <ImageButton
+                android:id="@+id/btn_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_pin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_more"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_half"
+                style="@style/ImageButton"/>
+
+
+            <TextView
+                android:id="@+id/text_place_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{review.place_name}"
+                app:layout_constraintTop_toBottomOf="@id/btn_back"
+                android:layout_marginTop="@dimen/margin_double"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double"
+                style="@style/TextBigTitle"/>
+
+            <TextView
+                android:id="@+id/text_place_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{review.address_name}"
+                app:layout_constraintTop_toBottomOf="@id/text_place_name"
+                android:layout_marginTop="@dimen/margin_half"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double"
+                style="@style/TextNormal"/>
+
+            <Button
+                android:id="@+id/btn_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:textColor="?attr/colorPrimary"
+                android:drawableTop="@drawable/btn_plus_red"
+                android:clickable="false"
+                app:layout_constraintTop_toBottomOf="@id/text_place_address"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/margin_1.5_times"
+                android:layout_marginLeft="@dimen/margin_double"
+                style="@style/TextButton" />
+
+            <CheckBox
+                android:id="@+id/check_is_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share"
+                android:checked="true"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/ic_share_drawable_selector"
+                android:drawablePadding="@dimen/margin_quarter"
+                android:clickable="false"
+                app:layout_constraintTop_toTopOf="@id/btn_category"
+                app:layout_constraintLeft_toRightOf="@id/btn_category"
+                android:layout_marginLeft="@dimen/margin_double"
+                style="@style/TextBig"/>
+
+            <TextView
+                android:id="@+id/text_theme_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/regist_theme"
+                app:layout_constraintTop_toBottomOf="@id/btn_category"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginLeft="@dimen/margin_double"
+                style="@style/TextTitle"/>
+
+            <LinearLayout
+                android:id="@+id/layout_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/text_theme_title"
+                android:layout_marginTop="@dimen/margin_1.5_times">
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    android:layout_marginRight="@dimen/margin_double"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/text_title_visit_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_theme"
+                android:layout_marginTop="@dimen/margin_big">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/visit_record"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextTitle"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/edit_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_background_shape"
+                android:minHeight="@dimen/clickable_button_height"
+                android:gravity="top|left"
+                android:padding="@dimen/margin_normal"
+                app:layout_constraintTop_toBottomOf="@id/text_title_visit_record"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_1.5_times"
+                android:layout_marginRight="@dimen/margin_1.5_times"
+                android:hint="@string/edit_comment_hint"
+                style="@style/TextNormal" />
+
+            <View
+                style="@style/Divider"
+                app:layout_constraintTop_toBottomOf="@id/edit_comment"
+                android:layout_marginTop="@dimen/margin_1.5_times"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/edit_comment"
+                android:layout_marginTop="@dimen/margin_1.5_times"
+                android:layout_marginLeft="@dimen/margin_double"
+                android:layout_marginRight="@dimen/margin_double"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
