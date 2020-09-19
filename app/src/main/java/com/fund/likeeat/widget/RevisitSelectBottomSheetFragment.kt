@@ -32,6 +32,10 @@ class RevisitSelectBottomSheetFragment: BottomSheetDialogFragment() {
         }
         adapter.submitList(gridItemList)
 
+        addReviewViewModel?.editedReview?.value?.revisit?.let {
+            adapter.setSelectItem(it)
+        }
+
         binding.btnOk.setOnClickListener {
             addReviewViewModel?.let {
                 val selectedItem = adapter.getSelectedItem()

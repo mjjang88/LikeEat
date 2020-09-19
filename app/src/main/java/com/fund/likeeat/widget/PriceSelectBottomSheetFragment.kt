@@ -32,6 +32,10 @@ class PriceSelectBottomSheetFragment: BottomSheetDialogFragment() {
         }
         adapter.submitList(gridItemList)
 
+        addReviewViewModel?.editedReview?.value?.priceRange?.let {
+            adapter.setSelectItem(it)
+        }
+
         binding.btnOk.setOnClickListener {
             addReviewViewModel?.let {
                 val selectedItem = adapter.getSelectedItem()

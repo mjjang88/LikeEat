@@ -69,9 +69,8 @@ class AddReviewActivity : AppCompatActivity()  {
         }
 
         binding.btnExtend.setOnClickListener {
-            val switchBtn = it as SwitchButton
-            switchBtn.toggle()
-            if (switchBtn.check) {
+            it.isSelected = !it.isSelected
+            if (it.isSelected) {
                 binding.layoutDetailPage.visibility = View.VISIBLE
             } else {
                 binding.layoutDetailPage.visibility = View.GONE
@@ -185,7 +184,7 @@ class AddReviewActivity : AppCompatActivity()  {
             binding.btnCategory.setTextColor(getColor(R.color.colorBlack))
         }
 
-        if (!review.themeIds.isNullOrBlank()) {
+        if (review.themeIds != null) {
             val adapter = AddReviewThemeAdapter()
             binding.listTheme.adapter = adapter
             adapter.checkable = false

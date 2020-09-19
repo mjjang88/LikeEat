@@ -52,7 +52,19 @@ class AddReviewBottomSheetListAdapter : ListAdapter<GridItem, RecyclerView.ViewH
     }
 
     fun getSelectedItem(): GridItem {
+        if (selectedPosition == RecyclerView.NO_POSITION) {
+            return GridItem("", 0)
+        }
         return getItem(selectedPosition)
+    }
+
+    fun setSelectItem(name: String) {
+        for (index in 0 until itemCount) {
+            if (getItem(index).name == name) {
+                selectedPosition = index
+                notifyItemChanged(index)
+            }
+        }
     }
 }
 

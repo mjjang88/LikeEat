@@ -159,7 +159,7 @@
                     android:layout_marginLeft="@dimen/margin_double"
                     style="@style/TextTitle"/>
 
-                <com.fund.likeeat.widget.SwitchButton
+                <ImageButton
                     android:id="@+id/btn_extend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

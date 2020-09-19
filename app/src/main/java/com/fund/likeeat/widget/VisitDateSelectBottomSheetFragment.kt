@@ -20,6 +20,10 @@ class VisitDateSelectBottomSheetFragment: BottomSheetDialogFragment() {
         val binding = BottomSheetSelectVisitDateBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
+        addReviewViewModel?.editedReview?.value?.visitedDayYmd?.let {
+            binding.datePickerVisitDate.init(it.substring(0, 4).toInt(), it.substring(4, 6).toInt() - 1, it.substring(6, 8).toInt(), null)
+        }
+
         binding.btnOk.setOnClickListener {
             addReviewViewModel?.let {
                 val year = String.format("%04d", binding.datePickerVisitDate.year)

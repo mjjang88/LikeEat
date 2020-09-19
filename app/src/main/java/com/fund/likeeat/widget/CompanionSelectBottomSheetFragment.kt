@@ -32,6 +32,10 @@ class CompanionSelectBottomSheetFragment: BottomSheetDialogFragment() {
         }
         adapter.submitList(gridItemList)
 
+        addReviewViewModel?.editedReview?.value?.companions?.let {
+            adapter.setSelectItem(it)
+        }
+
         binding.btnOk.setOnClickListener {
             addReviewViewModel?.let {
                 val selectedItem = adapter.getSelectedItem()

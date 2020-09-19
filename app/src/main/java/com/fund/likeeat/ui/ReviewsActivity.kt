@@ -46,31 +46,5 @@ class ReviewsActivity: AppCompatActivity() {
         reviewViewModel.reviewFull.observe(this) {
             adapter.submitList(it)
         }
-
-        val appFriendCOntext = AppFriendContext(AppFriendOrder.NICKNAME, 0, 100, "asc")
-        KakaoTalkService.getInstance().requestAppFriends(
-            appFriendCOntext,
-            object : TalkResponseCallback<AppFriendsResponse>() {
-                override fun onNotKakaoTalkUser() {
-                    Log.e("KAKAO_API", "카카오톡 사용자가 아님")
-                }
-
-                override fun onSessionClosed(errorResult: ErrorResult?) {
-                    Log.e("KAKAO_API", "세션이 닫혀 있음: " + errorResult)
-                }
-
-                override fun onFailure(errorResult: ErrorResult?) {
-                    Log.e("KAKAO_API", "친구 조회 실패: " + errorResult)
-                }
-
-                override fun onSuccess(result: AppFriendsResponse?) {
-                    Log.i("KAKAO_API", "친구 조회 성공")
-
-                    for (friend in result!!.friends) {
-                        Log.d("KAKAO_API", friend.toString())
-                        val uuid = friend.uuid // 메시지 전송 시 사용
-                    }
-                }
-            })
     }
 }

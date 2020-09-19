@@ -32,6 +32,10 @@ class ToiletSelectBottomSheetFragment: BottomSheetDialogFragment() {
         }
         adapter.submitList(gridItemList)
 
+        addReviewViewModel?.editedReview?.value?.toliets?.let {
+            adapter.setSelectItem(it)
+        }
+
         binding.btnOk.setOnClickListener {
             addReviewViewModel?.let {
                 val selectedItem = adapter.getSelectedItem()

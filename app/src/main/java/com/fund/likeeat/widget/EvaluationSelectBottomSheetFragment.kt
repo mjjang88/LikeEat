@@ -32,6 +32,10 @@ class EvaluationSelectBottomSheetFragment: BottomSheetDialogFragment() {
         }
         adapter.submitList(gridItemList)
 
+        addReviewViewModel?.editedReview?.value?.serviceQuality?.let {
+            adapter.setSelectItem(it)
+        }
+
         binding.btnOk.setOnClickListener {
             addReviewViewModel?.let {
                 val selectedItem = adapter.getSelectedItem()
