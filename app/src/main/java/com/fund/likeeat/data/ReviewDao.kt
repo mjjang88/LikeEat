@@ -22,4 +22,7 @@ interface ReviewDao {
         deleteAll()
         insertAll(matchs)
     }
+
+    @Query("SELECT * FROM reviews WHERE id in (:reviewId)")
+    fun getReviewByTheme(reviewId: List<Long>): List<Review>
 }

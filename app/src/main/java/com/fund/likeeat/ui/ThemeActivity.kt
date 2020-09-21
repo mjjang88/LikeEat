@@ -7,9 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
 import com.fund.likeeat.adapter.OnClickAddThemeListener
+import com.fund.likeeat.adapter.OnClickCardListener
 import com.fund.likeeat.adapter.ThemeAdapter
 import com.fund.likeeat.data.Theme
-import com.fund.likeeat.databinding.ActivitySetThemeBinding
 import com.fund.likeeat.databinding.ActivityThemeBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.viewmodels.AllThemesViewModel
@@ -26,11 +26,18 @@ class ThemeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView<ActivityThemeBinding>(this, R.layout.activity_theme)
         binding.lifecycleOwner = this
 
-        val adapter = ThemeAdapter(supportFragmentManager, object: OnClickAddThemeListener {
-            override fun onClick() {
-                startActivity(Intent(this@ThemeActivity, AddThemeActivity::class.java))
-            }
-        })
+        val adapter = ThemeAdapter(supportFragmentManager).apply {
+            setOnAddThemeListener(object: OnClickAddThemeListener {
+                override fun onClick() { startActivity(Intent(this@ThemeActivity, AddThemeActivity::class.java)) }
+            })
+            setOnClickCardListener(object: OnClickCardListener {
+                override fun onClick(themeId: Long) {
+                    val intent = Intent(this@ThemeActivity, ReviewsInThemeActivity::class.java)
+                    intent.putExtra("THEME_ID", themeId)
+                    startActivity(intent)
+                }
+            })
+        }
 
         binding.recycler.adapter = adapter
         subscribeUi(adapter)

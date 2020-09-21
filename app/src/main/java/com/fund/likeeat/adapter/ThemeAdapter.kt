@@ -15,7 +15,11 @@ import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.ui.SetThemeBottomSheet
 import kotlinx.android.synthetic.main.item_title.view.*
 
-class ThemeAdapter(val fragmentManager: FragmentManager, val listener: OnClickAddThemeListener): ListAdapter<Theme, RecyclerView.ViewHolder>(ThemeDiffCallback()) {
+class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, RecyclerView.ViewHolder>(ThemeDiffCallback()) {
+
+    var addThemeListener: OnClickAddThemeListener? = null
+    var clickCardListener : OnClickCardListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             VIEW_TYPE_TITLE -> TitleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false))
@@ -32,7 +36,9 @@ class ThemeAdapter(val fragmentManager: FragmentManager, val listener: OnClickAd
                 (holder as ThemeViewHolder).bind(theme)
             }
             VIEW_TYPE_FOOTER -> {
-                (holder as FooterViewHolder).itemView.setOnClickListener{ listener.onClick() }
+                addThemeListener?.let { listener ->
+                    (holder as FooterViewHolder).itemView.setOnClickListener{ listener.onClick() }
+                }
             }
         }
     }
@@ -55,6 +61,9 @@ class ThemeAdapter(val fragmentManager: FragmentManager, val listener: OnClickAd
 
     inner class ThemeViewHolder(private val binding: ItemThemeBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Theme) {
+            clickCardListener?.let { listener ->
+                binding.cardLayout.setOnClickListener { listener.onClick(item.id) }
+            }
             binding.imageMore.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putLong("THEME_ID", item.id)
@@ -68,6 +77,15 @@ class ThemeAdapter(val fragmentManager: FragmentManager, val listener: OnClickAd
                 executePendingBindings()
             }
         }
+    }
+
+
+    fun setOnAddThemeListener(li: OnClickAddThemeListener) {
+        addThemeListener = li
+    }
+
+    fun setOnClickCardListener(li: OnClickCardListener) {
+        clickCardListener = li
     }
 
     companion object {
@@ -90,4 +108,8 @@ class ThemeDiffCallback: DiffUtil.ItemCallback<Theme>() {
 
 interface OnClickAddThemeListener {
     fun onClick()
+}
+
+interface OnClickCardListener {
+    fun onClick(themeId: Long)
 }

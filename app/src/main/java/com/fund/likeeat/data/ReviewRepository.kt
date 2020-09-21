@@ -12,4 +12,8 @@ class ReviewRepository (
     fun getReviewList2(): List<Review> {
         return reviewDao.getReviewList2()
     }
+
+    fun getReviewByTheme(reviewId: List<Long>): List<Review> {
+        return reviewDao.getReviewByTheme(reviewId)
+    }
 }
