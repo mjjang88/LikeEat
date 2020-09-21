@@ -28,8 +28,6 @@ class ModifyReviewAcitivity : AppCompatActivity() {
 
     private val addReviewViewModel: AddReviewViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
-    lateinit var mReviews: ArrayList<Review>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityModifyReviewBinding>(
@@ -63,7 +61,6 @@ class ModifyReviewAcitivity : AppCompatActivity() {
                     )
                 }
             }
-            mReviews = it
         }
     }
 

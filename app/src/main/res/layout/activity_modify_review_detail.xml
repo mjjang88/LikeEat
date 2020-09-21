@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="review"
+            type="com.fund.likeeat.data.Review" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                android:background="@null"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/margin_double"
+                android:layout_marginLeft="@dimen/margin_double"/>
+
+            <LinearLayout
+                android:id="@+id/text_title_visit_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/btn_back"
+                android:layout_marginTop="@dimen/margin_double">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/visit_record"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextTitle"/>
+
+                <ImageButton
+                    android:id="@+id/btn_extend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_extend_selector"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    style="@style/ImageButton"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_background_red_shape"
+                android:minHeight="@dimen/review_edit_text_min_height"
+                android:text="@{review.comment}"
+                android:gravity="top|left"
+                android:padding="@dimen/margin_normal"
+                app:layout_constraintTop_toBottomOf="@id/text_title_visit_record"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_1.5_times"
+                android:layout_marginRight="@dimen/margin_1.5_times"
+                android:hint="@string/edit_comment_hint"
+                style="@style/TextNormal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_detail_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/edit_comment"
+                android:layout_marginTop="@dimen/margin_1.5_times"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btn_visit_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/visit_date"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_evaluation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/evaluation"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/btn_visit_date"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_companion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/companion"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toBottomOf="@id/btn_visit_date"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="@dimen/margin_1.5_times"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="@id/btn_companion"
+                    app:layout_constraintLeft_toRightOf="@id/btn_companion"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_restroom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restroom"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="@id/btn_price"
+                    app:layout_constraintLeft_toRightOf="@id/btn_price"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_re_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/re_visit"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_black"
+                    app:layout_constraintTop_toTopOf="@id/btn_restroom"
+                    app:layout_constraintLeft_toRightOf="@id/btn_restroom"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+                <Button
+                    android:id="@+id/btn_regist_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/regist_image"
+                    android:textColor="@color/colorGray"
+                    android:drawableTop="@drawable/btn_plus_big_black"
+                    app:layout_constraintTop_toBottomOf="@id/btn_companion"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="@dimen/margin_1.5_times"
+                    android:layout_marginLeft="@dimen/margin_double"
+                    style="@style/TextButton"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/regist_place"
+                app:layout_constraintTop_toBottomOf="@id/layout_detail_page"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_1.5_times"
+                style="@style/ConfirmButton"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

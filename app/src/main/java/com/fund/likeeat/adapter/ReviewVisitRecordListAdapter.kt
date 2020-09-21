@@ -1,14 +1,18 @@
 package com.fund.likeeat.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ListItemReviewVisitRecordBinding
 import com.fund.likeeat.manager.*
+import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.widget.ReviewMoreBottomSheetFragment
 
 class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(ReviewVisitRecordDiffCallback()) {
 
@@ -63,6 +67,13 @@ class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>
                     binding.btnReVisit.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
                     binding.btnReVisit.text = item.revisit
                     binding.btnReVisit.visibility = View.VISIBLE
+                }
+
+                binding.imageMore.setOnClickListener {
+                    val reviewMoreBottomSheetFragment = ReviewMoreBottomSheetFragment()
+                    reviewMoreBottomSheetFragment.arguments = Bundle().apply { putParcelable(
+                        INTENT_KEY_REVIEW, item) }
+                    reviewMoreBottomSheetFragment.show((binding.root.context as FragmentActivity).supportFragmentManager, reviewMoreBottomSheetFragment.tag)
                 }
             }
         }

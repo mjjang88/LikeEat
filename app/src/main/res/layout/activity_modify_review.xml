@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/share"
-                android:checked="true"
+                android:checked="@{review.isPublic}"
                 android:gravity="center"
                 android:button="@null"
                 android:drawableTop="@drawable/ic_share_drawable_selector"

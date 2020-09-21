@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.ModifyReviewAcitivity"></activity>
+        <activity android:name=".ui.ModifyReviewDetailActivity"></activity>
+        <activity android:name=".ui.ModifyReviewAcitivity" />
         <activity android:name=".ui.ReviewDetailActivity" />
         <activity android:name=".ui.MapPreviewActivity" />
         <activity

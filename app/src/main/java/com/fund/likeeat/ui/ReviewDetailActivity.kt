@@ -1,5 +1,6 @@
 package com.fund.likeeat.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,7 @@ import com.fund.likeeat.databinding.ActivityReviewDetailBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.getCategoryImageByName
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.viewmodels.ReviewDetailViewModel
 import com.fund.likeeat.widget.CategorySelectBottomSheetFragment
@@ -78,6 +80,13 @@ class ReviewDetailActivity : AppCompatActivity() {
         binding.listReview.adapter = reviewAdapter
         reviewDetailViewModel.reviews.observe(this) {
             reviewAdapter.submitList(it)
+        }
+
+        binding.editComment.setOnClickListener {
+            val intent = Intent(this, ModifyReviewDetailActivity::class.java)
+            intent.putExtra(INTENT_KEY_REVIEW, review)
+            intent.putExtra(INTENT_KEY_REVIEW_CREATE, true)
+            startActivity(intent)
         }
 
         binding.btnMore.setOnClickListener {
