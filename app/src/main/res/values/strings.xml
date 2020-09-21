@@ -76,5 +76,6 @@
 
     <string name="update">수정하기</string>
     <string name="delete">삭제하기</string>
+    <string name="apply">적용하기</string>
 
 </resources>

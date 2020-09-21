@@ -27,7 +27,7 @@ val appModule = module {
     viewModel { (uid: Long) -> ReviewsViewModel(get(), get(), get(), uid) }
     viewModel { (uid: Long) -> AllThemesViewModel(get(), uid) }
     viewModel { SearchPlaceViewModel() }
-    viewModel { (uid: Long) -> AddReviewViewModel(get(), uid) }
+    viewModel { (uid: Long) -> AddReviewViewModel(get(), get(), uid) }
     viewModel { (id: Long) -> OneThemeViewModel(get(), id) }
     viewModel { (id: Long) -> ReviewDetailViewModel(get(), get(), get(), id) }
 }

@@ -82,8 +82,8 @@ class ReviewDetailActivity : AppCompatActivity() {
 
         binding.btnMore.setOnClickListener {
             val reviewMoreBottomSheetFragment = ReviewMoreBottomSheetFragment()
+            reviewMoreBottomSheetFragment.arguments = Bundle().apply { putParcelableArray(INTENT_KEY_REVIEW, reviewDetailViewModel.reviews.value?.toTypedArray()) }
             reviewMoreBottomSheetFragment.show(supportFragmentManager, reviewMoreBottomSheetFragment.tag)
         }
-
     }
 }
