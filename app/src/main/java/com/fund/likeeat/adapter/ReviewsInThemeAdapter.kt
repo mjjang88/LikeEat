@@ -1,6 +1,5 @@
 package com.fund.likeeat.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +9,8 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ItemOnlyReviewsBinding
 
 class ReviewsInThemeAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(ReviewsInThemeDiffCallback()) {
+    var cardLongClickListener: CardLongClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ReviewsInThemeViewHolder(ItemOnlyReviewsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -18,20 +19,24 @@ class ReviewsInThemeAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(Review
         (holder as ReviewsInThemeViewHolder).bind(getItem(position))
     }
 
-    class ReviewsInThemeViewHolder(private val binding: ItemOnlyReviewsBinding): RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: Review) {
-            binding.cardLayout.setOnClickListener {
-                Log.i("CARD_ITEM_ID", item.id.toString())
-                Log.i("CARD_ITEM_UID", item.uid.toString())
-                Log.i("CARD_ITEM_CATEGORY", item.category.toString())
-                Log.i("CARD_ITEM_PLACE_NAME", item.place_name.toString())
-                Log.i("CARD_ITEM_ADDRESS_NAME", item.address_name.toString())
+    inner class ReviewsInThemeViewHolder(private val binding: ItemOnlyReviewsBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Review) {
+            cardLongClickListener?.let { listener ->
+                binding.cardLayout.setOnLongClickListener{
+                    listener.onLongClick(item.id)
+                    true
+                }
             }
+
             binding.apply {
                 review = item
                 executePendingBindings()
             }
         }
+    }
+
+    fun setOnCardLongClickListener(li: CardLongClickListener) {
+        cardLongClickListener = li
     }
 
 }
@@ -47,3 +52,6 @@ class ReviewsInThemeDiffCallback: DiffUtil.ItemCallback<Review>() {
 
 }
 
+interface CardLongClickListener {
+    fun onLongClick(reviewId: Long)
+}

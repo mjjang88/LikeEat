@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/center_dialog_width"
+    android:layout_height="@dimen/center_dialog_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/item_fill_white_round"
+    android:paddingHorizontal="@dimen/padding_normal">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/margin_1.5_times"
+        android:gravity="center"
+        android:text="@string/delete_theme_title"
+        android:textColor="@color/black01"
+        android:textSize="@dimen/text_size_bigger"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text1"
+        app:layout_constraintBottom_toTopOf="@id/seperator"
+        android:lineSpacingMultiplier="1.2"
+        android:gravity="center"
+        android:text="@string/delete_review_content"
+        android:textColor="@color/black02"
+        android:textSize="@dimen/text_size_big" />
+
+    <View
+        android:id="@+id/seperator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_height"
+        app:layout_constraintBottom_toTopOf="@id/delete_cancel"
+        android:background="@color/black06"/>
+
+    <TextView
+        android:id="@+id/delete_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_theme_cancel"
+        android:textSize="@dimen/text_size_bigger"
+        android:textStyle="bold"
+        android:textColor="@color/black03"
+        android:gravity="center"
+        android:paddingVertical="@dimen/padding_1.5_times"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/delete_ok"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/delete_ok"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="@dimen/padding_1.5_times"
+        android:text="@string/delete_theme_ok"
+        android:textSize="@dimen/text_size_bigger"
+        android:textStyle="bold"
+        android:textColor="@color/primary100"
+        app:layout_constraintBottom_toBottomOf="@id/delete_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/delete_cancel"
+        app:layout_constraintTop_toTopOf="@id/delete_cancel"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

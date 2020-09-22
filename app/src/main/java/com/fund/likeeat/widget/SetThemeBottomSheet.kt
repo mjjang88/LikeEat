@@ -1,4 +1,4 @@
-package com.fund.likeeat.ui
+package com.fund.likeeat.widget
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.fund.likeeat.R
 import com.fund.likeeat.databinding.BottomSheetSetThemeBinding
+import com.fund.likeeat.ui.UpdateThemeActivity
 import com.fund.likeeat.viewmodels.OneThemeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,7 +35,10 @@ class SetThemeBottomSheet: BottomSheetDialogFragment() {
                 }
 
                 actionDeleteTheme.setOnClickListener {
-                    val dialog = DeleteThemeDialog(requireContext(), themeId ?: throw Exception())
+                    val dialog = DeleteThemeDialog(
+                        requireContext(),
+                        themeId ?: throw Exception()
+                    )
                     dialog.setCancelable(false)
                     dialog.show()
                     dismiss()

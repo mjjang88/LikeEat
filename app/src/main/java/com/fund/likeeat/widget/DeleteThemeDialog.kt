@@ -1,4 +1,4 @@
-package com.fund.likeeat.ui
+package com.fund.likeeat.widget
 
 import android.app.Dialog
 import android.content.Context

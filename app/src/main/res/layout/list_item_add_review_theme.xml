@@ -9,6 +9,9 @@
         <variable
             name="theme"
             type="com.fund.likeeat.data.Theme" />
+        <variable
+        name="clickListener"
+        type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +20,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/margin_double"
         android:paddingRight="@dimen/margin_double"
-        android:background="@color/add_review_theme_background_color_selector">
+        android:background="@color/add_review_theme_background_color_selector"
+        android:onClick="@{clickListener}">
 
         <TextView
             android:layout_width="0dp"
@@ -34,6 +38,7 @@
         <ImageButton
             android:id="@+id/image_tag"
             android:layout_width="wrap_content"
+            app:colorTagTint="@{theme.color}"
             android:layout_height="wrap_content"
             android:src="@drawable/ic24_tag"
             android:background="@null"
@@ -43,8 +48,10 @@
             style="@style/ImageButton"/>
 
         <View
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Divider"/>
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_height"
+            android:background="@color/black06"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -12,7 +12,7 @@ import com.fund.likeeat.R
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ItemThemeBinding
 import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.ui.SetThemeBottomSheet
+import com.fund.likeeat.widget.SetThemeBottomSheet
 import kotlinx.android.synthetic.main.item_title.view.*
 
 class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, RecyclerView.ViewHolder>(ThemeDiffCallback()) {
@@ -68,7 +68,8 @@ class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, Rec
                 val bundle = Bundle()
                 bundle.putLong("THEME_ID", item.id)
 
-                val bottomSheetFragment = SetThemeBottomSheet()
+                val bottomSheetFragment =
+                    SetThemeBottomSheet()
                 bottomSheetFragment.arguments = bundle
                 bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
             }
