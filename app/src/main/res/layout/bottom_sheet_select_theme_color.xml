@@ -27,7 +27,9 @@
             app:spanCount="4"
             app:layout_constraintTop_toBottomOf="@id/text_title_theme_color"
             app:layout_constraintStart_toStartOf="@id/text_title_theme_color"
-            android:layout_marginTop="@dimen/margin_1.5_times" />
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintHeight_max="184dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/action_enroll"

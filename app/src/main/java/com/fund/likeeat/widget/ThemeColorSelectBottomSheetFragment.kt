@@ -8,12 +8,12 @@ import com.fund.likeeat.adapter.ColorItem
 import com.fund.likeeat.adapter.ColorListAdapter
 import com.fund.likeeat.adapter.ColorSelectedListener
 import com.fund.likeeat.databinding.BottomSheetSelectThemeColorBinding
+import com.fund.likeeat.utilities.COLOR_NOT_SELECTED
 import com.fund.likeeat.utilities.ColorList
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ThemeColorSelectBottomSheetFragment: BottomSheetDialogFragment() {
-    var selectedPosition = -1
-
+    var selectedPosition = COLOR_NOT_SELECTED
 
     lateinit var myColorSavedListener: ColorSavedListener
 

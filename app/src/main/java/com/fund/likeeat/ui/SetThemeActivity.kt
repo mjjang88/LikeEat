@@ -1,15 +1,17 @@
 package com.fund.likeeat.ui
 
-import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.fund.likeeat.R
 import com.fund.likeeat.databinding.ActivitySetThemeBinding
+import com.fund.likeeat.manager.KeyboardManager
+import com.fund.likeeat.utilities.COLOR_NOT_SELECTED
 import com.fund.likeeat.utilities.ColorList
 import com.fund.likeeat.utilities.UID_DETACHED
 import com.fund.likeeat.viewmodels.OneThemeViewModel
@@ -22,9 +24,10 @@ import org.koin.core.parameter.parametersOf
 open class SetThemeActivity : AppCompatActivity() {
     var themeId: Long? = null
     var isPublic = true
-    var colorSelected: Int = Color.BLACK
+    var colorSelected: Int? = null
 
     var isFocusingEditText = false
+    var isCorrectInputInformation = false
 
     val themeViewModel: OneThemeViewModel by viewModel { parametersOf(themeId) }
     lateinit var binding: ActivitySetThemeBinding
@@ -53,11 +56,7 @@ open class SetThemeActivity : AppCompatActivity() {
                 }
 
                 override fun onTextChanged(result: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!verifyThemeName(result.toString())) {
-                        action_enroll.setBackgroundResource(R.drawable.item_fill_black05_round)
-                    } else {
-                        action_enroll.setBackgroundResource(R.drawable.item_fill_black01_round)
-                    }
+                    verifyCorrectInputInformationAndChangeButtonStyle(result.toString())
                 }
             })
 
@@ -83,6 +82,7 @@ open class SetThemeActivity : AppCompatActivity() {
             }
         }
         isFocusingEditText = false
+        KeyboardManager.hideKeyboard(this, theme_name)
         return super.dispatchTouchEvent(ev)
     }
 
@@ -93,6 +93,8 @@ open class SetThemeActivity : AppCompatActivity() {
                 colorSelected = colorCode
                 theme_tag.setColorFilter(colorCode)
 
+                verifyCorrectInputInformationAndChangeButtonStyle(binding.themeName.text.toString())
+
                 val list = ColorList.colorList.filter { it.first == colorCode }
                 val colorText = list[0].second
                 theme_color_text.text = colorText
@@ -100,12 +102,12 @@ open class SetThemeActivity : AppCompatActivity() {
         })
 
         val bundle = Bundle()
-        bundle.putInt("COLOR_SELECTED", colorSelected)
+        bundle.putInt("COLOR_SELECTED", colorSelected ?: COLOR_NOT_SELECTED)
         themeColorSelectBottomSheet.arguments = bundle  // bundle값으로 현재 지정된 색을 넘겨줌 BottomSheet에 넘겨줌
         themeColorSelectBottomSheet.show(supportFragmentManager, themeColorSelectBottomSheet.tag)
     }
 
-    fun openPublicBottomSheetAndSetPublicState() {
+    private fun openPublicBottomSheetAndSetPublicState() {
         ThemePublicSelectBottomSheetFragment().apply {
             setPublicSavedListener(object: ThemePublicSelectBottomSheetFragment.PublicSavedListener {
                 override fun onSaved(isPublic: Boolean) {
@@ -127,6 +129,18 @@ open class SetThemeActivity : AppCompatActivity() {
         }
     }
 
-    fun verifyThemeName(name: String?): Boolean =
+    fun verifyCorrectInputInformationAndChangeButtonStyle(name: String?) {
+        if(verifyThemeName(name) && verifyThemeColor()) {
+            isCorrectInputInformation = true
+            action_enroll.setBackgroundResource(R.drawable.item_fill_black01_round)
+        } else {
+            isCorrectInputInformation = false
+            action_enroll.setBackgroundResource(R.drawable.item_fill_black05_round)
+        }
+    }
+
+    private fun verifyThemeName(name: String?): Boolean =
         !name.isNullOrEmpty() && name.length <= 20
+
+    private fun verifyThemeColor() = colorSelected != null
 }

@@ -20,7 +20,7 @@ class UpdateThemeActivity : SetThemeActivity() {
             binding.themeName.setText(theme.name)
 
             colorSelected = theme.color
-            binding.themeTag.setColorFilter(colorSelected)
+            binding.themeTag.setColorFilter(colorSelected!!)
 
             binding.themeColorText.text = colorText
 
@@ -33,10 +33,12 @@ class UpdateThemeActivity : SetThemeActivity() {
                 theme_is_public.text = resources.getString(R.string.theme_public_close)
                 image_public.setImageResource(R.drawable.ic_baseline_visibility_off_24)
             }
+
+            verifyCorrectInputInformationAndChangeButtonStyle(binding.themeName.text.toString())
         }
 
         binding.actionEnroll.setOnClickListener {
-            if(verifyThemeName(binding.themeName.text.toString())) {
+            if(isCorrectInputInformation) {
                 updateTheme()
                 finish()
             }
@@ -49,7 +51,7 @@ class UpdateThemeActivity : SetThemeActivity() {
             this,
             themeId!!,
             name = binding.themeName.text.toString(),
-            color = colorSelected,
+            color = colorSelected!!,
             isPublic = isPublic
         )
     }

@@ -13,7 +13,7 @@ class AddThemeActivity : SetThemeActivity() {
         binding.screenTitle.text = resources.getString(R.string.title_add_new_theme)
 
         binding.actionEnroll.setOnClickListener {
-            if (verifyThemeName(binding.themeName.text.toString())) {
+            if (isCorrectInputInformation) {
                 addNewTheme()
                 finish()
             }
@@ -24,7 +24,7 @@ class AddThemeActivity : SetThemeActivity() {
         val theme = ThemeRequest(
             MyApplication.pref.uid,
             binding.themeName.text.toString(),
-            colorSelected,
+            colorSelected!!,
             isPublic
         )
         RetrofitProcedure.sendThemeToServer(theme)

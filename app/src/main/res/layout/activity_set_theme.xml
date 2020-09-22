@@ -122,6 +122,7 @@
                             android:layout_width="@dimen/image_size_normal"
                             android:layout_height="@dimen/image_size_normal"
                             android:src="@drawable/ic_icon_tag"
+                            android:tint="@color/primary100"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -137,10 +138,10 @@
                         app:layout_constraintEnd_toEndOf="@id/layout_tag"
                         app:layout_constraintTop_toBottomOf="@id/layout_tag"
                         android:layout_marginTop="@dimen/margin_half"
-                        android:text="검정색"
+                        android:text="색상"
                         android:textSize="@dimen/text_size_big"
                         android:textStyle="bold"
-                        android:textColor="@color/black02" />
+                        android:textColor="@color/black03" />
 
 
                     <View
