@@ -91,6 +91,7 @@
         <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textColor">@color/colorGray</item>
     </style>
 
     <style name="FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
@@ -145,6 +146,8 @@
         <item name="chipBackgroundColor">@color/chip_background_selector</item>
         <item name="android:textColor">@color/chip_text_selector</item>
         <item name="chipMinHeight">40dp</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipStrokeColor">@color/colorGray</item>
     </style>
 
     <style name="ConfirmButton">

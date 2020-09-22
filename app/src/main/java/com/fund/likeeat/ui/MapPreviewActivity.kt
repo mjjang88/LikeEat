@@ -27,6 +27,10 @@ class MapPreviewActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
         initMap()
+
+        btn_back.setOnClickListener {
+            finish()
+        }
     }
 
     fun initMap() {

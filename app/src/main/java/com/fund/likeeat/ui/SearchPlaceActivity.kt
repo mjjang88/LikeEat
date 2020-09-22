@@ -37,6 +37,10 @@ class SearchPlaceActivity : AppCompatActivity() {
         intent.getParcelableExtra<LatLng>(INTENT_KEY_LOCATION).apply {
             searchPoiViewModel.locate.value = this
         }
+
+        btn_back.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initList() {
