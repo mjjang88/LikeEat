@@ -5,6 +5,7 @@ import com.fund.likeeat.R
 import com.fund.likeeat.data.ThemeRequest
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.utilities.ThemeType
 
 class AddThemeActivity : SetThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,6 @@ class AddThemeActivity : SetThemeActivity() {
             colorSelected!!,
             isPublic
         )
-        RetrofitProcedure.sendThemeToServer(theme)
+        RetrofitProcedure.sendThemeToServer(theme, ThemeType.TYPE_CUSTOM_THEME)
     }
 }

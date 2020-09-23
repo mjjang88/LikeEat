@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginEnd
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -64,6 +65,11 @@ class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, Rec
             clickCardListener?.let { listener ->
                 binding.cardLayout.setOnClickListener { listener.onClick(item.id) }
             }
+
+            if(item.name == MyApplication.applicationContext().resources.getString(R.string.theme_all)) {
+                binding.imageMore.visibility = View.GONE
+            }
+
             binding.imageMore.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putLong("THEME_ID", item.id)

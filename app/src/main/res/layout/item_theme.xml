@@ -15,7 +15,8 @@
         android:id="@+id/card_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/theme_card_height"
-        android:paddingHorizontal="@dimen/padding_double">
+        android:paddingStart="@dimen/padding_double"
+        android:paddingEnd="@dimen/padding_1.5_times">
 
         <TextView
             android:id="@+id/theme_name"
@@ -65,9 +66,9 @@
             android:id="@+id/theme_tag"
             android:layout_width="@dimen/image_size_normal"
             android:layout_height="@dimen/image_size_normal"
-            android:layout_marginEnd="@dimen/margin_normal"
             android:src="@drawable/ic_icon_tag"
             app:colorTagTint="@{theme.color}"
+            android:layout_marginEnd="@dimen/margin_half"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/image_more" />
@@ -75,8 +76,9 @@
 
         <ImageView
             android:id="@+id/image_more"
-            android:layout_width="@dimen/image_size_normal"
-            android:layout_height="@dimen/image_size_normal"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="@dimen/padding_half"
             android:src="@drawable/ic_icon_more"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

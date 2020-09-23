@@ -73,6 +73,7 @@
     <string name="theme_public_open">공개</string>
     <string name="theme_public_close">비공개</string>
     <string name="theme_enroll">등록하기</string>
+    <string name="theme_all">등록한 모든 맛집 (기본)</string>
 
     <!-- menu -->
     <string name="menu_add_review">리뷰 추가</string>
