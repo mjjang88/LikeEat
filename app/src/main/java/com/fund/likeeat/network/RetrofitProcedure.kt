@@ -1,7 +1,6 @@
 package com.fund.likeeat.network
 
 import android.graphics.Color
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.R
@@ -10,6 +9,7 @@ import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.utilities.ThemeType
 import com.fund.likeeat.utilities.ToastUtil
 import com.fund.likeeat.utilities.UID_DETACHED
+import com.fund.likeeat.utilities.UpdateReviewOnlyThemeType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -212,18 +212,28 @@ object RetrofitProcedure {
         })
     }
 
-    fun updateReviewOnlyTheme(reviewId: Long, themeId: Long, changeRequest: ReviewChanged) {
+    fun updateReviewOnlyTheme(reviewId: Long, themeId: Long, changeRequest: ReviewChanged, type: UpdateReviewOnlyThemeType, newThemeId: Long = -1L) {
         LikeEatRetrofit.getService().updateReviewOnlyTheme(reviewId, changeRequest).enqueue(object: Callback<Review> {
             override fun onFailure(call: Call<Review>, t: Throwable) {
-                Toast.makeText(MyApplication.applicationContext(), "리뷰 수정 실패", Toast.LENGTH_SHORT).show()
+                Toast.makeText(MyApplication.applicationContext(), "맛집 수정 실패", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<Review>, response: Response<Review>) {
                 if(response.isSuccessful) {
-                    GlobalScope.launch {
-                        AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteOneRelation(reviewId, themeId)
+                    when(type) {
+                        UpdateReviewOnlyThemeType.TYPE_DELETE -> {
+                            GlobalScope.launch {
+                                AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteOneRelation(reviewId, themeId)
+                            }
+                            ToastUtil.toastShort("맛집을 테마에서 제거했습니다")
+                        }
+                        UpdateReviewOnlyThemeType.TYPE_MOVE -> {
+                            GlobalScope.launch {
+                                AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().updateOneRelation(reviewId, themeId, newThemeId)
+                            }
+                            ToastUtil.toastShort("테마를 이동했습니다")
+                        }
                     }
-                    ToastUtil.toastShort("맛집을 테마에서 제거했습니다")
                     getThemeByUid(MyApplication.pref.uid)
                     getUserReview(MyApplication.pref.uid)
                 }

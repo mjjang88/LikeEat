@@ -74,10 +74,14 @@ class SetReviewInThemeBottomSheet : BottomSheetDialogFragment() {
 
             actionMove.setOnClickListener {
                 themesIdString?.let {
-                    val dialog = MoveReviewInThemeBottomSheet()
-                    dialog.arguments = reviewAndThemeDataBundle
-                    dialog.show(this@SetReviewInThemeBottomSheet.parentFragmentManager, dialog.tag)
-                    dismiss()
+                    if(isBundleFilled) {
+                        val dialog = MoveReviewInThemeBottomSheet()
+                        dialog.arguments = reviewAndThemeDataBundle
+                        dialog.show(this@SetReviewInThemeBottomSheet.parentFragmentManager, dialog.tag)
+                        dismiss()
+                    } else {
+                        ToastUtil.toastShort("다시 시도해주세요")
+                    }
                 }?: ToastUtil.toastShort("다시 시도해주세요")
 
             }

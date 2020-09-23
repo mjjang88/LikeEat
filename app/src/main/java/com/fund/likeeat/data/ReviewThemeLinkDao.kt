@@ -29,4 +29,7 @@ interface ReviewThemeLinkDao {
 
     @Query("DELETE FROM review_theme_link WHERE reviewId = :reviewId AND themeId = :themeId")
     suspend fun deleteOneRelation(reviewId: Long, themeId: Long)
+
+    @Query("UPDATE review_theme_link SET themeId = :newThemeId WHERE reviewId = :reviewId AND themeId = :themeId")
+    suspend fun updateOneRelation(reviewId: Long, themeId: Long, newThemeId: Long)
 }

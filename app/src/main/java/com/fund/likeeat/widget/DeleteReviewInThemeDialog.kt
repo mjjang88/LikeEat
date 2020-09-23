@@ -11,6 +11,7 @@ import com.fund.likeeat.data.PlaceWhenChangeReview
 import com.fund.likeeat.data.ReviewChanged
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.ToastUtil
+import com.fund.likeeat.utilities.UpdateReviewOnlyThemeType
 import kotlinx.android.synthetic.main.dialog_delete_review_in_theme.*
 
 class DeleteReviewInThemeDialog(context: Context, val dataBundle: Bundle) : Dialog(context) {
@@ -43,7 +44,7 @@ class DeleteReviewInThemeDialog(context: Context, val dataBundle: Bundle) : Dial
         setContentView(R.layout.dialog_delete_review_in_theme)
         delete_cancel.setOnClickListener { dismiss() }
         delete_ok.setOnClickListener {
-            RetrofitProcedure.updateReviewOnlyTheme(reviewId, themeId, makeReviewChanged())
+            RetrofitProcedure.updateReviewOnlyTheme(reviewId, themeId, makeReviewChanged(), UpdateReviewOnlyThemeType.TYPE_DELETE)
             dismiss()
         }
     }
@@ -73,7 +74,7 @@ class DeleteReviewInThemeDialog(context: Context, val dataBundle: Bundle) : Dial
             toliets,
             priceRange,
             serviceQuality,
-            "왜 안들어가",
+            revisit,
             themeIds,
             place
         )

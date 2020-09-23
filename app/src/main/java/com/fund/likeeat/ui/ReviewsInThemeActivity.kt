@@ -8,8 +8,6 @@ import com.fund.likeeat.R
 import com.fund.likeeat.adapter.CardLongClickListener
 import com.fund.likeeat.adapter.ReviewsInThemeAdapter
 import com.fund.likeeat.databinding.ActivityReviewsInThemeBinding
-import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.viewmodels.OneThemeViewModel
 import com.fund.likeeat.widget.SetReviewInThemeBottomSheet
 import kotlinx.android.synthetic.main.activity_reviews_in_theme.*
