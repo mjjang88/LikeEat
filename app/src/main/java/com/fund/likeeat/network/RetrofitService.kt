@@ -1,5 +1,6 @@
 package com.fund.likeeat.network
 
+import androidx.room.Delete
 import com.fund.likeeat.data.*
 import retrofit2.Call
 import retrofit2.Response
@@ -31,6 +32,17 @@ interface RetrofitService {
     @POST("/reviews/")
     suspend fun addReview(
         @Body reviewNWWrite: ReviewServerWrite?
+    ): Response<Unit>
+
+    @PUT("/reviews/{id}")
+    suspend fun setReview(
+        @Path("id") id: Long,
+        @Body reviewNWWrite: ReviewServerWrite?
+    ): Response<Unit>
+
+    @DELETE("/reviews/{id}")
+    suspend fun deleteReview(
+        @Path("id") id: Long
     ): Response<Unit>
 
     // http://likeeat-server.herokuapp.com/themes/?uid=UID

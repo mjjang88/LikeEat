@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -12,16 +13,16 @@ import com.fund.likeeat.R
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ActivityModifyReviewDetailBinding
 import com.fund.likeeat.manager.*
+import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.PlaceServer
+import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.widget.*
 import kotlinx.android.synthetic.main.activity_add_review.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -137,6 +138,10 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
             }
         })
 
+        binding.btnOk.setOnClickListener {
+            doSetReview()
+        }
+
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
@@ -220,5 +225,37 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
 
     fun setEnableBtnOk() {
         btn_ok.isEnabled = edit_comment.text.length > 0
+    }
+
+    private fun doSetReview() {
+
+        val reviewId = intent.getParcelableExtra<Review>(INTENT_KEY_REVIEW)?.id
+        val review = addReviewViewModel.editedReview.value
+        review?.comment = edit_comment.text.toString()
+
+        var bSendUserInfoSuccess = false
+        GlobalScope.launch(Dispatchers.Default) {
+            try {
+                LikeEatRetrofit.getService().setReview(reviewId?: 0, review).apply {
+                    if (isSuccessful) {
+                        bSendUserInfoSuccess = true
+                    }
+                }
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Default) {
+            while (!bSendUserInfoSuccess) {
+                delay(1000)
+            }
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@ModifyReviewDetailActivity, "리뷰 수정 완료", Toast.LENGTH_LONG).show()
+                RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                finish()
+            }
+        }
     }
 }
