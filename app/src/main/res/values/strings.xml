@@ -77,6 +77,10 @@
     <!-- menu -->
     <string name="menu_add_review">리뷰 추가</string>
 
-
+    <!-- left_drawer -->
+    <string name="enrolled_review">등록 맛집</string>
+    <string name="friend">친구</string>
+    <string name="now_selected_theme">현재 선택된 테마</string>
+    <string name="all_themes">모든 테마</string>
 
 </resources>
