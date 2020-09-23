@@ -1,6 +1,7 @@
 package com.fund.likeeat.network
 
 import android.graphics.Color
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.R
@@ -205,6 +206,26 @@ object RetrofitProcedure {
                         AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().deleteTheme(id)
                     }
                     ToastUtil.toastShort("테마를 삭제했습니다")
+                }
+            }
+
+        })
+    }
+
+    fun updateReviewOnlyTheme(reviewId: Long, themeId: Long, changeRequest: ReviewChanged) {
+        LikeEatRetrofit.getService().updateReviewOnlyTheme(reviewId, changeRequest).enqueue(object: Callback<Review> {
+            override fun onFailure(call: Call<Review>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "리뷰 수정 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Review>, response: Response<Review>) {
+                if(response.isSuccessful) {
+                    GlobalScope.launch {
+                        AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteOneRelation(reviewId, themeId)
+                    }
+                    ToastUtil.toastShort("맛집을 테마에서 제거했습니다")
+                    getThemeByUid(MyApplication.pref.uid)
+                    getUserReview(MyApplication.pref.uid)
                 }
             }
 

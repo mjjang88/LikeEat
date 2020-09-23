@@ -16,4 +16,8 @@ class ReviewRepository (
     fun getReviewByTheme(reviewId: List<Long>): List<Review> {
         return reviewDao.getReviewByTheme(reviewId)
     }
+
+    fun getReviewById(reviewId: Long): LiveData<Review> {
+        return reviewDao.getReviewById(reviewId)
+    }
 }
