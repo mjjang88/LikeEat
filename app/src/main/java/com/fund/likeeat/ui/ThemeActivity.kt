@@ -31,9 +31,10 @@ class ThemeActivity : AppCompatActivity() {
                 override fun onClick() { startActivity(Intent(this@ThemeActivity, AddThemeActivity::class.java)) }
             })
             setOnClickCardListener(object: OnClickCardListener {
-                override fun onClick(themeId: Long) {
+                override fun onClick(themeId: Long, themeName: String) {
                     val intent = Intent(this@ThemeActivity, ReviewsInThemeActivity::class.java)
                     intent.putExtra("THEME_ID", themeId)
+                    intent.putExtra("THEME_NAME", themeName)
                     startActivity(intent)
                 }
             })

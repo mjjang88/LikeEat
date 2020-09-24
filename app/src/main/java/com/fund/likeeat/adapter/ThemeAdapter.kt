@@ -63,7 +63,7 @@ class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, Rec
     inner class ThemeViewHolder(private val binding: ItemThemeBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Theme) {
             clickCardListener?.let { listener ->
-                binding.cardLayout.setOnClickListener { listener.onClick(item.id) }
+                binding.cardLayout.setOnClickListener { listener.onClick(item.id, item.name) }
             }
 
             if(item.name == MyApplication.applicationContext().resources.getString(R.string.theme_all)) {
@@ -118,5 +118,5 @@ interface OnClickAddThemeListener {
 }
 
 interface OnClickCardListener {
-    fun onClick(themeId: Long)
+    fun onClick(themeId: Long, themeName: String = "")
 }

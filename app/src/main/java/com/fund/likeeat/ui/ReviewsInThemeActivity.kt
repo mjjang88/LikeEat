@@ -31,20 +31,26 @@ class ReviewsInThemeActivity : AppCompatActivity() {
         }
 
         val adapter = ReviewsInThemeAdapter().apply {
-            setOnCardLongClickListener(object: CardLongClickListener {
+            setOnCardLongClickListener(object : CardLongClickListener {
                 override fun onLongClick(reviewId: Long) {
                     val bundle = Bundle().apply {
                         putLong("REVIEW_ID", reviewId)
                         putLong("THEME_ID", intent.getLongExtra("THEME_ID", -12))
                     }
+                    if(intent.getStringExtra("THEME_NAME") == resources.getString(R.string.theme_all)) {
+                        /* todo 등록한 모든 맛집일 경우에 보여지는 하단 bottomsheet는 다르다. (삭제 기능만 있을거임)
+                            특별한 디자인 나온게 없어서, 보류
+                        */
 
-                    val dialog =
-                        SetReviewInThemeBottomSheet()
-                    dialog.arguments = bundle
-                    dialog.show(supportFragmentManager, dialog.tag)
+                    } else {
+                        val dialog =
+                            SetReviewInThemeBottomSheet()
+                        dialog.arguments = bundle
+                        dialog.show(supportFragmentManager, dialog.tag)
+                    }
                 }
-
             })
+
         }
         recycler.adapter = adapter
 

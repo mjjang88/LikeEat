@@ -1,6 +1,7 @@
 package com.fund.likeeat.network
 
 import android.graphics.Color
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.R
@@ -229,6 +230,7 @@ object RetrofitProcedure {
                         }
                         UpdateReviewOnlyThemeType.TYPE_MOVE -> {
                             GlobalScope.launch {
+                                AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteOneRelation(reviewId, newThemeId)
                                 AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().updateOneRelation(reviewId, themeId, newThemeId)
                             }
                             ToastUtil.toastShort("테마를 이동했습니다")

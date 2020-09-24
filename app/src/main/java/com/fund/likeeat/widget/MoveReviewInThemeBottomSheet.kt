@@ -1,6 +1,7 @@
 package com.fund.likeeat.widget
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,7 +86,7 @@ class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
 
         val adapter = MoveThemeAdapter().apply {
             setOnClickCardListener(object: OnClickCardListener {
-                override fun onClick(themeId: Long) {
+                override fun onClick(themeId: Long, themeName: String) {
                     newThemeId = themeId
                 }
             })
@@ -107,7 +108,8 @@ class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
     }
 
     fun updateThemeIdInListAndReturnToString(): String {
-        val newList = themesIdList!!.filter { it != themeId.toString() }.map{ it.toLong() } as MutableList
+        Log.i("THEME_ID_BEFORE", arguments?.getString("THEMES_ID_STRING").toString())
+        val newList = themesIdList!!.filter { it != themeId.toString() && it != newThemeId.toString() }.map{ it.toLong() } as MutableList
         newList.add(newThemeId!!)
         newList.sort()
 
@@ -118,6 +120,7 @@ class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
                 builder.append(",")
             }
         }
+        Log.i("THEME_ID_AFTER", builder.toString())
         return builder.toString()
     }
 
