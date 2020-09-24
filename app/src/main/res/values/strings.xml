@@ -17,6 +17,7 @@
     <string name="not_share">나만보기</string>
     <string name="category">카테고리</string>
     <string name="select_theme">테마 추가적용</string>
+    <string name="move_theme">테마 이동</string>
 
     <string name="edit_comment_hint">#해시태그와 함께 평가를 남기세요</string>
 
@@ -53,11 +54,13 @@
 
     <!-- theme_update/delete -->
     <string name="delete_theme_title">알림</string>
-    <string name="delete_theme_content">등록한 테마를 완전히 삭제합니다\n계속하시겠습니까?</string>
+    <string name="delete_theme_content">등록한 테마를 완전히 삭제합니다\n계속 하시겠습니까?</string>
+    <string name="delete_review_content">등록한 맛집을 테마에서 제거합니다\n계속 하시겠습니까?</string>
     <string name="delete_theme_cancel">취소</string>
     <string name="delete_theme_ok">삭제</string>
     <string name="update_theme">수정하기</string>
     <string name="delete_theme">삭제하기</string>
+    <string name="move_review_to_another_theme">테마이동</string>
 
     <!-- theme_resource -->
     <string name="review_count">num개의 맛집</string>
@@ -67,9 +70,20 @@
     <string name="theme_color_title">테마 색상</string>
     <string name="theme_add_review">테마에 맛집 추가</string>
     <string name="theme_set_public">테마 공개여부</string>
+    <string name="theme_is_public">공유여부</string>
     <string name="theme_public_open">공개</string>
     <string name="theme_public_close">비공개</string>
     <string name="theme_enroll">등록하기</string>
+    <string name="theme_all">등록한 모든 맛집 (기본)</string>
+
+    <!-- menu -->
+    <string name="menu_add_review">리뷰 추가</string>
+
+    <!-- left_drawer -->
+    <string name="enrolled_review">등록 맛집</string>
+    <string name="friend">친구</string>
+    <string name="now_selected_theme">현재 선택된 테마</string>
+    <string name="all_themes">모든 테마</string>
 
     <string name="place_in_map">맛집 리스트</string>
     <string name="seek_more_place">더 많은 맛집 찾기</string>

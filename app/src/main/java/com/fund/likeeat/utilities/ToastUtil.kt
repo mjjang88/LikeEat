@@ -1,20 +1,20 @@
 package com.fund.likeeat.utilities
 
-import android.app.Activity
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import com.fund.likeeat.R
 import com.fund.likeeat.manager.MyApplication
 import kotlinx.android.synthetic.main.dialog_toast.view.*
 
 object ToastUtil {
-    fun toastShort(activity: Activity, message: String) {
+    fun toastShort(message: String) {
         val inflater = MyApplication.applicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val toastView = inflater.inflate(
             R.layout.dialog_toast,
-            activity.findViewById(R.id.viewgroup)
+            View(MyApplication.applicationContext()).findViewById(R.id.viewgroup) // 쓸데없는 View 객체가 생성.. 상관없나..?
         )?.apply { toast_message.text = message }
 
         Toast(MyApplication.applicationContext()).apply {

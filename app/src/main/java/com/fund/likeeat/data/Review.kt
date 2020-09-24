@@ -30,3 +30,18 @@ data class Review(
     val phone: String?
 ) : Parcelable {
 }
+
+data class ReviewChanged(
+    val isPublic: Boolean,
+    val category: String?,
+    val comment: String?,
+    val visitedDayYmd: String?,
+    val companions: String?,
+    val toliets: String?,
+    val priceRange: String?,
+    val serviceQuality: String?,
+    val revisit: String?,
+    val themeIds: String,
+    val place: PlaceWhenChangeReview
+) {
+}

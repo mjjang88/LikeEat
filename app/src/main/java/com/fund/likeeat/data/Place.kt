@@ -45,3 +45,13 @@ data class Place(
     val distance : String?
 ) : Parcelable{
 }
+
+data class PlaceWhenChangeReview(
+    val lat: Double,
+    val lng: Double,
+    val address: String?,
+    val name: String?,
+    val phoneNumber: String?
+) {
+    
+}

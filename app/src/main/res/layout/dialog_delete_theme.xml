@@ -32,7 +32,7 @@
         android:gravity="center"
         android:text="@string/delete_theme_content"
         android:textColor="@color/black02"
-        android:textSize="@dimen/text_size_normal" />
+        android:textSize="@dimen/text_size_big" />
 
     <View
         android:id="@+id/seperator"

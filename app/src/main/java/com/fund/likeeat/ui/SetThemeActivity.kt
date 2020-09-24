@@ -1,19 +1,25 @@
 package com.fund.likeeat.ui
 
-import android.graphics.Color
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.fund.likeeat.R
 import com.fund.likeeat.databinding.ActivitySetThemeBinding
+import com.fund.likeeat.manager.KeyboardManager
+import com.fund.likeeat.utilities.COLOR_NOT_SELECTED
 import com.fund.likeeat.utilities.ColorList
+import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.utilities.UID_DETACHED
 import com.fund.likeeat.viewmodels.OneThemeViewModel
-import dev.sasikanth.colorsheet.ColorSheet
+import com.fund.likeeat.widget.ThemeColorSelectBottomSheetFragment
+import com.fund.likeeat.widget.ThemePublicSelectBottomSheetFragment
+import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_set_theme.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -21,9 +27,12 @@ import org.koin.core.parameter.parametersOf
 open class SetThemeActivity : AppCompatActivity() {
     var themeId: Long? = null
     var isPublic = true
-    var colorSelected: Int = Color.BLACK
+    var colorSelected: Int? = null
 
     var isFocusingEditText = false
+    var isCorrectInputInformation = false
+
+    var naverMapInfo: LatLng? = null
 
     val themeViewModel: OneThemeViewModel by viewModel { parametersOf(themeId) }
     lateinit var binding: ActivitySetThemeBinding
@@ -37,7 +46,7 @@ open class SetThemeActivity : AppCompatActivity() {
         binding.apply {
             lifecycleOwner = this@SetThemeActivity
 
-            themeColor.setOnClickListener { openColorSheetAndSetThemeColor() }
+            layoutTag.setOnClickListener { openColorBottomSheetAndSetThemeColor() }
             themeName.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) {
                     theme_name.setBackgroundResource(R.drawable.item_border_round_primary100)
@@ -52,23 +61,17 @@ open class SetThemeActivity : AppCompatActivity() {
                 }
 
                 override fun onTextChanged(result: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!verifyThemeName(result.toString())) {
-                        action_enroll.setBackgroundResource(R.drawable.item_fill_black05_round)
-                    } else {
-                        action_enroll.setBackgroundResource(R.drawable.item_fill_black01_round)
-                    }
+                    verifyCorrectInputInformationAndChangeButtonStyle(result.toString())
                 }
             })
 
-            layoutThemeSetPublic.setOnClickListener {
-                if (isPublic) {
-                    themeIsPublic.text = resources.getString(R.string.theme_public_close)
-                    imagePublic.setImageResource(R.drawable.ic_eye_off_24)
-                } else {
-                    themeIsPublic.text = resources.getString(R.string.theme_public_open)
-                    imagePublic.setImageResource(R.drawable.ic_eye_24)
-                }
-                isPublic = !isPublic
+            layoutThemeSetPublic.setOnClickListener { openPublicBottomSheetAndSetPublicState() }
+
+            layoutAddReviewInTheme.setOnClickListener {
+                val intent = Intent(this@SetThemeActivity, SearchPlaceInThemeActivity::class.java)
+                intent.putExtra("THEME_ID", NOT_CREATED)
+                intent.putExtra(INTENT_KEY_LOCATION, naverMapInfo)
+                startActivity(intent)
             }
 
             actionBack.setOnClickListener { finish() }
@@ -91,18 +94,65 @@ open class SetThemeActivity : AppCompatActivity() {
             }
         }
         isFocusingEditText = false
+        KeyboardManager.hideKeyboard(this, theme_name)
         return super.dispatchTouchEvent(ev)
     }
 
-    private fun openColorSheetAndSetThemeColor() {
-        ColorSheet().colorPicker(
-            colors = ColorList.colorList,
-            listener = { color: Int ->
-                colorSelected = color
-                theme_color.circleColor = color
-            }).show(supportFragmentManager)
+    private fun openColorBottomSheetAndSetThemeColor() {
+        val themeColorSelectBottomSheet = ThemeColorSelectBottomSheetFragment()
+        themeColorSelectBottomSheet.setColorSavedListener(object: ThemeColorSelectBottomSheetFragment.ColorSavedListener {
+            override fun onSaved(colorCode: Int) {
+                colorSelected = colorCode
+                theme_tag.setColorFilter(colorCode)
+
+                verifyCorrectInputInformationAndChangeButtonStyle(binding.themeName.text.toString())
+
+                val list = ColorList.colorList.filter { it.first == colorCode }
+                val colorText = list[0].second
+                theme_color_text.text = colorText
+            }
+        })
+
+        val bundle = Bundle()
+        bundle.putInt("COLOR_SELECTED", colorSelected ?: COLOR_NOT_SELECTED)
+        themeColorSelectBottomSheet.arguments = bundle  // bundle값으로 현재 지정된 색을 넘겨줌 BottomSheet에 넘겨줌
+        themeColorSelectBottomSheet.show(supportFragmentManager, themeColorSelectBottomSheet.tag)
     }
 
-    fun verifyThemeName(name: String?): Boolean =
+    private fun openPublicBottomSheetAndSetPublicState() {
+        ThemePublicSelectBottomSheetFragment().apply {
+            setPublicSavedListener(object: ThemePublicSelectBottomSheetFragment.PublicSavedListener {
+                override fun onSaved(isPublic: Boolean) {
+                    this@SetThemeActivity.isPublic = isPublic
+                    if (isPublic) {
+                        binding.themeIsPublic.text = resources.getString(R.string.theme_public_open)
+                        binding.imagePublic.setImageResource(R.drawable.ic_baseline_visibility_24)
+                    } else {
+                        binding.themeIsPublic.text = resources.getString(R.string.theme_public_close)
+                        binding.imagePublic.setImageResource(R.drawable.ic_baseline_visibility_off_24)
+                    }
+                }
+            })
+
+            val bundle = Bundle()
+            bundle.putBoolean("PUBLIC_SELECTED", isPublic)
+            arguments = bundle
+            show(supportFragmentManager, tag)
+        }
+    }
+
+    fun verifyCorrectInputInformationAndChangeButtonStyle(name: String?) {
+        if(verifyThemeName(name) && verifyThemeColor()) {
+            isCorrectInputInformation = true
+            action_enroll.setBackgroundResource(R.drawable.item_fill_black01_round)
+        } else {
+            isCorrectInputInformation = false
+            action_enroll.setBackgroundResource(R.drawable.item_fill_black05_round)
+        }
+    }
+
+    private fun verifyThemeName(name: String?): Boolean =
         !name.isNullOrEmpty() && name.length <= 20
+
+    private fun verifyThemeColor() = colorSelected != null
 }

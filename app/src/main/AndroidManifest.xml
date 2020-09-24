@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.ReviewsInThemeActivity"></activity>
         <activity android:name=".ui.ModifyReviewDetailActivity" />
         <activity android:name=".ui.ModifyReviewAcitivity" />
         <activity android:name=".ui.ReviewDetailActivity" />
@@ -38,6 +39,7 @@
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.ReviewsActivity" />
         <activity android:name=".ui.SearchPlaceActivity" />
+        <activity android:name=".ui.SearchPlaceInThemeActivity" />
         <activity android:name=".ui.AddReviewActivity" />
         <activity android:name=".ui.ViewReviewActivity" />
 

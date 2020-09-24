@@ -3,9 +3,9 @@ package com.fund.likeeat.ui
 import android.os.Bundle
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.data.ThemeRequest
-import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.utilities.ColorList
+import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
+import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_set_theme.*
 
 class UpdateThemeActivity : SetThemeActivity() {
@@ -13,27 +13,35 @@ class UpdateThemeActivity : SetThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        naverMapInfo = intent.getParcelableExtra<LatLng>(INTENT_KEY_LOCATION)
         binding.screenTitle.text = resources.getString(R.string.title_edit_theme)
 
         themeViewModel.theme.observe(this) { theme ->
+            val list = ColorList.colorList.filter { it.first == theme.color }
+            val colorText = list[0].second
+
             binding.themeName.setText(theme.name)
 
             colorSelected = theme.color
-            binding.themeColor.circleColor = colorSelected
+            binding.themeTag.setColorFilter(colorSelected!!)
+
+            binding.themeColorText.text = colorText
 
             if(theme.isPublic) {
                 isPublic = true
                 theme_is_public.text = resources.getString(R.string.theme_public_open)
-                image_public.setImageResource(R.drawable.ic_eye_24)
+                image_public.setImageResource(R.drawable.ic_baseline_visibility_24)
             } else {
                 isPublic = false
                 theme_is_public.text = resources.getString(R.string.theme_public_close)
-                image_public.setImageResource(R.drawable.ic_eye_off_24)
+                image_public.setImageResource(R.drawable.ic_baseline_visibility_off_24)
             }
+
+            verifyCorrectInputInformationAndChangeButtonStyle(binding.themeName.text.toString())
         }
 
         binding.actionEnroll.setOnClickListener {
-            if(verifyThemeName(binding.themeName.text.toString())) {
+            if(isCorrectInputInformation) {
                 updateTheme()
                 finish()
             }
@@ -46,7 +54,7 @@ class UpdateThemeActivity : SetThemeActivity() {
             this,
             themeId!!,
             name = binding.themeName.text.toString(),
-            color = colorSelected,
+            color = colorSelected!!,
             isPublic = isPublic
         )
     }

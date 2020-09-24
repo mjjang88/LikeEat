@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="gridItem"
+            type="com.fund.likeeat.adapter.ColorItem" />
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_double"
+        android:layout_marginBottom="@dimen/margin_1.5_times"
+        android:onClick="@{clickListener}">
+
+        <ImageView
+            android:id="@+id/eclipse"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/eclipse"/>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_tag"
+            app:colorTagTint="@{gridItem.colorCode}"
+            app:layout_constraintTop_toTopOf="@id/eclipse"
+            app:layout_constraintStart_toStartOf="@id/eclipse"
+            app:layout_constraintEnd_toEndOf="@id/eclipse"
+            app:layout_constraintBottom_toBottomOf="@id/eclipse"/>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{gridItem.name}"
+            app:layout_constraintTop_toBottomOf="@id/eclipse"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/margin_half"
+            android:textStyle="bold"
+            style="@style/TextBig"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

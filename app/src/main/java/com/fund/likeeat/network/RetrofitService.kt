@@ -68,4 +68,10 @@ interface RetrofitService {
     fun deleteTheme(
         @Path("id") id: Long
     ): Call<Theme>
+
+    @PUT("/reviews/{id}")
+    fun updateReviewOnlyTheme(
+        @Path("id") id: Long,
+        @Body reviewChanged: ReviewChanged
+    ): Call<Review>
 }
