@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.databinding.LayoutImageTextBinding
 
-class AddReviewBottomSheetListAdapter() : ListAdapter<GridItem, RecyclerView.ViewHolder>(GridItemDiffCallback())  {
+class AddReviewBottomSheetListAdapter : ListAdapter<GridItem, RecyclerView.ViewHolder>(GridItemDiffCallback())  {
 
     var selectedPosition : Int = RecyclerView.NO_POSITION
 
@@ -52,7 +52,19 @@ class AddReviewBottomSheetListAdapter() : ListAdapter<GridItem, RecyclerView.Vie
     }
 
     fun getSelectedItem(): GridItem {
+        if (selectedPosition == RecyclerView.NO_POSITION) {
+            return GridItem("", 0)
+        }
         return getItem(selectedPosition)
+    }
+
+    fun setSelectItem(name: String) {
+        for (index in 0 until itemCount) {
+            if (getItem(index).name == name) {
+                selectedPosition = index
+                notifyItemChanged(index)
+            }
+        }
     }
 }
 

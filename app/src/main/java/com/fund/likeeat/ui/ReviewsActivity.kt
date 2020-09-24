@@ -11,8 +11,16 @@ import com.fund.likeeat.databinding.ActivityReviewsBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.utilities.UID_DETACHED
 import com.fund.likeeat.viewmodels.ReviewsViewModel
+import com.kakao.friends.AppFriendContext
+import com.kakao.friends.AppFriendOrder
+import com.kakao.friends.response.AppFriendsResponse
+import com.kakao.kakaotalk.callback.TalkResponseCallback
+import com.kakao.kakaotalk.v2.KakaoTalkService
+import com.kakao.network.ErrorResult
+import com.kakao.sdk.talk.TalkApiClient
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+
 
 class ReviewsActivity: AppCompatActivity() {
     private lateinit var binding: ActivityReviewsBinding
@@ -21,7 +29,10 @@ class ReviewsActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView<ActivityReviewsBinding>(this, R.layout.activity_reviews)
+        binding = DataBindingUtil.setContentView<ActivityReviewsBinding>(
+            this,
+            R.layout.activity_reviews
+        )
         binding.lifecycleOwner = this
 
         Log.i("UID_ATTACHED", intent.getLongExtra("uid", UID_DETACHED).toString())

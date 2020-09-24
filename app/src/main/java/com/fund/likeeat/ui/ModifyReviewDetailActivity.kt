@@ -1,6 +1,5 @@
 package com.fund.likeeat.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,16 +10,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.adapter.AddReviewThemeAdapter
-import com.fund.likeeat.data.Place
-import com.fund.likeeat.data.Theme
-import com.fund.likeeat.databinding.ActivityAddReviewBinding
+import com.fund.likeeat.data.Review
+import com.fund.likeeat.databinding.ActivityModifyReviewDetailBinding
 import com.fund.likeeat.manager.*
 import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.PlaceServer
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.network.ReviewServerWrite
-import com.fund.likeeat.utilities.INTENT_KEY_PLACE
+import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.widget.*
 import kotlinx.android.synthetic.main.activity_add_review.*
@@ -28,20 +26,18 @@ import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class AddReviewActivity : AppCompatActivity()  {
+class ModifyReviewDetailActivity : AppCompatActivity() {
 
     private val addReviewViewModel: AddReviewViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
-    lateinit var mPlace: Place
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityAddReviewBinding>(
+        val binding = DataBindingUtil.setContentView<ActivityModifyReviewDetailBinding>(
             this,
-            R.layout.activity_add_review
+            R.layout.activity_modify_review_detail
         )
 
-        initPlace(binding)
+        initReview(binding)
 
         initComponent(binding)
 
@@ -50,21 +46,33 @@ class AddReviewActivity : AppCompatActivity()  {
         }
     }
 
-    private fun initPlace(binding: ActivityAddReviewBinding) {
-        val place = intent.getParcelableExtra<Place>(INTENT_KEY_PLACE)
+    private fun initReview(binding: ActivityModifyReviewDetailBinding) {
+        var review = intent.getParcelableExtra<Review>(INTENT_KEY_REVIEW)
 
-        binding.place = place
-        mPlace = place!!
+        if (review != null) {
+            val isCreateReview = intent.getBooleanExtra(INTENT_KEY_REVIEW_CREATE, false)
+            if (isCreateReview) {
+                review = Review(review.id, review.uid, review.isPublic, review.category,
+                    null, null, null, null, null, null, null, null,
+                    review.x, review.y, review.place_name, review.place_name, review.phone)
+            }
+
+            binding.review = review
+
+            lifecycleScope.launch {
+                val themeIds = addReviewViewModel.getThemeIds(review)
+
+                withContext(Dispatchers.Main) {
+                    addReviewViewModel.editedReview.value = ReviewServerWrite(review.isPublic, review.category, review.comment, review.visitedDayYmd, review.companions,
+                        review.toliets, review.priceRange, review.serviceQuality, themeIds, review.uid, review.revisit,
+                        PlaceServer(review.y?: 0.0, review.x?: 0.0, review.address_name?: "", review.place_name?: "", review.phone?: "")
+                    )
+                }
+            }
+        }
     }
 
-    private fun initComponent(binding: ActivityAddReviewBinding) {
-
-        binding.btnCategory.setOnClickListener {
-            val categoryBottomSheetFragment = CategorySelectBottomSheetFragment()
-            categoryBottomSheetFragment.addReviewViewModel = addReviewViewModel
-            categoryBottomSheetFragment.show(supportFragmentManager, categoryBottomSheetFragment.tag)
-        }
-
+    private fun initComponent(binding: ActivityModifyReviewDetailBinding) {
         binding.btnExtend.setOnClickListener {
             it.isSelected = !it.isSelected
             if (it.isSelected) {
@@ -72,20 +80,6 @@ class AddReviewActivity : AppCompatActivity()  {
             } else {
                 binding.layoutDetailPage.visibility = View.GONE
             }
-        }
-
-        binding.checkIsPublic.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                buttonView.text = getString(R.string.share)
-            } else {
-                buttonView.text = getString(R.string.not_share)
-            }
-        }
-
-        binding.layoutAddTheme.setOnClickListener {
-            val themeBottomSheetFragment = ThemeSelectBottomSheetFragment()
-            themeBottomSheetFragment.addReviewViewModel = addReviewViewModel
-            themeBottomSheetFragment.show(supportFragmentManager, themeBottomSheetFragment.tag)
         }
 
         binding.btnVisitDate.setOnClickListener {
@@ -144,53 +138,16 @@ class AddReviewActivity : AppCompatActivity()  {
             }
         })
 
+        binding.btnOk.setOnClickListener {
+            doSetReview()
+        }
+
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
-
-        binding.btnOk.setOnClickListener {
-            doAddingReview()
-        }
     }
 
-    private fun updateReview(binding: ActivityAddReviewBinding, review: ReviewServerWrite) {
-
-        if (review.category.isNullOrBlank()) {
-            val drawable = resources.getDrawable(R.drawable.btn_plus_red, null)
-            binding.btnCategory.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
-            binding.btnCategory.text = getString(R.string.category)
-            binding.btnCategory.setTextColor(getColor(R.color.colorPrimary))
-        } else {
-            val drawable = resources.getDrawable(getCategoryImageByName(review.category!!), null)
-            binding.btnCategory.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
-            binding.btnCategory.text = review.category
-            binding.btnCategory.setTextColor(getColor(R.color.colorBlack))
-        }
-
-        if (review.themeIds != null) {
-            val adapter = AddReviewThemeAdapter()
-            binding.listTheme.adapter = adapter
-            adapter.checkable = false
-
-            lifecycleScope.launch(Dispatchers.IO) {
-                val themeList = addReviewViewModel.getThemeList()
-                val themeIds = addReviewViewModel.editedReview.value?.themeIds?.split(",")
-                val checkedList: ArrayList<Theme> = ArrayList()
-
-                themeIds?.forEach { themeId ->
-                    if (themeId.isNullOrBlank()) return@forEach
-                    themeList.find {
-                        it.id == themeId.toLong()
-                    }.apply {
-                        if (this != null) {
-                            checkedList.add(this)
-                        }
-                    }
-                }
-
-                adapter.submitList(checkedList)
-            }
-        }
+    private fun updateReview(binding: ActivityModifyReviewDetailBinding, review: ReviewServerWrite) {
 
         if (review.visitedDayYmd.isNullOrBlank()) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
@@ -267,17 +224,19 @@ class AddReviewActivity : AppCompatActivity()  {
     }
 
     fun setEnableBtnOk() {
-        btn_ok.isEnabled = edit_comment.text.length > 0 && !addReviewViewModel.editedReview.value?.category.isNullOrBlank()
+        btn_ok.isEnabled = edit_comment.text.length > 0
     }
 
-    private fun doAddingReview() {
+    private fun doSetReview() {
 
-        val review = makeReview()
+        val reviewId = intent.getParcelableExtra<Review>(INTENT_KEY_REVIEW)?.id
+        val review = addReviewViewModel.editedReview.value
+        review?.comment = edit_comment.text.toString()
 
         var bSendUserInfoSuccess = false
         GlobalScope.launch(Dispatchers.Default) {
             try {
-                LikeEatRetrofit.getService().addReview(review).apply {
+                LikeEatRetrofit.getService().setReview(reviewId?: 0, review).apply {
                     if (isSuccessful) {
                         bSendUserInfoSuccess = true
                     }
@@ -293,43 +252,10 @@ class AddReviewActivity : AppCompatActivity()  {
             }
 
             withContext(Dispatchers.Main) {
-                Toast.makeText(this@AddReviewActivity, "리뷰 추가 완료", Toast.LENGTH_LONG).show()
-                val intent = Intent(this@AddReviewActivity, MainActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                }
-                startActivity(intent)
+                Toast.makeText(this@ModifyReviewDetailActivity, "리뷰 수정 완료", Toast.LENGTH_LONG).show()
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                finish()
             }
         }
-    }
-
-    private fun makeReview(): ReviewServerWrite {
-
-        val uid = MyApplication.pref.uid
-        val isPublic = check_is_public.isChecked
-        val category = addReviewViewModel.editedReview.value?.category?: ""
-        val comment = edit_comment.text.toString()
-        val visitedDayYmd = addReviewViewModel.editedReview.value?.visitedDayYmd
-        val companions = addReviewViewModel.editedReview.value?.companions?: ""
-        val toliets = addReviewViewModel.editedReview.value?.toliets?: ""
-        val priceRange = addReviewViewModel.editedReview.value?.priceRange?: ""
-        val serviceQuality = addReviewViewModel.editedReview.value?.serviceQuality?: ""
-        val revisit = addReviewViewModel.editedReview.value?.revisit?: ""
-        val themeIds = addReviewViewModel.editedReview.value?.themeIds?: ""
-
-        return ReviewServerWrite(
-            isPublic,
-            category,
-            comment,
-            visitedDayYmd,
-            companions,
-            toliets,
-            priceRange,
-            serviceQuality,
-            themeIds,
-            uid,
-            revisit,
-            PlaceServer(mPlace)
-        )
     }
 }

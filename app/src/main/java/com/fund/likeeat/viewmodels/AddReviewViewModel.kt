@@ -2,12 +2,17 @@ package com.fund.likeeat.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fund.likeeat.data.Theme
-import com.fund.likeeat.data.ThemeRepository
+import androidx.lifecycle.viewModelScope
+import com.fund.likeeat.data.*
 import com.fund.likeeat.network.ReviewServerWrite
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class AddReviewViewModel internal constructor(
     val themeRepository: ThemeRepository,
+    val reviewThemeLinkDao: ReviewThemeLinkDao,
     val uid: Long
 ): ViewModel() {
 
@@ -24,6 +29,50 @@ class AddReviewViewModel internal constructor(
 
     fun setTheme(themeIds: String) {
         editedReview.value?.themeIds = themeIds
+        editedReview.value = editedReview.value
+    }
+
+    suspend fun getThemeIds(review: Review): String {
+
+        val result = viewModelScope.async(Dispatchers.IO) {
+
+            var strResult: String = ""
+
+            try {
+                val themeListAll = getThemeList()
+                val reviewThemeLinkList = reviewThemeLinkDao.getList()
+
+                val themeListResult = ArrayList<Theme>()
+                reviewThemeLinkList.forEach { reviewThemeLink: ReviewThemeLink ->
+                    if (review.id == reviewThemeLink.reviewId) {
+                        themeListAll.find {theme ->
+                            theme.id == reviewThemeLink.themeId
+                        }?.let {
+                            themeListResult.add(it)
+                        }
+                    }
+                }
+
+                themeListResult.forEach {
+                    if (!strResult.isNullOrBlank()) {
+                        strResult += ","
+                    }
+                    strResult += it.id
+                }
+
+                strResult
+
+            } catch (e: Throwable) {
+                e.stackTrace
+                ""
+            }
+        }
+
+        return result.await()
+    }
+
+    fun setVisitDate(date: String) {
+        editedReview.value?.visitedDayYmd = date
         editedReview.value = editedReview.value
     }
 

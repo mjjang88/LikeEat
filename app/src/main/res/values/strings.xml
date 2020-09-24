@@ -41,7 +41,7 @@
 
     <string name="regist_theme">등록 테마</string>
     <string name="btn_regist_theme">테마 추가 적용</string>
-    
+
     <string name="visit_record">방문기록</string>
 
     <string name="complete_select">선택완료</string>
@@ -70,5 +70,12 @@
     <string name="theme_public_open">공개</string>
     <string name="theme_public_close">비공개</string>
     <string name="theme_enroll">등록하기</string>
+
+    <string name="place_in_map">맛집 리스트</string>
+    <string name="seek_more_place">더 많은 맛집 찾기</string>
+
+    <string name="update">수정하기</string>
+    <string name="delete">삭제하기</string>
+    <string name="apply">적용하기</string>
 
 </resources>

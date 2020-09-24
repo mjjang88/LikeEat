@@ -16,7 +16,6 @@ import com.fund.likeeat.viewmodels.SEARCH_OPTION_NEAR_MAP_LOCATION
 import com.fund.likeeat.viewmodels.SearchPlaceViewModel
 import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_search_place.*
-import kotlinx.android.synthetic.main.item_reviews.*
 import org.koin.android.ext.android.inject
 
 class SearchPlaceActivity : AppCompatActivity() {
@@ -36,6 +35,10 @@ class SearchPlaceActivity : AppCompatActivity() {
 
         intent.getParcelableExtra<LatLng>(INTENT_KEY_LOCATION).apply {
             searchPoiViewModel.locate.value = this
+        }
+
+        btn_back.setOnClickListener {
+            finish()
         }
     }
 
