@@ -2,21 +2,17 @@ package com.fund.likeeat.ui
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.fund.likeeat.R
-import com.fund.likeeat.adapter.ReviewsAdapter
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
@@ -24,9 +20,7 @@ import com.fund.likeeat.utilities.GpsTracker
 import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.utilities.ToastUtil
 import com.fund.likeeat.viewmodels.MapViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kakao.sdk.user.UserApiClient
-import com.kakao.usermgmt.response.model.User
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.MapFragment
@@ -92,6 +86,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         binding.navigationLeft.all_theme_layout.setOnClickListener {
             val intent = Intent(requireContext(), ThemeActivity::class.java)
+            intent.putExtra(INTENT_KEY_LOCATION, mNaverMap.cameraPosition.target)
             startActivity(intent)
             drawer.closeDrawer(GravityCompat.START)
         }

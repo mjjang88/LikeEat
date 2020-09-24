@@ -12,7 +12,10 @@ import com.fund.likeeat.adapter.ThemeAdapter
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityThemeBinding
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.viewmodels.AllThemesViewModel
+import com.fund.likeeat.widget.OnSelectEditListener
+import com.naver.maps.geometry.LatLng
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -26,15 +29,30 @@ class ThemeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView<ActivityThemeBinding>(this, R.layout.activity_theme)
         binding.lifecycleOwner = this
 
+        val naverMapInfo = intent.getParcelableExtra<LatLng>(INTENT_KEY_LOCATION)
+
         val adapter = ThemeAdapter(supportFragmentManager).apply {
             setOnAddThemeListener(object: OnClickAddThemeListener {
-                override fun onClick() { startActivity(Intent(this@ThemeActivity, AddThemeActivity::class.java)) }
+                override fun onClick() { startActivity(Intent(this@ThemeActivity, AddThemeActivity::class.java)
+                    .apply{ putExtra(INTENT_KEY_LOCATION, naverMapInfo) }) }
             })
+
             setOnClickCardListener(object: OnClickCardListener {
                 override fun onClick(themeId: Long, themeName: String) {
                     val intent = Intent(this@ThemeActivity, ReviewsInThemeActivity::class.java)
                     intent.putExtra("THEME_ID", themeId)
                     intent.putExtra("THEME_NAME", themeName)
+                    intent.putExtra(INTENT_KEY_LOCATION, naverMapInfo)
+                    startActivity(intent)
+                }
+            })
+
+            setOnSelectEditListener(object: OnSelectEditListener {
+                override fun onSelectEdit(themeId: Long?) {
+                    val intent = Intent(this@ThemeActivity, UpdateThemeActivity::class.java).apply {
+                        putExtra(INTENT_KEY_LOCATION, naverMapInfo)
+                        putExtra("THEME_ID", themeId)
+                    }
                     startActivity(intent)
                 }
             })

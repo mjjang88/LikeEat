@@ -13,12 +13,15 @@ import com.fund.likeeat.R
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ItemThemeBinding
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.widget.OnSelectEditListener
 import com.fund.likeeat.widget.SetThemeBottomSheet
 import kotlinx.android.synthetic.main.item_title.view.*
+import kotlinx.coroutines.selects.select
 
 class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, RecyclerView.ViewHolder>(ThemeDiffCallback()) {
 
     var addThemeListener: OnClickAddThemeListener? = null
+    var selectEditListener: OnSelectEditListener? = null
     var clickCardListener : OnClickCardListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -75,7 +78,12 @@ class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, Rec
                 bundle.putLong("THEME_ID", item.id)
 
                 val bottomSheetFragment =
-                    SetThemeBottomSheet()
+                    SetThemeBottomSheet(object: OnSelectEditListener {
+                        override fun onSelectEdit(themeId: Long?) {
+                            selectEditListener?.onSelectEdit(themeId)
+                        }
+
+                    })
                 bottomSheetFragment.arguments = bundle
                 bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
             }
@@ -93,6 +101,10 @@ class ThemeAdapter(val fragmentManager: FragmentManager): ListAdapter<Theme, Rec
 
     fun setOnClickCardListener(li: OnClickCardListener) {
         clickCardListener = li
+    }
+
+    fun setOnSelectEditListener(li: OnSelectEditListener){
+        selectEditListener = li
     }
 
     companion object {

@@ -3,6 +3,7 @@ package com.fund.likeeat.utilities
 import com.fund.likeeat.data.AppDatabase
 import com.fund.likeeat.data.ReviewRepository
 import com.fund.likeeat.data.ThemeRepository
+import com.fund.likeeat.ui.SearchPlaceInThemeActivity
 import com.fund.likeeat.viewmodels.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -31,4 +32,5 @@ val appModule = module {
     viewModel { (id: Long) -> OneThemeViewModel(get(), get(), get(), id) }
     viewModel { (reviewId: Long, themeId: Long) -> ReviewThemeLinkViewModel(get(), reviewId, themeId) }
     viewModel { (reviewId: Long) -> OneReviewViewModel(get(), reviewId) }
+    viewModel { SearchPlaceInThemeViewModel(get()) }
 }

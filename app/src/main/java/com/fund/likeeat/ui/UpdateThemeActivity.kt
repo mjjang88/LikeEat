@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
 import com.fund.likeeat.utilities.ColorList
+import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
+import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_set_theme.*
 
 class UpdateThemeActivity : SetThemeActivity() {
@@ -11,6 +13,7 @@ class UpdateThemeActivity : SetThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        naverMapInfo = intent.getParcelableExtra<LatLng>(INTENT_KEY_LOCATION)
         binding.screenTitle.text = resources.getString(R.string.title_edit_theme)
 
         themeViewModel.theme.observe(this) { theme ->

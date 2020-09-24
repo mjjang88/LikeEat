@@ -1,5 +1,6 @@
 package com.fund.likeeat.ui
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
@@ -13,10 +14,12 @@ import com.fund.likeeat.databinding.ActivitySetThemeBinding
 import com.fund.likeeat.manager.KeyboardManager
 import com.fund.likeeat.utilities.COLOR_NOT_SELECTED
 import com.fund.likeeat.utilities.ColorList
+import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.utilities.UID_DETACHED
 import com.fund.likeeat.viewmodels.OneThemeViewModel
 import com.fund.likeeat.widget.ThemeColorSelectBottomSheetFragment
 import com.fund.likeeat.widget.ThemePublicSelectBottomSheetFragment
+import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_set_theme.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -28,6 +31,8 @@ open class SetThemeActivity : AppCompatActivity() {
 
     var isFocusingEditText = false
     var isCorrectInputInformation = false
+
+    var naverMapInfo: LatLng? = null
 
     val themeViewModel: OneThemeViewModel by viewModel { parametersOf(themeId) }
     lateinit var binding: ActivitySetThemeBinding
@@ -61,6 +66,13 @@ open class SetThemeActivity : AppCompatActivity() {
             })
 
             layoutThemeSetPublic.setOnClickListener { openPublicBottomSheetAndSetPublicState() }
+
+            layoutAddReviewInTheme.setOnClickListener {
+                val intent = Intent(this@SetThemeActivity, SearchPlaceInThemeActivity::class.java)
+                intent.putExtra("THEME_ID", NOT_CREATED)
+                intent.putExtra(INTENT_KEY_LOCATION, naverMapInfo)
+                startActivity(intent)
+            }
 
             actionBack.setOnClickListener { finish() }
         }
