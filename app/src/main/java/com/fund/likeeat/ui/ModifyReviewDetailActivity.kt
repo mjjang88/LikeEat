@@ -139,7 +139,12 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
         })
 
         binding.btnOk.setOnClickListener {
-            doSetReview()
+            val isCreateReview = intent.getBooleanExtra(INTENT_KEY_REVIEW_CREATE, false)
+            if (isCreateReview) {
+                doAddReview()
+            } else {
+                doSetReview()
+            }
         }
 
         binding.btnBack.setOnClickListener {
@@ -230,8 +235,8 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
     private fun doSetReview() {
 
         val reviewId = intent.getParcelableExtra<Review>(INTENT_KEY_REVIEW)?.id
-        val review = addReviewViewModel.editedReview.value
-        review?.comment = edit_comment.text.toString()
+        val review = setReviewNullToBlack(addReviewViewModel.editedReview.value)
+        review.comment = edit_comment.text.toString()
 
         var bSendUserInfoSuccess = false
         GlobalScope.launch(Dispatchers.Default) {
@@ -257,5 +262,53 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private fun doAddReview() {
+
+        val review = setReviewNullToBlack(addReviewViewModel.editedReview.value)
+        review.comment = edit_comment.text.toString()
+
+        var bSendUserInfoSuccess = false
+        GlobalScope.launch(Dispatchers.Default) {
+            try {
+                LikeEatRetrofit.getService().addReview(review).apply {
+                    if (isSuccessful) {
+                        bSendUserInfoSuccess = true
+                    }
+                }
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Default) {
+            while (!bSendUserInfoSuccess) {
+                delay(1000)
+            }
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@ModifyReviewDetailActivity, "리뷰 추가 완료", Toast.LENGTH_LONG).show()
+                RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                finish()
+            }
+        }
+    }
+
+    private fun setReviewNullToBlack(review: ReviewServerWrite?): ReviewServerWrite {
+        return  ReviewServerWrite(
+            review?.isPublic?: false,
+            review?.category?: "",
+            review?.comment?: "",
+            review?.visitedDayYmd?: "",
+            review?.companions?: "",
+            review?.toliets?: "",
+            review?.priceRange?: "",
+            review?.serviceQuality?: "",
+            review?.themeIds?: "",
+            review?.uid?: -1,
+            review?.revisit?: "",
+            review?.place
+        )
     }
 }

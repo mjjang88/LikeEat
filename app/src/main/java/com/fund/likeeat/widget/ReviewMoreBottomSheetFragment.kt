@@ -19,6 +19,7 @@ import com.fund.likeeat.ui.ModifyReviewAcitivity
 import com.fund.likeeat.ui.ModifyReviewDetailActivity
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*

@@ -20,7 +20,6 @@ import com.fund.likeeat.manager.PermissionManager
 import com.fund.likeeat.utilities.GpsTracker
 import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
-import com.fund.likeeat.viewmodels.MapViewModel
 import com.fund.likeeat.utilities.ToastUtil
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.kakao.sdk.user.UserApiClient
@@ -100,7 +99,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             drawer.openDrawer(GravityCompat.START)
         }
 
-        binding.layoutHighlightPanel.setOnClickListener {
+        binding.layoutFabHighlight.setOnClickListener {
             val intent = Intent(requireContext(), ReviewDetailActivity::class.java)
             intent.putExtra(INTENT_KEY_REVIEW, highlightReview)
             startActivity(intent)
