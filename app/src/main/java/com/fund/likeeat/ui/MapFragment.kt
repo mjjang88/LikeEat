@@ -105,6 +105,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        binding.navigationRight.layoutRightNaviTitle.setOnClickListener {
+            
+        }
+
         return binding.root
     }
 

@@ -96,5 +96,6 @@
     <string name="search_name">이름 검색</string>
     <string name="favorite">즐겨찾기</string>
     <string name="all_friends">모든 친구</string>
+    <string name="manage_friend">친구 관리</string>
 
 </resources>
