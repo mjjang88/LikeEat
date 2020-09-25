@@ -189,6 +189,16 @@
             android:fitsSystemWindows="true"
             layout="@layout/navigation_left"/>
 
+        <include
+            android:id="@+id/navigation_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="true"
+            layout="@layout/navigation_right"
+            android:layout_marginLeft="@dimen/margin_big"
+            app:viewModel="@{viewModel}"/>
+
     </androidx.drawerlayout.widget.DrawerLayout>
 
 
