@@ -61,6 +61,7 @@
                         android:gravity="center"/>
 
                     <ImageButton
+                        android:id="@+id/btn_friend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_users"
@@ -196,7 +197,6 @@
             android:layout_gravity="end"
             android:fitsSystemWindows="true"
             layout="@layout/navigation_right"
-            android:layout_marginLeft="@dimen/margin_big"
             app:viewModel="@{viewModel}"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>

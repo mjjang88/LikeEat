@@ -105,8 +105,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        binding.btnFriend.setOnClickListener {
+            drawer.openDrawer(GravityCompat.END)
+        }
+
         binding.navigationRight.layoutRightNaviTitle.setOnClickListener {
-            
+            val intent = Intent(requireContext(), FriendsActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root

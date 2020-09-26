@@ -71,4 +71,7 @@
     <dimen name="alert_dialog_button_height">72dp</dimen>
     <dimen name="alert_dialog_button_divider_height">24dp</dimen>
 
+    <dimen name="friend_image_width">32dp</dimen>
+    <dimen name="friend_image_height">32dp</dimen>
+
 </resources>

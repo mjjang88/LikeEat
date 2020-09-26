@@ -122,7 +122,6 @@ class ThemeDiffCallback: DiffUtil.ItemCallback<Theme>() {
     override fun areContentsTheSame(oldItem: Theme, newItem: Theme): Boolean {
         return oldItem == newItem
     }
-
 }
 
 interface OnClickAddThemeListener {

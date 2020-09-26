@@ -74,4 +74,9 @@ interface RetrofitService {
         @Path("id") id: Long,
         @Body reviewChanged: ReviewChanged
     ): Call<Review>
+
+    @POST("/friends/")
+    suspend fun addFriends(
+        @Body friend: FriendLink
+    ): Response<Unit>
 }

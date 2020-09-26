@@ -18,6 +18,8 @@ val appModule = module {
     single(createdAtStart = false) { get<AppDatabase>().reviewDao() }
     single(createdAtStart = false) { get<AppDatabase>().themeDao() }
     single(createdAtStart = false) { get<AppDatabase>().reviewThemeLinkDao() }
+    single(createdAtStart = false) { get<AppDatabase>().kakaoFriendDao() }
+    single(createdAtStart = false) { get<AppDatabase>().friendLinkDao() }
     single { ReviewRepository(get()) }
     single { ThemeRepository(get()) }
 
@@ -35,4 +37,5 @@ val appModule = module {
     viewModel { (reviewId: Long, themeId: Long) -> ReviewThemeLinkViewModel(get(), reviewId, themeId) }
     viewModel { (reviewId: Long) -> OneReviewViewModel(get(), reviewId) }
     viewModel { SearchPlaceInThemeViewModel(get()) }
+    viewModel { (uid: Long) -> AddFriendViewModel(get(), uid) }
 }

@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.FriendsActivity"></activity>
+        <activity android:name=".ui.AddFriendActivity"></activity>
+        <activity android:name=".ui.FriendsActivity" />
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">
