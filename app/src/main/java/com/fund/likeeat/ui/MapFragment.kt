@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.fund.likeeat.R
+import com.fund.likeeat.adapter.MainThemeAdapter
+import com.fund.likeeat.adapter.OnSelectNavCardListener
 import com.fund.likeeat.data.Review
+import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
@@ -21,6 +24,8 @@ import com.fund.likeeat.utilities.GpsTracker
 import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.utilities.ToastUtil
+import com.fund.likeeat.viewmodels.AllThemesViewModel
+import com.fund.likeeat.viewmodels.MapOneThemeViewModel
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
@@ -30,14 +35,24 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.navigation_left.view.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+
+/***
+ * 전체 ReivewList는 mapViewModel.review에 존재!
+ * 선택된 테마의 ReviewList는 mapOneThemeViewModel.reviewOneTheme에 존재!
+ */
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mNaverMap : NaverMap
+    private val markers = hashMapOf<Long, Marker>()
+    private var nowSelectedThemeName: String? = null
 
     private val mapViewModel: MapViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val mapOneThemeViewModel: MapOneThemeViewModel by inject()
 
     private var highlightMarker: Marker? = null
     private var highlightReview: Review? = null
@@ -105,6 +120,37 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        val adapter = MainThemeAdapter()
+        adapter.setOnClickNavCardListener(object: OnSelectNavCardListener {
+            override fun onSelectNavCard(theme: Theme) {
+                binding.navigationLeft.theme_name.text = theme.name
+                binding.navigationLeft.theme_count.text = resources.getString(R.string.review_count)
+                    .replace("num", theme.reviewsCount.toString())
+                binding.navigationLeft.theme_tag.setColorFilter(theme.color)
+                binding.themeTitle.text = theme.name
+
+                nowSelectedThemeName = theme.name
+
+                mapOneThemeViewModel.getReviewIdListByThemeId(theme.id)
+            }
+
+        })
+
+        binding.navigationLeft.all_theme_recycler.adapter = adapter
+        themeViewModel.themeList.observe(viewLifecycleOwner) { themeList ->
+            adapter.submitList(themeList)
+        }
+
+        mapOneThemeViewModel.reviewIdList.observe(viewLifecycleOwner) { result ->
+            val reviewIdList = result.map { it.reviewId }
+            mapOneThemeViewModel.getReviews(reviewIdList)
+        }
+
+        mapOneThemeViewModel.reviewOneTheme.observe(viewLifecycleOwner) {
+            markerAndStyleInit()
+            if(nowSelectedThemeName != resources.getString(R.string.theme_all)) markerForTheme()
+        }
+
         return binding.root
     }
 
@@ -131,30 +177,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun subscribeUi() {
+        markers.clear()
         mapViewModel.review.observe(viewLifecycleOwner) {
-            it.forEach {review ->
+            it.forEach { review ->
                 val marker = Marker()
                 marker.captionText = review.place_name ?: "Null"
                 marker.position = LatLng(review.y!!, review.x!!)
                 marker.icon = OverlayImage.fromResource(R.drawable.marker_base)
+                marker.map = mNaverMap
                 marker.setOnClickListener {
-                    highlightMarker?.map = null
-                    val highLightMarker = Marker()
-                    highLightMarker.position = LatLng(review.y, review.x)
-                    highLightMarker.icon = OverlayImage.fromResource(R.drawable.marker_base_highlight)
-                    highLightMarker.map = mNaverMap
-                    highlightMarker = highLightMarker
-                    highlightReview = review
+                    setHighLightReviewAndMarkerStyle(review)
                     changeState(STATE_HIGHLIGHT)
-
-                    text_highlight_place_name.text = review.place_name
-                    text_highlight_place_address.text = review.address_name
-
                     true
                 }
-                marker.map = mNaverMap
-            }
 
+                markers[review.id] = marker
+            }
             mapViewModel.getReviewFullList(it)
         }
     }
@@ -243,9 +281,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    // Left Drawer 열었을 때, 관련 데이터가 바로 보일 수 있도록, MapFragment 진입시 동작하게 했습니다.
-    // 명준님께서 작업하신 기타 Init 작업이 있으시다면 같이 묶어도 괜찮습니다!
     private fun dataInit() {
         getMyKakaoAccountInfoAndSetProfileView()
     }
+
+    private fun markerAndStyleInit() {
+        val iter = markers.keys.iterator()
+        while(iter.hasNext()) {
+            val id = iter.next()
+            markers[id]?.icon = OverlayImage.fromResource(R.drawable.marker_base)
+        }
+    }
+
+    private fun markerForTheme() {
+        mapOneThemeViewModel.reviewOneTheme.value?.forEach { review ->
+            markers[review.id]?.icon = OverlayImage.fromResource(R.drawable.marker_theme)
+        }
+    }
+
+    private fun setHighLightReviewAndMarkerStyle(review: Review) {
+        highlightMarker?.map = null
+        val highLightMarker = Marker()
+        highLightMarker.position = LatLng(review.y!!, review.x!!)
+        highLightMarker.icon = OverlayImage.fromResource(R.drawable.marker_base_highlight)
+        highLightMarker.map = mNaverMap
+        highlightMarker = highLightMarker
+        highlightReview = review
+
+        text_highlight_place_name.text = review.place_name
+        text_highlight_place_address.text = review.address_name
+    }
+
+
 }

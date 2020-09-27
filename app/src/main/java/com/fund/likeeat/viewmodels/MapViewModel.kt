@@ -16,7 +16,7 @@ class MapViewModel internal constructor(
     val reviewThemeLinkDao: ReviewThemeLinkDao,
     val uid: Long
 ) : ViewModel(){
-    val review: LiveData<List<Review>> = reviewRepository.getReviewList()
+    val review: LiveData<List<Review>> = reviewRepository.getReviewListByUid(uid)
     val theme: LiveData<List<Theme>> = themeDao.getThemeList(uid)
 
     val reviewFull = MutableLiveData<ArrayList<ReviewFull>>().apply { value = arrayListOf() }

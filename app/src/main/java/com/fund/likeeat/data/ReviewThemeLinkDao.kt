@@ -32,4 +32,7 @@ interface ReviewThemeLinkDao {
 
     @Query("UPDATE review_theme_link SET themeId = :newThemeId WHERE reviewId = :reviewId AND themeId = :themeId")
     suspend fun updateOneRelation(reviewId: Long, themeId: Long, newThemeId: Long)
+
+    @Query("SELECT * FROM review_theme_link WHERE themeId = :themeId")
+    fun getReviewListByThemeId(themeId: Long): List<ReviewThemeLink>
 }

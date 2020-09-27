@@ -14,4 +14,8 @@ class ThemeRepository (
     fun getThemeList2(uid: Long): List<Theme> {
         return themeDao.getThemeList2(uid)
     }
+
+    fun getThemeByThemeId(themeId: Long): Theme {
+        return themeDao.getThemeByThemeId(themeId)
+    }
 }

@@ -11,6 +11,10 @@ class ReviewRepository (
         return reviewDao.getReviewList()
     }
 
+    fun getReviewListByUid(uid: Long): LiveData<List<Review>> {
+        return reviewDao.getReviewListByUid(uid)
+    }
+
     fun getReviewList2(): List<Review> {
         return reviewDao.getReviewList2()
     }

@@ -28,4 +28,7 @@ interface ThemeDao {
 
     @Query("DELETE FROM theme WHERE id=:id")
     suspend fun deleteTheme(id: Long)
+
+    @Query("SELECT * FROM theme WHERE id=:themeId")
+    fun getThemeByThemeId(themeId: Long): Theme
 }
