@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
@@ -244,4 +245,13 @@ object RetrofitProcedure {
         })
     }
 
+    fun getFriends() {
+
+        GlobalScope.launch(Dispatchers.IO) {
+            LikeEatRetrofit.getService().getFriends(MyApplication.pref.uid).apply {
+                val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
+                database.friendLinkDao().deleteAndInsertAll(body()?.toList()?: emptyList())
+            }
+        }
+    }
 }

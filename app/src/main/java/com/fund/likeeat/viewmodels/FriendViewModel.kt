@@ -1,19 +1,15 @@
 package com.fund.likeeat.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.fund.likeeat.data.FriendLink
 import com.fund.likeeat.data.FriendLinkDao
 import com.fund.likeeat.data.KakaoFriend
 import com.fund.likeeat.data.KakaoFriendDao
-import com.fund.likeeat.network.LikeEatRetrofit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddFriendViewModel internal constructor(
+class FriendViewModel internal constructor(
     kakaoFriendDao: KakaoFriendDao,
     friendLinkDao: FriendLinkDao,
     val uid: Long
@@ -21,9 +17,11 @@ class AddFriendViewModel internal constructor(
     val kakaofriends: LiveData<List<KakaoFriend>> = kakaoFriendDao.getKakaoFriends()
     val friendLink: LiveData<List<FriendLink>> = friendLinkDao.getFriendLink()
     val friends: MutableLiveData<List<KakaoFriend>> = MutableLiveData()
+    val favoriteFriends: MutableLiveData<List<KakaoFriend>> = MutableLiveData()
 
     fun getFriendList() {
 
+        val listFav: ArrayList<KakaoFriend> = ArrayList()
         val list: ArrayList<KakaoFriend> = ArrayList()
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -31,33 +29,31 @@ class AddFriendViewModel internal constructor(
                 val isMatch = friendLink.value?.any {
                     friend.uid == it.uid_to
                 }
-                if (isMatch != null && isMatch == false) {
-                    list.add(friend)
+                if (isMatch != null && isMatch == true) {
+                    val isFav = friendLink.value?.find {
+                        friend.uid == it.uid_to
+                    }?.isFav
+
+                    if (isFav != null && isFav == true) {
+                        listFav.add(friend)
+                    } else {
+                        list.add(friend)
+                    }
                 }
             }
 
             withContext(Dispatchers.Main) {
                 friends.value = list
+                favoriteFriends.value = listFav
             }
         }
     }
 
-    suspend fun addFriend(friends: List<KakaoFriend>): Boolean {
-
-        var isSuccess = true
-        friends.forEach {
-            val friendLink = FriendLink(uid, it.uid, false)
-
-            val result = viewModelScope.launch(Dispatchers.IO) {
-                LikeEatRetrofit.getService().addFriends(friendLink).apply {
-                    if (!isSuccessful) {
-                        isSuccess = false
-                    }
-                }
+    fun getFriendLinkById(FriendUid: Long): FriendLink? {
+        return friendLink.value?.let {
+            it.find {
+                it.uid_to == FriendUid
             }
-            result.join()
         }
-
-        return isSuccess
     }
 }

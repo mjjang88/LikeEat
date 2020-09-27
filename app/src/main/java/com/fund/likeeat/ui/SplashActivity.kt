@@ -59,7 +59,7 @@ class SplashActivity : AppCompatActivity() {
                 RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)
                 getKakaoFriends()
-                getFriends()
+                RetrofitProcedure.getFriends()
             }
 
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
@@ -101,15 +101,5 @@ class SplashActivity : AppCompatActivity() {
                 override fun onFailure(errorResult: ErrorResult?) {
                 }
             })
-    }
-
-    private fun getFriends() {
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            LikeEatRetrofit.getService().getFriends(MyApplication.pref.uid).apply {
-                val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
-                database.friendLinkDao().deleteAndInsertAll(body()?.toList()?: emptyList())
-            }
-        }
     }
 }

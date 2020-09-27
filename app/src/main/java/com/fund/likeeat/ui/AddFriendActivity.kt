@@ -14,7 +14,6 @@ import com.fund.likeeat.viewmodels.AddFriendViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -31,13 +30,13 @@ class AddFriendActivity : AppCompatActivity() {
 
         val adapter = AddFriendListAdapter()
         binding.listFriends.adapter = adapter
-        addFriendViewModel.newFriends.observe(this) {
+        addFriendViewModel.friends.observe(this) {
             adapter.submitList(it)
         }
 
         var isGetFriend = false
         var isGetFriendLink = false
-        addFriendViewModel.friends.observe(this) {
+        addFriendViewModel.kakaofriends.observe(this) {
             isGetFriend = true
             if (isGetFriend && isGetFriendLink) {
                 addFriendViewModel.getFriendList()

@@ -38,4 +38,5 @@ val appModule = module {
     viewModel { (reviewId: Long) -> OneReviewViewModel(get(), reviewId) }
     viewModel { SearchPlaceInThemeViewModel(get()) }
     viewModel { (uid: Long) -> AddFriendViewModel(get(), get(), uid) }
+    viewModel { (uid: Long) -> FriendViewModel(get(), get(), uid) }
 }

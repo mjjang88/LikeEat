@@ -84,4 +84,15 @@ interface RetrofitService {
     suspend fun getFriends(
         @Query("uid") uid: Long
     ): Response<List<FriendLink>>
+
+    @DELETE("/friends/{id}")
+    suspend fun deleteFriend(
+        @Path("id") id: Long
+    ): Response<Unit>
+
+    @PUT("/friends/{id}")
+    suspend fun updateFriend(
+        @Path("id") id: Long,
+        @Body friendLink: FriendLinkFavoriteUpdate
+    ): Response<Unit>
 }
