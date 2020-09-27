@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.data.AppDatabase
 import com.fund.likeeat.data.KakaoFriend
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
@@ -57,6 +59,7 @@ class SplashActivity : AppCompatActivity() {
                 RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)
                 getKakaoFriends()
+                getFriends()
             }
 
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
@@ -98,5 +101,15 @@ class SplashActivity : AppCompatActivity() {
                 override fun onFailure(errorResult: ErrorResult?) {
                 }
             })
+    }
+
+    private fun getFriends() {
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            LikeEatRetrofit.getService().getFriends(MyApplication.pref.uid).apply {
+                val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
+                database.friendLinkDao().deleteAndInsertAll(body()?.toList()?: emptyList())
+            }
+        }
     }
 }

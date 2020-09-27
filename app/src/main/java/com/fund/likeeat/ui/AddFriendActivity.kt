@@ -31,8 +31,23 @@ class AddFriendActivity : AppCompatActivity() {
 
         val adapter = AddFriendListAdapter()
         binding.listFriends.adapter = adapter
-        addFriendViewModel.friends.observe(this) {
+        addFriendViewModel.newFriends.observe(this) {
             adapter.submitList(it)
+        }
+
+        var isGetFriend = false
+        var isGetFriendLink = false
+        addFriendViewModel.friends.observe(this) {
+            isGetFriend = true
+            if (isGetFriend && isGetFriendLink) {
+                addFriendViewModel.getFriendList()
+            }
+        }
+        addFriendViewModel.friendLink.observe(this) {
+            isGetFriendLink = true
+            if (isGetFriend && isGetFriendLink) {
+                addFriendViewModel.getFriendList()
+            }
         }
 
         binding.btnOk.setOnClickListener {
@@ -46,6 +61,8 @@ class AddFriendActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this@AddFriendActivity, "친구추가를 실패했습니다", Toast.LENGTH_SHORT).show()
                     }
+
+                    finish()
                 }
             }
         }

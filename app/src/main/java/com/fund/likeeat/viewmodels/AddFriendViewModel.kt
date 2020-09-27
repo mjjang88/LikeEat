@@ -1,21 +1,46 @@
 package com.fund.likeeat.viewmodels
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fund.likeeat.data.FriendLink
+import com.fund.likeeat.data.FriendLinkDao
 import com.fund.likeeat.data.KakaoFriend
 import com.fund.likeeat.data.KakaoFriendDao
 import com.fund.likeeat.network.LikeEatRetrofit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddFriendViewModel internal constructor(
     kakaoFriendDao: KakaoFriendDao,
+    friendLinkDao: FriendLinkDao,
     val uid: Long
 ) : ViewModel(){
     val friends: LiveData<List<KakaoFriend>> = kakaoFriendDao.getKakaoFriends()
+    val friendLink: LiveData<List<FriendLink>> = friendLinkDao.getFriendLink()
+    val newFriends: MutableLiveData<List<KakaoFriend>> = MutableLiveData()
+
+    fun getFriendList() {
+
+        val list: ArrayList<KakaoFriend> = ArrayList()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            friends.value?.forEach { friend ->
+                val isMatch = friendLink.value?.any {
+                    friend.uid == it.uid_to
+                }
+                if (isMatch != null && isMatch == false) {
+                    list.add(friend)
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                newFriends.value = list
+            }
+        }
+    }
 
     suspend fun addFriend(friends: List<KakaoFriend>): Boolean {
 

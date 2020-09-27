@@ -79,4 +79,9 @@ interface RetrofitService {
     suspend fun addFriends(
         @Body friend: FriendLink
     ): Response<Unit>
+
+    @GET("/friends/")
+    suspend fun getFriends(
+        @Query("uid") uid: Long
+    ): Response<List<FriendLink>>
 }
