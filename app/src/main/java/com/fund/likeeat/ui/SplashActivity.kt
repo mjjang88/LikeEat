@@ -20,9 +20,7 @@ import com.kakao.friends.response.AppFriendsResponse
 import com.kakao.kakaotalk.callback.TalkResponseCallback
 import com.kakao.kakaotalk.v2.KakaoTalkService
 import com.kakao.network.ErrorResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,52 +52,66 @@ class SplashActivity : AppCompatActivity() {
             Log.i("KAKAO_API", "사용자 아이디: " + result?.userId)
             Log.i("KAKAO_API", "남은 시간(s): " + result?.expiresIn)
 
-            result?.let {
-                DataUtils.attachMyUid(result.userId)
-                RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
-                RetrofitProcedure.getUserReview(MyApplication.pref.uid)
-                getKakaoFriends()
-                RetrofitProcedure.getFriends()
+            lifecycleScope.launch(Dispatchers.IO) {
+                result?.let {
+                    DataUtils.attachMyUid(result.userId)
+                    RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
+                    RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                    getKakaoFriends()
+                    RetrofitProcedure.getFriends()
+                }
+
+                withContext(Dispatchers.Main) {
+                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    startActivity(intent)
+
+                    finish()
+                }
             }
-
-            val intent = Intent(this@SplashActivity, MainActivity::class.java)
-            startActivity(intent)
-
-            finish()
         }
     }
+}
 
-    private fun getKakaoFriends() {
-        val context = AppFriendContext(AppFriendOrder.NICKNAME, 0, 100, "asc")
+suspend fun getKakaoFriends() {
+    var bEndDbSave = false
 
-        KakaoTalkService.getInstance()
-            .requestAppFriends(context, object : TalkResponseCallback<AppFriendsResponse>() {
-                override fun onSuccess(result: AppFriendsResponse?) {
+    val context = AppFriendContext(AppFriendOrder.NICKNAME, 0, 100, "asc")
 
-                    val friends: ArrayList<KakaoFriend> = ArrayList()
-                    result?.friends?.forEach {
-                        val kakaoFriend = KakaoFriend(
-                            it.id,
-                            it.profileNickname,
-                            it.profileThumbnailImage
-                        )
-                        friends.add(kakaoFriend)
-                    }
+    KakaoTalkService.getInstance()
+        .requestAppFriends(context, object : TalkResponseCallback<AppFriendsResponse>() {
+            override fun onSuccess(result: AppFriendsResponse?) {
 
-                    GlobalScope.launch(Dispatchers.IO) {
+                val friends: ArrayList<KakaoFriend> = ArrayList()
+                result?.friends?.forEach {
+                    val kakaoFriend = KakaoFriend(
+                        it.id,
+                        it.profileNickname,
+                        it.profileThumbnailImage
+                    )
+                    friends.add(kakaoFriend)
+                }
+
+                runBlocking {
+                    val job = GlobalScope.launch(Dispatchers.IO) {
                         val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
                         database.kakaoFriendDao().deleteAndInsertAll(friends)
                     }
+                    job.join()
+                    bEndDbSave = true
                 }
+            }
 
-                override fun onNotKakaoTalkUser() {
-                }
+            override fun onNotKakaoTalkUser() {
+            }
 
-                override fun onSessionClosed(errorResult: ErrorResult?) {
-                }
+            override fun onSessionClosed(errorResult: ErrorResult?) {
+            }
 
-                override fun onFailure(errorResult: ErrorResult?) {
-                }
-            })
+            override fun onFailure(errorResult: ErrorResult?) {
+            }
+        })
+
+    while (!bEndDbSave) {
+        delay(500)
     }
 }

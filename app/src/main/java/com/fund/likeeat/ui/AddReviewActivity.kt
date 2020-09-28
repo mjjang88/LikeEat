@@ -297,8 +297,8 @@ class AddReviewActivity : AppCompatActivity()  {
                 val intent = Intent(this@AddReviewActivity, MainActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
-                startActivity(intent)
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                startActivity(intent)
             }
         }
     }

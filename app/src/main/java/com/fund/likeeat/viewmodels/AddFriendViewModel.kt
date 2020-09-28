@@ -46,7 +46,7 @@ class AddFriendViewModel internal constructor(
 
         var isSuccess = true
         friends.forEach {
-            val friendLink = FriendLink(uid, it.uid, false)
+            val friendLink = FriendLink(-1, uid, it.uid, false)
 
             val result = viewModelScope.launch(Dispatchers.IO) {
                 LikeEatRetrofit.getService().addFriends(friendLink).apply {

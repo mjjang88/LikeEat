@@ -54,7 +54,7 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
             if (isCreateReview) {
                 review = Review(review.id, review.uid, review.isPublic, review.category,
                     null, null, null, null, null, null, null, null,
-                    review.x, review.y, review.place_name, review.place_name, review.phone)
+                    review.x, review.y, review.place_name, review.address_name, review.phone)
             }
 
             binding.review = review

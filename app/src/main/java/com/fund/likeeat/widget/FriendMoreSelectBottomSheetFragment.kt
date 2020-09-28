@@ -39,7 +39,7 @@ class FriendMoreSelectBottomSheetFragment: BottomSheetDialogFragment() {
             }
 
             binding.layoutDelete.setOnClickListener {
-                doDeleteFriend(friend1.uid_to)
+                doDeleteFriend(friend1.id)
             }
         }
 
@@ -51,7 +51,7 @@ class FriendMoreSelectBottomSheetFragment: BottomSheetDialogFragment() {
         var bSendUserInfoSuccess = false
         GlobalScope.launch(Dispatchers.Default) {
             try {
-                LikeEatRetrofit.getService().updateFriend(friend.uid_to, FriendLinkFavoriteUpdate(friend.isFav)).apply {
+                LikeEatRetrofit.getService().updateFriend(friend.id, FriendLinkFavoriteUpdate(!friend.isFav)).apply {
                     if (isSuccessful) {
                         bSendUserInfoSuccess = true
                     }

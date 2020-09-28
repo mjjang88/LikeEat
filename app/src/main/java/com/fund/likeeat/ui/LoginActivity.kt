@@ -83,6 +83,14 @@ class LoginActivity : AppCompatActivity() {
                             delay(1000)
                         }
 
+                        user.let {
+                            DataUtils.attachMyUid(it.id)
+                            RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
+                            RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                            getKakaoFriends()
+                            RetrofitProcedure.getFriends()
+                        }
+
                         withContext(Dispatchers.Main) {
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(intent)
@@ -109,11 +117,6 @@ class LoginActivity : AppCompatActivity() {
         override fun onSuccess(result: AccessTokenInfoResponse?) {
             Log.i("KAKAO_API", "사용자 아이디: " + result?.userId)
             Log.i("KAKAO_API", "남은 시간(s): " + result?.expiresIn)
-
-            result?.let {
-                DataUtils.attachMyUid(result.userId)
-                RetrofitProcedure.getThemeByUid(MyApplication.pref.uid)
-            }
         }
     }
 
