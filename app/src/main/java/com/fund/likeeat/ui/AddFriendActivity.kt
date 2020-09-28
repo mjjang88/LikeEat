@@ -10,6 +10,7 @@ import com.fund.likeeat.R
 import com.fund.likeeat.adapter.AddFriendListAdapter
 import com.fund.likeeat.databinding.ActivityAddFriendBinding
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.viewmodels.AddFriendViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +54,10 @@ class AddFriendActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 val isSuccess = addFriendViewModel.addFriend(adapter.checkedList)
+
+                if (isSuccess) {
+                    RetrofitProcedure.getFriends()
+                }
 
                 withContext(Dispatchers.Main) {
                     if (isSuccess) {
