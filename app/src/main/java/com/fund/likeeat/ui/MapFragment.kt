@@ -100,7 +100,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             drawer.openDrawer(GravityCompat.START)
         }
 
-        binding.layoutFabHighlight.setOnClickListener {
+        binding.layoutPlaceInfo.setOnClickListener {
             val intent = Intent(requireContext(), ReviewDetailActivity::class.java)
             intent.putExtra(INTENT_KEY_REVIEW, highlightReview)
             startActivity(intent)
@@ -127,6 +127,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         mapViewModel.friendLink.observe(viewLifecycleOwner) {
             isGetFriendLink = true
+            binding.navigationRight.textFriendCount.text = it.size.toString()
             if (isGetFriend && isGetFriendLink) {
                 mapViewModel.getFriendList()
             }
@@ -142,7 +143,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.navigationRight.listRightNaviFriends.adapter = friendAdapter
         mapViewModel.friends.observe(viewLifecycleOwner) {
             friendAdapter.submitList(it)
-            binding.navigationRight.textFriendCount.text = it.size.toString()
         }
 
         binding.navigationRight.layoutRightNaviTitle.setOnClickListener {

@@ -57,5 +57,9 @@ class FriendsActivity : AppCompatActivity() {
             val intent = Intent(this, AddFriendActivity::class.java)
             startActivity(intent)
         }
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 }

@@ -39,7 +39,13 @@ class FriendMoreSelectBottomSheetFragment: BottomSheetDialogFragment() {
             }
 
             binding.layoutDelete.setOnClickListener {
-                doDeleteFriend(friend1.id)
+                CustomAlertDialog(requireContext())
+                    .setTitle("알림")
+                    .setMessage("등록한 친구를 삭제합니다.\n계속 하시겠습니까?")
+                    .setPositiveButton("삭제") {
+                        doDeleteFriend(friend1.id)
+                    }.setNegativeButton("취소") {
+                    }.show()
             }
         }
 
