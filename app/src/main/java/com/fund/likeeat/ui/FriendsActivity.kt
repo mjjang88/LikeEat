@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.adapter.FriendListAdapter
+import com.fund.likeeat.adapter.FriendManageListAdapter
 import com.fund.likeeat.databinding.ActivityFriendsBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.viewmodels.FriendViewModel
@@ -24,14 +24,14 @@ class FriendsActivity : AppCompatActivity() {
             R.layout.activity_friends
         )
 
-        val favoriteAdapter = FriendListAdapter()
+        val favoriteAdapter = FriendManageListAdapter()
         favoriteAdapter.mFriendViewModel = friendViewModel
         binding.listFavorite.adapter = favoriteAdapter
         friendViewModel.favoriteFriends.observe(this) {
             favoriteAdapter.submitList(it)
         }
 
-        val friendAdapter = FriendListAdapter()
+        val friendAdapter = FriendManageListAdapter()
         friendAdapter.mFriendViewModel = friendViewModel
         binding.listFriends.adapter = friendAdapter
         friendViewModel.friends.observe(this) {

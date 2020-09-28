@@ -32,10 +32,10 @@
                 style="@style/TextBigTitle"/>
 
             <TextView
+                android:id="@+id/text_friend_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@android:string/unknownName"
                 android:textColor="@color/colorGray"
                 android:layout_marginLeft="@dimen/margin_normal"
                 style="@style/TextBigTitle"/>
@@ -51,6 +51,7 @@
                 android:layout_gravity="center_vertical|end"
                 android:src="@drawable/ic_icon_right"
                 android:layout_marginRight="@dimen/margin_normal"
+                android:clickable="false"
                 style="@style/ImageButton" />
 
         </LinearLayout>
