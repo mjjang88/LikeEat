@@ -1,14 +1,13 @@
 package com.fund.likeeat.widget
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.databinding.BottomSheetSetReviewInThemeBinding
+import com.fund.likeeat.databinding.BottomSheetSetPlaceInThemeBinding
 import com.fund.likeeat.utilities.ToastUtil
 import com.fund.likeeat.viewmodels.OneReviewViewModel
 import com.fund.likeeat.viewmodels.ReviewThemeLinkViewModel
@@ -16,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.core.parameter.parametersOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SetReviewInThemeBottomSheet : BottomSheetDialogFragment() {
+class SetPlaceInThemeBottomSheet : BottomSheetDialogFragment() {
     var reviewId: Long? = null
     var themeId: Long? = null
     var themesIdString: String? = null
@@ -47,10 +46,8 @@ class SetReviewInThemeBottomSheet : BottomSheetDialogFragment() {
                 putString("REVIEW_PRICE_RANGE", it.priceRange)
                 putString("REVIEW_SERVICE_QUALITY", it.serviceQuality)
                 putString("REVIEW_REVISIT", it.revisit)
-                Log.i("REVIEW_REVISIT", it.revisit.toString())
-                Log.i("REVIEW_SERVICE_QUALITY", it.serviceQuality.toString())
-                putDouble("PLACE_LAT", it.x?:0.0)
-                putDouble("PLACE_LNG", it.y?:0.0)
+                putDouble("PLACE_X", it.x?:0.0)
+                putDouble("PLACE_Y", it.y?:0.0)
                 putString("PLACE_ADDRESS", it.address_name)
                 putString("PLACE_NAME", it.place_name)
                 putString("PLACE_PHONE_NUMBER", it.phone)
@@ -62,9 +59,9 @@ class SetReviewInThemeBottomSheet : BottomSheetDialogFragment() {
             reviewAndThemeDataBundle.putString("THEMES_ID_STRING", themesIdString)
         }
 
-        val binding = DataBindingUtil.inflate<BottomSheetSetReviewInThemeBinding>(
+        val binding = DataBindingUtil.inflate<BottomSheetSetPlaceInThemeBinding>(
             inflater,
-            R.layout.bottom_sheet_set_review_in_theme,
+            R.layout.bottom_sheet_set_place_in_theme,
             container,
             false
         ).apply {
@@ -77,7 +74,7 @@ class SetReviewInThemeBottomSheet : BottomSheetDialogFragment() {
                     if(isBundleFilled) {
                         val dialog = MoveReviewInThemeBottomSheet()
                         dialog.arguments = reviewAndThemeDataBundle
-                        dialog.show(this@SetReviewInThemeBottomSheet.parentFragmentManager, dialog.tag)
+                        dialog.show(this@SetPlaceInThemeBottomSheet.parentFragmentManager, dialog.tag)
                         dismiss()
                     } else {
                         ToastUtil.toastShort("다시 시도해주세요")
@@ -90,9 +87,9 @@ class SetReviewInThemeBottomSheet : BottomSheetDialogFragment() {
                 themesIdString?.let {
                     if (isBundleFilled) {
                         val dialog =
-                            DeleteReviewInThemeDialog(requireContext(), reviewAndThemeDataBundle)
-                        dialog.setCancelable(false)
-                        dialog.show()
+                            DeleteReviewInThemeDialog(reviewAndThemeDataBundle)
+                        dialog.isCancelable = false
+                        dialog.show(parentFragmentManager, dialog.tag)
                         dismiss()
                     } else {
                         ToastUtil.toastShort("다시 시도해주세요")

@@ -17,6 +17,7 @@ class OneThemeViewModel(
 
     var reviewIdList: LiveData<List<ReviewThemeLink>> = reviewThemeLinkDao.getListByThemeId(themeId)
     val reviewOneTheme: MutableLiveData<List<Review>> = MutableLiveData()
+    val reviewOneThemeNoSameData: MutableLiveData<List<Review>> = MutableLiveData()
 
     fun updateTheme(
         activity: Activity,
@@ -33,5 +34,9 @@ class OneThemeViewModel(
 
     fun getReviews(reviewIdList: List<Long>) {
         reviewOneTheme.postValue(reviewRepository.getReviewByTheme(reviewIdList))
+    }
+
+    fun getReviewsNoSameData(reviewIdList: List<Long>) {
+        reviewOneThemeNoSameData.postValue(reviewRepository.getReviewByReviewIdWithNoSameData(reviewIdList))
     }
 }

@@ -39,6 +39,12 @@ interface ReviewDao {
     @Query("SELECT * FROM reviews WHERE id in (:reviewId)")
     fun getReviewByTheme(reviewId: List<Long>): List<Review>
 
+    @Query("SELECT * FROM reviews WHERE id in (:reviewId) GROUP BY x, y, place_name")
+    fun getReviewByReviewIdWithNoSameData(reviewId: List<Long>): List<Review>
+
     @Query("SELECT * FROM reviews WHERE uid = :uid AND ((place_name LIKE :word) OR (address_name LIKE :word))")
     fun getReviewByUidAndWord(uid: Long, word: String): MutableList<Review>
+
+    @Query("SELECT * FROM reviews WHERE uid = :uid AND x = :x AND y = :y AND place_name = :placeName")
+    fun getReviewListByPlace(uid: Long, x: Double, y: Double, placeName: String): List<Review>
 }

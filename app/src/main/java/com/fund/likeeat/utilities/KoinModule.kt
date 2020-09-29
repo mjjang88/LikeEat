@@ -36,4 +36,5 @@ val appModule = module {
     viewModel { (reviewId: Long) -> OneReviewViewModel(get(), reviewId) }
     viewModel { SearchPlaceInThemeViewModel(get()) }
     viewModel { MapOneThemeViewModel(get(), get(), get()) }
+    viewModel { ReviewInThemeViewModel(get()) }
 }
