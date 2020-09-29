@@ -249,14 +249,12 @@ object RetrofitProcedure {
                             GlobalScope.launch {
                                 AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteOneRelation(reviewId, themeId)
                             }
-                            ToastUtil.toastShort("맛집을 테마에서 제거했습니다")
                         }
                         UpdateReviewOnlyThemeType.TYPE_MOVE -> {
                             GlobalScope.launch {
                                 AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteOneRelation(reviewId, newThemeId)
                                 AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().updateOneRelation(reviewId, themeId, newThemeId)
                             }
-                            ToastUtil.toastShort("테마를 이동했습니다")
                         }
                     }
                     GlobalScope.launch {

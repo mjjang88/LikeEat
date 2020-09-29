@@ -5,6 +5,9 @@ const val PLACE_DATA_FILENAME = "place.json"
 
 const val UID_DETACHED = -100L
 const val COLOR_NOT_SELECTED = -110
+const val NO_X_VALUE = 0.0
+const val NO_Y_VALUE = 0.0
+const val NO_PLACE_NAME = "NO_PLACE_NAME"
 
 const val INTENT_KEY_PLACE = "INTENT_KEY_PLACE"
 const val INTENT_KEY_REVIEW = "INTENT_KEY_REVIEW"

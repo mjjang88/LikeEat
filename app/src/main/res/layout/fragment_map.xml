@@ -13,8 +13,7 @@
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:openDrawer="start">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -54,10 +53,12 @@
                         style="@style/ImageButton"/>
 
                     <TextView
+                        android:id="@+id/theme_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="@dimen/text_size_normal"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_big"
                         android:gravity="center"/>
 
                     <ImageButton
@@ -189,7 +190,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            layout="@layout/navigation_left"/>
+            layout="@layout/navigation_left" />
 
         <include
             android:id="@+id/navigation_right"

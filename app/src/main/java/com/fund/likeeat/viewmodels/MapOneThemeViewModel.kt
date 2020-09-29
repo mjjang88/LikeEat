@@ -6,18 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fund.likeeat.data.*
 import com.fund.likeeat.network.RetrofitProcedure
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class OneThemeViewModel(
-    themeRepository: ThemeRepository,
+class MapOneThemeViewModel(
+    val themeRepository: ThemeRepository,
     val reviewRepository: ReviewRepository,
-    reviewThemeLinkDao: ReviewThemeLinkDao,
-    themeId: Long
+    val reviewThemeLinkDao: ReviewThemeLinkDao
 ): ViewModel() {
-    val theme = themeRepository.getTheme(themeId)
-
-    var reviewIdList: LiveData<List<ReviewThemeLink>> = reviewThemeLinkDao.getListByThemeId(themeId)
+    val theme: MutableLiveData<Theme> = MutableLiveData()
+    var reviewIdList: MutableLiveData<List<ReviewThemeLink>> = MutableLiveData()
     val reviewOneTheme: MutableLiveData<List<Review>> = MutableLiveData()
-    val reviewOneThemeNoSameData: MutableLiveData<List<Review>> = MutableLiveData()
 
     fun updateTheme(
         activity: Activity,
@@ -33,10 +32,14 @@ class OneThemeViewModel(
     }
 
     fun getReviews(reviewIdList: List<Long>) {
-        reviewOneTheme.postValue(reviewRepository.getReviewByTheme(reviewIdList))
+        reviewOneTheme.postValue(reviewRepository.getReviewByReviewIdWithNoSameData(reviewIdList))
     }
 
-    fun getReviewsNoSameData(reviewIdList: List<Long>) {
-        reviewOneThemeNoSameData.postValue(reviewRepository.getReviewByReviewIdWithNoSameData(reviewIdList))
+    fun getThemeByThemeId(themeId: Long) {
+        theme.postValue(themeRepository.getThemeByThemeId(themeId))
+    }
+
+    fun getReviewIdListByThemeId(themeId: Long) {
+        GlobalScope.launch { reviewIdList.postValue(reviewThemeLinkDao.getReviewListByThemeId(themeId)) }
     }
 }

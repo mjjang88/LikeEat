@@ -11,40 +11,34 @@ import com.fund.likeeat.R
 import com.fund.likeeat.adapter.MoveThemeAdapter
 import com.fund.likeeat.adapter.OnClickCardListener
 import com.fund.likeeat.data.PlaceWhenChangeReview
+import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.ReviewChanged
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.BottomSheetSelectNewThemeBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.RetrofitProcedure
-import com.fund.likeeat.utilities.ToastUtil
-import com.fund.likeeat.utilities.UpdateReviewOnlyThemeType
+import com.fund.likeeat.utilities.*
 import com.fund.likeeat.viewmodels.AllThemesViewModel
+import com.fund.likeeat.viewmodels.ReviewInThemeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
     private val viewModel: AllThemesViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val reviewInThemeViewModel : ReviewInThemeViewModel by inject()
 
     var newThemeId: Long? = null
     var themesIdList: List<String>? = null
 
     var reviewId: Long? = null
     var themeId: Long? = null
-    var isPublic: Boolean? = null
-    var category: String? = null
-    var comment: String? = null
-    var visitedDayYmd: String? = null
-    var companions: String? = null
-    var toliets: String? = null
-    var priceRange: String? = null
-    var serviceQuality: String? = null
-    var revisit: String? = null
-    var lat: Double? = null
-    var lng: Double? = null
-    var address: String? = null
+    var x: Double? = null
+    var y: Double? = null
     var name: String? = null
-    var phoneNumber: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         newThemeId = arguments?.getLong("THEME_ID")
@@ -52,20 +46,9 @@ class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
 
         reviewId = arguments?.getLong("REVIEW_ID")
         themeId = arguments?.getLong("THEME_ID")
-        isPublic = arguments?.getBoolean("REVIEW_IS_PUBLIC")
-        category = arguments?.getString("REVIEW_CATEGORY")
-        comment = arguments?.getString("REVIEW_COMMENT")
-        visitedDayYmd = arguments?.getString("REVIEW_VISITED_DAY_YMD")
-        companions = arguments?.getString("REVIEW_COMPANIONS")
-        toliets = arguments?.getString("REVIEW_TOILETS")
-        priceRange = arguments?.getString("REVIEW_PRICE_RANGE")
-        serviceQuality = arguments?.getString("REVIEW_SERVICE_QUALITY")
-        revisit = arguments?.getString("REVIEW_REVISIT")
-        lat = arguments?.getDouble("PLACE_LAT")
-        lng = arguments?.getDouble("PLACE_LNG")
-        address = arguments?.getString("PLACE_ADDRESS")
+        x = arguments?.getDouble("PLACE_X")
+        y = arguments?.getDouble("PLACE_Y")
         name = arguments?.getString("PLACE_NAME")
-        phoneNumber = arguments?.getString("PLACE_PHONE_NUMBER")
 
         val binding = DataBindingUtil.inflate<BottomSheetSelectNewThemeBinding>(
             inflater,
@@ -76,10 +59,7 @@ class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
             lifecycleOwner = viewLifecycleOwner
 
             actionEnroll.setOnClickListener {
-                val reviewChanged = makeReviewChanged()?.let {
-                    RetrofitProcedure.updateReviewOnlyTheme(reviewId!!, themeId!!, it, UpdateReviewOnlyThemeType.TYPE_MOVE, newThemeId!!)
-                }?:ToastUtil.toastShort("Error")
-
+                GlobalScope.launch { reviewInThemeViewModel.getAllReviews(x ?: NO_X_VALUE, y ?: NO_Y_VALUE, name ?: NO_PLACE_NAME) }
                 dismiss()
             }
         }
@@ -104,6 +84,16 @@ class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
             adapter.submitList(themeList)
         }
 
+        reviewInThemeViewModel.allReviewsList.observe(requireActivity()) { result: List<Review> ->
+            val reviewChanged = makeReviewChanged(result[0])
+            for(review in result) {
+                reviewChanged?.let {
+                    RetrofitProcedure.updateReviewOnlyTheme(review.id, themeId!!, it, UpdateReviewOnlyThemeType.TYPE_MOVE, newThemeId!!)
+                }?:ToastUtil.toastShort("Error")
+            }
+            ToastUtil.toastShort("테마를 이동했습니다")
+        }
+
         return binding.root
     }
 
@@ -124,27 +114,21 @@ class MoveReviewInThemeBottomSheet : BottomSheetDialogFragment() {
         return builder.toString()
     }
 
-    fun makeReviewChanged(): ReviewChanged? {
-        lat?.let { latNotNull ->
-            lng?.let { lngNotNull ->
-                isPublic?.let { isPublicNotNull ->
-                    val place = PlaceWhenChangeReview(latNotNull, lngNotNull, address, name, phoneNumber)
-                    val themeIds = updateThemeIdInListAndReturnToString()
-                    return ReviewChanged(
-                        isPublicNotNull,
-                        category,
-                        comment,
-                        visitedDayYmd,
-                        companions,
-                        toliets,
-                        priceRange,
-                        serviceQuality,
-                        revisit,
-                        themeIds,
-                        place
-                    )
-                }
-            }
-        }?:return null
+    fun makeReviewChanged(review: Review): ReviewChanged? {
+        val place = PlaceWhenChangeReview(review.x ?: NO_X_VALUE, review.y ?: NO_Y_VALUE, review.address_name, review.place_name, review.phone)
+        val themeIds = updateThemeIdInListAndReturnToString()
+        return ReviewChanged(
+            review.isPublic,
+            review.category,
+            review.comment,
+            review.visitedDayYmd,
+            review.companions,
+            review.toliets,
+            review.priceRange,
+            review.serviceQuality,
+            review.revisit,
+            themeIds,
+            place
+        )
     }
 }

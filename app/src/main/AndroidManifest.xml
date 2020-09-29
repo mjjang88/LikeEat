@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ReviewsInThemeActivity" />
+        <activity android:name=".ui.PlacesInThemeActivity"></activity>
         <activity android:name=".ui.ModifyReviewDetailActivity" />
         <activity android:name=".ui.ModifyReviewAcitivity" />
         <activity android:name=".ui.ReviewDetailActivity" />

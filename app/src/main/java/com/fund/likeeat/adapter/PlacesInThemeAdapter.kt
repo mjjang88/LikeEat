@@ -23,7 +23,7 @@ class ReviewsInThemeAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(Review
         fun bind(item: Review) {
             cardLongClickListener?.let { listener ->
                 binding.cardLayout.setOnLongClickListener{
-                    listener.onLongClick(item.id)
+                    listener.onLongClick(item.id, item.x, item.y, item.place_name)
                     true
                 }
             }
@@ -53,5 +53,5 @@ class ReviewsInThemeDiffCallback: DiffUtil.ItemCallback<Review>() {
 }
 
 interface CardLongClickListener {
-    fun onLongClick(reviewId: Long)
+    fun onLongClick(reviewId: Long?, x: Double?, y: Double?, placeName: String?)
 }
