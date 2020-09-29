@@ -74,4 +74,25 @@ interface RetrofitService {
         @Path("id") id: Long,
         @Body reviewChanged: ReviewChanged
     ): Call<Review>
+
+    @POST("/friends/")
+    suspend fun addFriends(
+        @Body friend: FriendLink
+    ): Response<Unit>
+
+    @GET("/friends/")
+    suspend fun getFriends(
+        @Query("uid") uid: Long
+    ): Response<List<FriendLink>>
+
+    @DELETE("/friends/{id}")
+    suspend fun deleteFriend(
+        @Path("id") id: Long
+    ): Response<Unit>
+
+    @PUT("/friends/{id}")
+    suspend fun updateFriend(
+        @Path("id") id: Long,
+        @Body friendLink: FriendLinkFavoriteUpdate
+    ): Response<Unit>
 }

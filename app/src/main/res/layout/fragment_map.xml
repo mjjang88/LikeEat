@@ -61,6 +61,7 @@
                         android:gravity="center"/>
 
                     <ImageButton
+                        android:id="@+id/btn_friend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_users"
@@ -128,6 +129,7 @@
                     style="@style/FloatingActionButton"/>
 
                 <LinearLayout
+                    android:id="@+id/layout_place_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -188,6 +190,15 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             layout="@layout/navigation_left"/>
+
+        <include
+            android:id="@+id/navigation_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="true"
+            layout="@layout/navigation_right"
+            app:viewModel="@{viewModel}"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

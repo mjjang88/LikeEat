@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.fund.likeeat.data.Review"/>
+        <variable
+            name="viewModel"
+            type="com.fund.likeeat.viewmodels.MapViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_left"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            style="@style/ImageButton"/>
+
+        <ImageButton
+            android:id="@+id/btn_add_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_plus"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"
+            style="@style/ImageButton"/>
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/manage_friend"
+            app:layout_constraintTop_toBottomOf="@id/btn_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/margin_double"
+            android:layout_marginLeft="@dimen/margin_double"
+            style="@style/TextBigTitle"/>
+
+        <TextView
+            android:id="@+id/text_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            android:layout_marginLeft="@dimen/margin_double"
+            android:layout_marginTop="@dimen/margin_big"
+            style="@style/TextTitle"/>
+
+        <View
+            style="@style/Divider"
+            app:layout_constraintTop_toBottomOf="@id/text_favorite"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/text_favorite"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+        <TextView
+            android:id="@+id/text_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/friend"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/list_favorite"
+            android:layout_marginLeft="@dimen/margin_double"
+            android:layout_marginTop="@dimen/margin_big"
+            style="@style/TextTitle"/>
+
+        <View
+            style="@style/Divider"
+            app:layout_constraintTop_toBottomOf="@id/text_friend"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_friends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/text_friend"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

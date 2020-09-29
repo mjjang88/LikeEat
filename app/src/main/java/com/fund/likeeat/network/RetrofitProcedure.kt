@@ -1,20 +1,20 @@
 package com.fund.likeeat.network
 
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.ui.MainActivity
 import com.fund.likeeat.utilities.ThemeType
 import com.fund.likeeat.utilities.ToastUtil
 import com.fund.likeeat.utilities.UID_DETACHED
 import com.fund.likeeat.utilities.UpdateReviewOnlyThemeType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,57 +41,69 @@ object RetrofitProcedure {
         })
     }
 
-    fun getUserReview(uid: Long) {
+    suspend fun getUserReview(uid: Long) {
+        var bEndDbSave = false
+
         LikeEatRetrofit.getService().requestUserReview(uid).enqueue(object : Callback<List<ReviewServerRead>> {
             override fun onFailure(call: Call<List<ReviewServerRead>>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "데이터 로드 실패", Toast.LENGTH_LONG).show()
+                bEndDbSave = true
             }
 
             override fun onResponse(call: Call<List<ReviewServerRead>>, response: Response<List<ReviewServerRead>>) {
                 if (response.isSuccessful) {
-                    GlobalScope.launch {
-                        response.body()?.let {
+                    runBlocking {
+                        val job = GlobalScope.launch {
+                            response.body()?.let {
 
-                            val reviewList = ArrayList<Review>()
-                            val reviewThemeLinkList = ArrayList<ReviewThemeLink>()
+                                val reviewList = ArrayList<Review>()
+                                val reviewThemeLinkList = ArrayList<ReviewThemeLink>()
 
-                            for (item in it) {
-                                Review(
-                                    item.id,
-                                    item.uid,
-                                    item.isPublic,
-                                    item.category,
-                                    item.comment,
-                                    item.visitedDayYmd,
-                                    item.companions,
-                                    item.toliets,
-                                    item.priceRange,
-                                    item.serviceQuality,
-                                    item.revisit,
-                                    null,
-                                    item.place?.lng,
-                                    item.place?.lat,
-                                    item.place?.name,
-                                    item.place?.address,
-                                    item.place?.phoneNumber
-                                ).let { review -> reviewList.add(review) }
-
-                                for (theme in item.themes) {
-                                    ReviewThemeLink(
+                                for (item in it) {
+                                    Review(
                                         item.id,
-                                        theme.id
-                                    ).let { reviewThemeLink -> reviewThemeLinkList.add(reviewThemeLink) }
-                                }
-                            }
+                                        item.uid,
+                                        item.isPublic,
+                                        item.category,
+                                        item.comment,
+                                        item.visitedDayYmd,
+                                        item.companions,
+                                        item.toliets,
+                                        item.priceRange,
+                                        item.serviceQuality,
+                                        item.revisit,
+                                        null,
+                                        item.place?.lng,
+                                        item.place?.lat,
+                                        item.place?.name,
+                                        item.place?.address,
+                                        item.place?.phoneNumber
+                                    ).let { review -> reviewList.add(review) }
 
-                            val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
-                            database.reviewDao().deleteAndInsertAll(reviewList)
-                            database.reviewThemeLinkDao().deleteAndInsertAll(reviewThemeLinkList)
+                                    for (theme in item.themes) {
+                                        ReviewThemeLink(
+                                            item.id,
+                                            theme.id
+                                        ).let { reviewThemeLink -> reviewThemeLinkList.add(reviewThemeLink) }
+                                    }
+                                }
+
+                                val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
+                                database.reviewDao().deleteAndInsertAll(reviewList)
+                                database.reviewThemeLinkDao().deleteAndInsertAll(reviewThemeLinkList)
+                            }
                         }
+                        job.join()
+                        bEndDbSave = true
                     }
                 }
+                bEndDbSave = true
             }
         })
+
+        while (!bEndDbSave) {
+            delay(500)
+        }
     }
 
     fun getUserReview(uid: Long, liveData: MutableLiveData<List<Review>>?) {
@@ -144,12 +156,15 @@ object RetrofitProcedure {
 
     // 만약 getThemeByUid를 통해 데이터를 불러올 경우, 값이 하나도 안들어있다면 기본 Default 테마를 만들어준다.
     // 그 이후에는 무조건 테마가 하나 이상 존재하게 되므로, 또 다시 Default 테마가 추가 될 일은 없다. (서버 자체에서 삭제하지 않는 이상은)
-    fun getThemeByUid(uid: Long) {
+    suspend fun getThemeByUid(uid: Long) {
+        var bEndDbSave = false
+
         if(MyApplication.pref.uid == UID_DETACHED) return
 
         LikeEatRetrofit.getService().requestThemeByUid(uid).enqueue(object: Callback<List<Theme>> {
             override fun onFailure(call: Call<List<Theme>>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "테마 로드 실패", Toast.LENGTH_SHORT).show()
+                bEndDbSave = true
             }
 
             override fun onResponse(call: Call<List<Theme>>, response: Response<List<Theme>>) {
@@ -163,10 +178,14 @@ object RetrofitProcedure {
                         )
                         sendThemeToServer(theme, ThemeType.TYPE_FIRST_THEME)
                     } else {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            AppDatabase.getInstance(MyApplication.applicationContext()).themeDao()
-                                .insertTheme(
-                                    response.body()?.map { it.copy(uid = uid) })
+                        runBlocking {
+                            val job = CoroutineScope(Dispatchers.IO).launch {
+                                AppDatabase.getInstance(MyApplication.applicationContext()).themeDao()
+                                    .insertTheme(
+                                        response.body()?.map { it.copy(uid = uid) })
+                            }
+                            job.join()
+                            bEndDbSave = true
                         }
                     }
                 } else {
@@ -175,6 +194,10 @@ object RetrofitProcedure {
             }
 
         })
+
+        while (!bEndDbSave) {
+            delay(500)
+        }
     }
 
     fun updateThemeById(id: Long, themeChanged: ThemeChanged) {
@@ -236,12 +259,32 @@ object RetrofitProcedure {
                             ToastUtil.toastShort("테마를 이동했습니다")
                         }
                     }
-                    getThemeByUid(MyApplication.pref.uid)
-                    getUserReview(MyApplication.pref.uid)
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
+                    }
                 }
             }
 
         })
     }
 
+    suspend fun getFriends() {
+        var bEndDbSave = false
+
+        runBlocking {
+            val job = GlobalScope.launch(Dispatchers.IO) {
+                LikeEatRetrofit.getService().getFriends(MyApplication.pref.uid).apply {
+                    val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
+                    database.friendLinkDao().deleteAndInsertAll(body()?.toList()?: emptyList())
+                }
+            }
+            job.join()
+            bEndDbSave = true
+        }
+
+        while (!bEndDbSave) {
+            delay(500)
+        }
+    }
 }

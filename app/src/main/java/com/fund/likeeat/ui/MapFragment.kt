@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.fund.likeeat.R
+import com.fund.likeeat.adapter.FriendListAdapter
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.FragmentMapBinding
 import com.fund.likeeat.manager.MyApplication
@@ -99,13 +100,55 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             drawer.openDrawer(GravityCompat.START)
         }
 
-        binding.layoutFabHighlight.setOnClickListener {
+        binding.layoutPlaceInfo.setOnClickListener {
             val intent = Intent(requireContext(), ReviewDetailActivity::class.java)
             intent.putExtra(INTENT_KEY_REVIEW, highlightReview)
             startActivity(intent)
         }
 
+        binding.btnFriend.setOnClickListener {
+            drawer.openDrawer(GravityCompat.END)
+        }
+
+        initFriend(binding)
+
         return binding.root
+    }
+
+    fun initFriend(binding: FragmentMapBinding) {
+
+        var isGetFriend = false
+        var isGetFriendLink = false
+        mapViewModel.kakaofriends.observe(viewLifecycleOwner) {
+            isGetFriend = true
+            if (isGetFriend && isGetFriendLink) {
+                mapViewModel.getFriendList()
+            }
+        }
+        mapViewModel.friendLink.observe(viewLifecycleOwner) {
+            isGetFriendLink = true
+            binding.navigationRight.textFriendCount.text = it.size.toString()
+            if (isGetFriend && isGetFriendLink) {
+                mapViewModel.getFriendList()
+            }
+        }
+
+        val favoriteAdapter = FriendListAdapter()
+        binding.navigationRight.listRightNaviFavorite.adapter = favoriteAdapter
+        mapViewModel.favoriteFriends.observe(viewLifecycleOwner) {
+            favoriteAdapter.submitList(it)
+        }
+
+        val friendAdapter = FriendListAdapter()
+        binding.navigationRight.listRightNaviFriends.adapter = friendAdapter
+        mapViewModel.friends.observe(viewLifecycleOwner) {
+            friendAdapter.submitList(it)
+        }
+
+        binding.navigationRight.layoutRightNaviTitle.setOnClickListener {
+            val intent = Intent(requireContext(), FriendsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

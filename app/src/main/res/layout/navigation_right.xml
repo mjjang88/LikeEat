@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.fund.likeeat.data.Review"/>
+        <variable
+            name="viewModel"
+            type="com.fund.likeeat.viewmodels.MapViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface">
+
+        <LinearLayout
+            android:id="@+id/layout_right_navi_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_big">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/friends_list"
+                android:layout_marginLeft="@dimen/margin_double"
+                style="@style/TextBigTitle"/>
+
+            <TextView
+                android:id="@+id/text_friend_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/colorGray"
+                android:layout_marginLeft="@dimen/margin_normal"
+                style="@style/TextBigTitle"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/ic_icon_right"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:clickable="false"
+                style="@style/ImageButton" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_right_navi_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_background_shape"
+            android:drawableRight="@drawable/ic_icon_search"
+            android:minHeight="@dimen/clickable_button_height"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/margin_1.5_times"
+            android:paddingRight="@dimen/margin_1.5_times"
+            app:layout_constraintTop_toBottomOf="@id/layout_right_navi_title"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:hint="@string/search_name"
+            style="@style/TextNormal" />
+
+        <TextView
+            android:id="@+id/text_right_navi_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_right_navi_search"
+            android:layout_marginLeft="@dimen/margin_double"
+            android:layout_marginTop="@dimen/margin_big"
+            style="@style/TextTitle"/>
+
+        <View
+            style="@style/Divider"
+            app:layout_constraintTop_toBottomOf="@id/text_right_navi_favorite"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_right_navi_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/text_right_navi_favorite"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+        <TextView
+            android:id="@+id/text_right_navi_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_friends"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/list_right_navi_favorite"
+            android:layout_marginLeft="@dimen/margin_double"
+            android:layout_marginTop="@dimen/margin_big"
+            style="@style/TextTitle"/>
+
+        <View
+            style="@style/Divider"
+            app:layout_constraintTop_toBottomOf="@id/text_right_navi_all"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_right_navi_friends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/text_right_navi_all"
+            android:layout_marginTop="@dimen/margin_1.5_times"
+            android:layout_marginLeft="@dimen/margin_1.5_times"
+            android:layout_marginRight="@dimen/margin_1.5_times"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

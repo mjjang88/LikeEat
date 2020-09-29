@@ -92,4 +92,13 @@
     <string name="delete">삭제하기</string>
     <string name="apply">적용하기</string>
 
+    <string name="friends_list">친구 목록</string>
+    <string name="search_name">이름 검색</string>
+    <string name="favorite">즐겨찾기</string>
+    <string name="all_friends">모든 친구</string>
+    <string name="manage_friend">친구 관리</string>
+    <string name="add_friend">친구 추가</string>
+    <string name="add">추가하기</string>
+    <string name="add_favorite">즐겨찾기 추가</string>
+
 </resources>
