@@ -32,7 +32,7 @@ class MapOneThemeViewModel(
     }
 
     fun getReviews(reviewIdList: List<Long>) {
-        GlobalScope.launch { reviewOneTheme.postValue(reviewRepository.getReviewByTheme(reviewIdList)) }
+        reviewOneTheme.postValue(reviewRepository.getReviewByReviewIdWithNoSameData(reviewIdList))
     }
 
     fun getThemeByThemeId(themeId: Long) {

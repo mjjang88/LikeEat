@@ -12,7 +12,7 @@ interface ReviewDao {
     @Query("SELECT * FROM reviews")
     fun getReviewList2(): List<Review>
 
-    @Query("SELECT * FROM reviews WHERE uid = :uid")
+    @Query("SELECT * FROM reviews WHERE uid = :uid GROUP BY x, y, place_name")
     fun getReviewListByUid(uid: Long): LiveData<List<Review>>
 
     @Query("SELECT * FROM reviews WHERE place_name = :placeName AND address_name = :addressName")

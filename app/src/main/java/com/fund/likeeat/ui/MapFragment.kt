@@ -3,6 +3,7 @@ package com.fund.likeeat.ui
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,8 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.navigation_left.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -143,7 +146,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mapOneThemeViewModel.reviewIdList.observe(viewLifecycleOwner) { result ->
             val reviewIdList = result.map { it.reviewId }
-            mapOneThemeViewModel.getReviews(reviewIdList)
+            GlobalScope.launch { mapOneThemeViewModel.getReviews(reviewIdList) }
         }
 
         mapOneThemeViewModel.reviewOneTheme.observe(viewLifecycleOwner) {

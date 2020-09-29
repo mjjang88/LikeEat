@@ -67,12 +67,12 @@ open class SetThemeActivity : AppCompatActivity() {
 
             layoutThemeSetPublic.setOnClickListener { openPublicBottomSheetAndSetPublicState() }
 
-            layoutAddReviewInTheme.setOnClickListener {
+            /*layoutAddReviewInTheme.setOnClickListener {
                 val intent = Intent(this@SetThemeActivity, SearchPlaceInThemeActivity::class.java)
                 intent.putExtra("THEME_ID", NOT_CREATED)
                 intent.putExtra(INTENT_KEY_LOCATION, naverMapInfo)
                 startActivity(intent)
-            }
+            }*/
 
             actionBack.setOnClickListener { finish() }
         }

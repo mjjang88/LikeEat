@@ -154,7 +154,7 @@
                         app:layout_constraintTop_toBottomOf="@id/theme_color_text" />
 
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <!--<androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_add_review_in_theme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -199,7 +199,7 @@
                         android:layout_height="@dimen/separator_height"
                         android:layout_marginHorizontal="@dimen/margin_double"
                         android:background="@color/black06"
-                        app:layout_constraintTop_toBottomOf="@id/layout_add_review_in_theme" />
+                        app:layout_constraintTop_toBottomOf="@id/layout_add_review_in_theme" />-->
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_theme_set_public"
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/padding_double"
                         android:paddingVertical="@dimen/padding_1.5_times"
-                        app:layout_constraintTop_toBottomOf="@id/separator2">
+                        app:layout_constraintTop_toBottomOf="@id/separator1">
 
                         <TextView
                             android:id="@+id/tv4"
