@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ItemOnlyReviewsBinding
 
-class ReviewsInThemeAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(ReviewsInThemeDiffCallback()) {
+class PlacesInThemeAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(PlacesInThemeDiffCallback()) {
     var cardLongClickListener: CardLongClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,7 +41,7 @@ class ReviewsInThemeAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(Review
 
 }
 
-class ReviewsInThemeDiffCallback: DiffUtil.ItemCallback<Review>() {
+class PlacesInThemeDiffCallback: DiffUtil.ItemCallback<Review>() {
     override fun areItemsTheSame(oldItem: Review, newItem: Review): Boolean {
         return (oldItem.id) == (newItem.id)
     }

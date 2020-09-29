@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
 import com.fund.likeeat.adapter.CardLongClickListener
-import com.fund.likeeat.adapter.ReviewsInThemeAdapter
+import com.fund.likeeat.adapter.PlacesInThemeAdapter
 import com.fund.likeeat.databinding.ActivityPlacesInThemeBinding
 import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.utilities.NO_PLACE_NAME
@@ -40,7 +40,7 @@ class PlacesInThemeActivity : AppCompatActivity() {
         toolbar.title = ""
         setSupportActionBar(toolbar)
 
-        val adapter = ReviewsInThemeAdapter().apply {
+        val adapter = PlacesInThemeAdapter().apply {
             setOnCardLongClickListener(object : CardLongClickListener {
                 override fun onLongClick(reviewId: Long?, x: Double?, y: Double?, placeName: String?) {
                     val bundle = Bundle().apply {

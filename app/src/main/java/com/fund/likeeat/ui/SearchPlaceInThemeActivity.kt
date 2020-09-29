@@ -7,7 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
-import com.fund.likeeat.adapter.ReviewsInThemeAdapter
+import com.fund.likeeat.adapter.CardClickListener
+import com.fund.likeeat.adapter.OnClickCardListener
+import com.fund.likeeat.adapter.PlacesInThemeAdapter
+import com.fund.likeeat.adapter.SearchPlaceAdapter
+import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ActivitySearchPlaceInThemeBinding
 import com.fund.likeeat.manager.KeyboardManager
 import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
@@ -15,17 +19,20 @@ import com.fund.likeeat.viewmodels.SEARCH_OPTION_ACCURACY
 import com.fund.likeeat.viewmodels.SEARCH_OPTION_NEAR_CURRUNT_LOCATION
 import com.fund.likeeat.viewmodels.SEARCH_OPTION_NEAR_MAP_LOCATION
 import com.fund.likeeat.viewmodels.SearchPlaceInThemeViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_search_place_in_theme.*
+import kotlinx.coroutines.selects.select
 import org.koin.android.ext.android.inject
 import kotlin.math.pow
 
 const val NOT_CREATED = -300L
 
 class SearchPlaceInThemeActivity : AppCompatActivity() {
-
     private val searchPoiViewModel: SearchPlaceInThemeViewModel by inject()
     private lateinit var binding: ActivitySearchPlaceInThemeBinding
+
+    val selectedSet = hashSetOf<Review>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +44,33 @@ class SearchPlaceInThemeActivity : AppCompatActivity() {
         initEditText()
         initChip()
 
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
+
         intent.getParcelableExtra<LatLng>(INTENT_KEY_LOCATION).apply {
             searchPoiViewModel.locate.value = this
         }
 
-        val adapter = ReviewsInThemeAdapter()
+        val adapter = SearchPlaceAdapter()
+        adapter.setOnCardClickListener(object: CardClickListener {
+            override fun onClick(review: Review) {
+                if(review in selectedSet) {
+                    selectedSet.remove(review)
+                } else {
+                    selectedSet.add(review)
+                }
+                searchPoiViewModel.selectedSet.value = selectedSet
+            }
+        })
+
         binding.listPlace.adapter = adapter
+
+        searchPoiViewModel.selectedSet.observe(this) { result ->
+            if(result.size == 0) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            } else {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
 
         searchPoiViewModel.reviewList.observe(this) { resultList ->
 

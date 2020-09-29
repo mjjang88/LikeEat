@@ -6,13 +6,18 @@
         <variable
             name="review"
             type="com.fund.likeeat.data.Review" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/card_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/theme_card_height"
-        android:paddingHorizontal="@dimen/padding_double">
+        android:paddingHorizontal="@dimen/padding_double"
+        android:onClick="@{clickListener}">
 
 
         <LinearLayout

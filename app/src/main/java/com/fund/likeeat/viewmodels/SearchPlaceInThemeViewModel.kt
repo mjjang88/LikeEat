@@ -20,7 +20,13 @@ class SearchPlaceInThemeViewModel(val reviewRepository: ReviewRepository) : View
     val x: MutableLiveData<Double> = MutableLiveData()
     val y: MutableLiveData<Double> = MutableLiveData()
 
+    val selectedSet: MutableLiveData<HashSet<Review>> = MutableLiveData()
+
     var reviewList: MutableLiveData<MutableList<Review>> = MutableLiveData()
+
+    init {
+        selectedSet.value = hashSetOf()
+    }
 
     fun searchFromWord(word: String) {
         GlobalScope.launch {
