@@ -5,5 +5,5 @@ enum class ThemeType {
 }
 
 enum class UpdateReviewOnlyThemeType {
-    TYPE_DELETE, TYPE_MOVE
+    TYPE_DELETE, TYPE_MOVE, TYPE_ADD
 }

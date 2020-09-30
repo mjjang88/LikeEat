@@ -6,18 +6,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fund.likeeat.data.*
 import com.fund.likeeat.network.RetrofitProcedure
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.core.context.GlobalContext
 
 class OneThemeViewModel(
     themeRepository: ThemeRepository,
     val reviewRepository: ReviewRepository,
-    reviewThemeLinkDao: ReviewThemeLinkDao,
+    val reviewThemeLinkDao: ReviewThemeLinkDao,
     themeId: Long
 ): ViewModel() {
     val theme = themeRepository.getTheme(themeId)
 
-    var reviewIdList: LiveData<List<ReviewThemeLink>> = reviewThemeLinkDao.getListByThemeId(themeId)
+    var reviewIdList: MutableLiveData<List<ReviewThemeLink>> = MutableLiveData()
     val reviewOneTheme: MutableLiveData<List<Review>> = MutableLiveData()
     val reviewOneThemeNoSameData: MutableLiveData<List<Review>> = MutableLiveData()
+
+    init {
+        getReviewIdList(themeId)
+    }
+
+    fun getReviewIdList(themeId: Long) {
+        GlobalScope.launch { reviewIdList.postValue(reviewThemeLinkDao.getListByThemeId(themeId)) }
+    }
 
     fun updateTheme(
         activity: Activity,

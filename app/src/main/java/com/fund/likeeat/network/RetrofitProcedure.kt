@@ -267,6 +267,27 @@ object RetrofitProcedure {
         })
     }
 
+    fun addReviewOnlyTheme(link: ReviewThemeLink, reviewId: Long, changeRequest: ReviewChanged) {
+        LikeEatRetrofit.getService().updateReviewOnlyTheme(reviewId, changeRequest).enqueue(object: Callback<Review> {
+            override fun onFailure(call: Call<Review>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "맛집 추가 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Review>, response: Response<Review>) {
+
+                GlobalScope.launch {
+                    AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().insertOneRelation(link)
+                }
+
+                GlobalScope.launch {
+                    getThemeByUid(MyApplication.pref.uid)
+                    getUserReview(MyApplication.pref.uid)
+                }
+            }
+
+        })
+    }
+
     suspend fun getFriends() {
         var bEndDbSave = false
 
