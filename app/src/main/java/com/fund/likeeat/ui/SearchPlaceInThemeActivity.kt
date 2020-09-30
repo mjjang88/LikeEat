@@ -2,6 +2,7 @@ package com.fund.likeeat.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -124,19 +125,25 @@ class SearchPlaceInThemeActivity : AppCompatActivity() {
 
         binding.actionEnroll.setOnClickListener {
             val list: ArrayList<Review> = ArrayList(selectedSet)
-            /*GlobalScope.launch {
+            GlobalScope.launch {
                 for(review in list) {
-                    addPlaceInThemeViewModel.getReviewListByXYName(review)
                     addPlaceInThemeViewModel.getRelations(review)
+                    addPlaceInThemeViewModel.getReviewListByXYName(review)
 
-                    for(item in addPlaceInThemeViewModel.reviewList.value!!) {
-                        val themeIdString = addPlaceInThemeViewModel.getThemeIdString()
-                        RetrofitProcedure.addReviewOnlyTheme(ReviewThemeLink(item.id, themeId!!), item.id, makeReviewChanged(item, themeIdString)!!)
-                    }
+                    /*for(item in addPlaceInThemeViewModel.reviewList.value!!) {
+
+                    }*/
                 }
-            }*/
+            }
             ToastUtil.toastShort("맛집을 테마에 추가했습니다.")
             finish()
+        }
+
+        addPlaceInThemeViewModel.reviewList.observe(this) {result ->
+            for(i in result) {
+                val themeIdString = addPlaceInThemeViewModel.getThemeIdString()
+                RetrofitProcedure.addReviewOnlyTheme(ReviewThemeLink(i.id, themeId!!), i.id, makeReviewChanged(i, themeIdString)!!)
+            }
         }
     }
 

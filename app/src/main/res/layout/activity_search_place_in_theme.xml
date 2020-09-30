@@ -11,57 +11,6 @@
         tools:context=".MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:behavior_hideable="true"
-            android:background="@drawable/item_border_top_round_shadow"
-            app:layout_behavior="@string/bottom_sheet_behavior">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/action_enroll"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/clickable_button_height"
-                android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_marginVertical="@dimen/margin_1.5_times"
-                android:background="@drawable/item_fill_black01_round"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:clickable="true">
-
-                <ImageView
-                    android:id="@+id/image_enroll"
-                    android:layout_width="@dimen/image_size_normal"
-                    android:layout_height="@dimen/image_size_normal"
-                    android:src="@drawable/ic_baseline_check_24"
-                    android:tint="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/text_enroll"
-                    app:layout_constraintHorizontal_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/text_enroll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_normal"
-                    android:text="@string/complete_select"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_size_big"
-                    app:layout_constraintStart_toEndOf="@id/image_enroll"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -184,6 +133,56 @@
                 app:layout_constraintTop_toBottomOf="@id/separator"
                 tools:context="com.fund.likeeat.ui.SearchPlaceActivity"
                 tools:listitem="@layout/list_item_place" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:behavior_hideable="true"
+            android:background="@drawable/item_border_top_round_shadow"
+            app:layout_behavior="@string/bottom_sheet_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/action_enroll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clickable_button_height"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginVertical="@dimen/margin_1.5_times"
+                android:background="@drawable/item_fill_black01_round"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/image_enroll"
+                    android:layout_width="@dimen/image_size_normal"
+                    android:layout_height="@dimen/image_size_normal"
+                    android:src="@drawable/ic_baseline_check_24"
+                    android:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/text_enroll"
+                    app:layout_constraintHorizontal_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/text_enroll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:text="@string/complete_select"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_big"
+                    app:layout_constraintStart_toEndOf="@id/image_enroll"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
