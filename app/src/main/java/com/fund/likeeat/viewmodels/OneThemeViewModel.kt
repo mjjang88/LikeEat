@@ -18,17 +18,9 @@ class OneThemeViewModel(
 ): ViewModel() {
     val theme = themeRepository.getTheme(themeId)
 
-    var reviewIdList: MutableLiveData<List<ReviewThemeLink>> = MutableLiveData()
+    var reviewIdList: LiveData<List<ReviewThemeLink>> = reviewThemeLinkDao.getListByThemeId(themeId)
     val reviewOneTheme: MutableLiveData<List<Review>> = MutableLiveData()
     val reviewOneThemeNoSameData: MutableLiveData<List<Review>> = MutableLiveData()
-
-    init {
-        getReviewIdList(themeId)
-    }
-
-    fun getReviewIdList(themeId: Long) {
-        GlobalScope.launch { reviewIdList.postValue(reviewThemeLinkDao.getListByThemeId(themeId)) }
-    }
 
     fun updateTheme(
         activity: Activity,

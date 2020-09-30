@@ -11,7 +11,7 @@ interface ReviewThemeLinkDao {
     fun getList(): List<ReviewThemeLink>
 
     @Query("SELECT * FROM review_theme_link WHERE themeId = :themeId")
-    fun getListByThemeId(themeId: Long): List<ReviewThemeLink>
+    fun getListByThemeId(themeId: Long): LiveData<List<ReviewThemeLink>>
 
     @Query("SELECT * FROM review_theme_link WHERE reviewId = :reviewId")
     fun getListByReviewId(reviewId: Long): List<ReviewThemeLink>

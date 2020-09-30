@@ -267,7 +267,7 @@ object RetrofitProcedure {
         })
     }
 
-    fun addReviewOnlyTheme(link: ReviewThemeLink, reviewId: Long, changeRequest: ReviewChanged) {
+    fun addReviewOnlyTheme(link: ReviewThemeLink, reviewId: Long, changeRequest: ReviewChanged, isLast: Boolean) {
         LikeEatRetrofit.getService().updateReviewOnlyTheme(reviewId, changeRequest).enqueue(object: Callback<Review> {
             override fun onFailure(call: Call<Review>, t: Throwable) {
                 Toast.makeText(MyApplication.applicationContext(), "맛집 추가 실패", Toast.LENGTH_SHORT).show()
@@ -279,9 +279,11 @@ object RetrofitProcedure {
                     AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().insertOneRelation(link)
                 }
 
-                GlobalScope.launch {
-                    getThemeByUid(MyApplication.pref.uid)
-                    getUserReview(MyApplication.pref.uid)
+                if(isLast) {
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
+                    }
                 }
             }
 

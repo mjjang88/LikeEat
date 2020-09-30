@@ -15,36 +15,32 @@ class AddPlaceInThemeViewModel(
     val reviewThemeLinkDao: ReviewThemeLinkDao,
     val reviewRepository: ReviewRepository
 ) : ViewModel() {
-    // 전체를 한번에 할지, 한번씩 전체를 할지
-    //val reviewMap: MutableLiveData<HashMap<Long, List<Review>>> = MutableLiveData()
-    val reviewList: MutableLiveData<List<Review>> = MutableLiveData()
-    val linkedRelationList: MutableLiveData<List<ReviewThemeLink>> = MutableLiveData()
+    val reviewPair: MutableLiveData<List<Pair<Review, Pair<List<ReviewThemeLink>, List<Review>>>>> = MutableLiveData()
+    val tempReviewPair = mutableListOf<Pair<Review, Pair<List<ReviewThemeLink>, List<Review>>>>()
 
-    /*fun getReviewListByXYName(review: Review) {
-        reviewMap.value!![review.id] = reviewRepository.getReviewListByPlace(MyApplication.pref.uid, review.x ?: NO_X_VALUE, review.y ?: NO_Y_VALUE, review.place_name ?: NO_PLACE_NAME)
-    }*/
 
-    fun getReviewListByXYName(review: Review) {
-        reviewList.postValue(reviewRepository.getReviewListByPlace(MyApplication.pref.uid, review.x ?: NO_X_VALUE, review.y ?: NO_Y_VALUE, review.place_name ?: NO_PLACE_NAME))
-    }
-
-    fun getRelations(review: Review) {
-        linkedRelationList.postValue(reviewThemeLinkDao.getListByReviewId(review.id))
+    fun insertReviewPair(review: Review) {
+        val item = Pair(
+            review, Pair(
+                reviewThemeLinkDao.getListByReviewId(review.id),
+                reviewRepository.getReviewListByPlace(MyApplication.pref.uid, review.x ?: NO_X_VALUE, review.y ?: NO_Y_VALUE, review.place_name ?: NO_PLACE_NAME)
+            )
+        )
+        tempReviewPair.add(item)
+        reviewPair.postValue(tempReviewPair)
     }
 
     // "1,3,5" 식으로 나타내게 됨
-    fun getThemeIdString(): String? {
+    fun getThemeIdString(reviewThemeLinkList: List<ReviewThemeLink>): String? {
         val builder = StringBuilder()
-        val list = linkedRelationList.value
-        list?.let {
+        reviewThemeLinkList.let {
             for((index, link) in it.withIndex()) {
                 builder.append(link.themeId)
                 if(index != it.size-1) {
                     builder.append(",")
                 }
             }
-        }?:return null
-
+        }
         return builder.toString()
     }
 }

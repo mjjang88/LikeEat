@@ -1,6 +1,8 @@
 package com.fund.likeeat.ui
 
 import android.os.Bundle
+import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -27,8 +29,10 @@ import com.fund.likeeat.viewmodels.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_search_place_in_theme.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import kotlin.math.pow
 
@@ -125,25 +129,36 @@ class SearchPlaceInThemeActivity : AppCompatActivity() {
 
         binding.actionEnroll.setOnClickListener {
             val list: ArrayList<Review> = ArrayList(selectedSet)
+
             GlobalScope.launch {
                 for(review in list) {
-                    addPlaceInThemeViewModel.getRelations(review)
-                    addPlaceInThemeViewModel.getReviewListByXYName(review)
-
-                    /*for(item in addPlaceInThemeViewModel.reviewList.value!!) {
-
-                    }*/
+                    addPlaceInThemeViewModel.insertReviewPair(review)
                 }
             }
-            ToastUtil.toastShort("맛집을 테마에 추가했습니다.")
-            finish()
         }
 
-        addPlaceInThemeViewModel.reviewList.observe(this) {result ->
-            for(i in result) {
-                val themeIdString = addPlaceInThemeViewModel.getThemeIdString()
-                RetrofitProcedure.addReviewOnlyTheme(ReviewThemeLink(i.id, themeId!!), i.id, makeReviewChanged(i, themeIdString)!!)
+        addPlaceInThemeViewModel.reviewPair.observe(this) { result ->
+
+            if(selectedSet.size == result.size) {
+                for ((index, i) in result.withIndex()) {
+                    for (j in i.second.second) {
+                        val themeIdString =
+                            addPlaceInThemeViewModel.getThemeIdString(i.second.first)
+                        RetrofitProcedure.addReviewOnlyTheme(
+                            ReviewThemeLink(j.id, themeId!!),
+                            j.id,
+                            makeReviewChanged(j, themeIdString)!!,
+                            index == result.size - 1
+                        )
+                    }
+
+                    if(index == result.size - 1) {
+                        ToastUtil.toastShort("맛집을 테마에 추가했습니다.")
+                        finish()
+                    }
+                }
             }
+
         }
     }
 

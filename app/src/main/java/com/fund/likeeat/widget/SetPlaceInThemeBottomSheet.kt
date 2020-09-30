@@ -12,6 +12,9 @@ import com.fund.likeeat.utilities.ToastUtil
 import com.fund.likeeat.viewmodels.OneReviewViewModel
 import com.fund.likeeat.viewmodels.ReviewThemeLinkViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,7 +26,7 @@ class SetPlaceInThemeBottomSheet : BottomSheetDialogFragment() {
     var isBundleFilled = false
 
     private val oneReviewViewModel: OneReviewViewModel by viewModel { parametersOf(reviewId) }
-    private val linkViewModel: ReviewThemeLinkViewModel by viewModel { parametersOf(reviewId, themeId) }
+    private val linkViewModel: ReviewThemeLinkViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +35,7 @@ class SetPlaceInThemeBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         reviewId = arguments?.getLong("REVIEW_ID")
         themeId = arguments?.getLong("THEME_ID")
+        GlobalScope.launch { linkViewModel.getThemeIdList(reviewId!!) }
 
         oneReviewViewModel.review.observe(viewLifecycleOwner) {
             reviewAndThemeDataBundle.apply {
