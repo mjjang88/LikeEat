@@ -48,6 +48,8 @@ class AddReviewActivity : AppCompatActivity()  {
         addReviewViewModel.editedReview.observe(this) {
             it?.let { review -> updateReview(binding, review) }
         }
+
+        addReviewViewModel.setDefaultThemeId()
     }
 
     private fun initPlace(binding: ActivityAddReviewBinding) {
@@ -188,7 +190,9 @@ class AddReviewActivity : AppCompatActivity()  {
                     }
                 }
 
-                adapter.submitList(checkedList)
+                withContext(Dispatchers.Main) {
+                    adapter.submitList(checkedList)
+                }
             }
         }
 
