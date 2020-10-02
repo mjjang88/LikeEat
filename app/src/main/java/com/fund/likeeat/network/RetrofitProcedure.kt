@@ -123,6 +123,27 @@ object RetrofitProcedure {
         })
     }
 
+    fun deleteReview(reviewId: Long, themeId: List<Long>) {
+        LikeEatRetrofit.getService().deleteReviewProcedure(reviewId).enqueue(object: Callback<Review> {
+            override fun onFailure(call: Call<Review>, t: Throwable) {
+                ToastUtil.toastShort("맛집 삭제 실패")
+            }
+
+            override fun onResponse(call: Call<Review>, response: Response<Review>) {
+                GlobalScope.launch {
+                    AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteRelations(reviewId, themeId)
+                }
+
+                GlobalScope.launch {
+                    getThemeByUid(MyApplication.pref.uid)
+                    getUserReview(MyApplication.pref.uid)
+                }
+                ToastUtil.toastShort("맛집 삭제를 완료했습니다")
+            }
+
+        })
+    }
+
     fun sendThemeToServer(theme: ThemeRequest, type: ThemeType) {
         LikeEatRetrofit.getService().sendTheme(theme).enqueue(object : Callback<Theme> {
             override fun onFailure(call: Call<Theme>, t: Throwable) {

@@ -17,6 +17,7 @@ import com.fund.likeeat.utilities.NO_X_VALUE
 import com.fund.likeeat.utilities.NO_Y_VALUE
 import com.fund.likeeat.viewmodels.OneThemeViewModel
 import com.fund.likeeat.widget.SetPlaceInThemeBottomSheet
+import com.fund.likeeat.widget.SetPlaceInThemeOnlyDeleteBottomSheet
 import com.naver.maps.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_places_in_theme.*
 import kotlinx.coroutines.GlobalScope
@@ -51,9 +52,10 @@ class PlacesInThemeActivity : AppCompatActivity() {
                         putLong("THEME_ID", intent.getLongExtra("THEME_ID", -12))
                     }
                     if(intent.getStringExtra("THEME_NAME") == resources.getString(R.string.theme_all)) {
-                        /* todo 등록한 모든 맛집일 경우에 보여지는 하단 bottomsheet는 다르다. (삭제 기능만 있을거임)
-                            특별한 디자인 나온게 없어서, 보류
-                        */
+                        val dialog =
+                            SetPlaceInThemeOnlyDeleteBottomSheet()
+                        dialog.arguments = bundle
+                        dialog.show(supportFragmentManager, dialog.tag)
 
                     } else {
                         val dialog =
@@ -80,8 +82,10 @@ class PlacesInThemeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu_reviews_in_theme, menu)
+        if(intent.getStringExtra("THEME_NAME") != resources.getString(R.string.theme_all)) {
+            val inflater = menuInflater
+            inflater.inflate(R.menu.menu_reviews_in_theme, menu)
+        }
         return true
     }
 

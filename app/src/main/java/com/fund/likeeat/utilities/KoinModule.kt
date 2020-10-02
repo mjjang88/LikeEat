@@ -42,4 +42,5 @@ val appModule = module {
     viewModel { MapOneThemeViewModel(get(), get(), get()) }
     viewModel { ReviewInThemeViewModel(get()) }
     viewModel { AddPlaceInThemeViewModel(get(), get()) }
+    viewModel { DeleteReviewViewModel(get()) }
 }
