@@ -13,6 +13,7 @@ import com.fund.likeeat.databinding.BottomSheetReivewMoreBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.ui.MapActivity
 import com.fund.likeeat.ui.ModifyReviewActivity
 import com.fund.likeeat.ui.ModifyReviewDetailActivity
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
@@ -20,6 +21,7 @@ import com.fund.likeeat.utilities.RESULT_CODE_FINISH_SET_REVIEW
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ReviewMoreBottomSheetFragment: BottomSheetDialogFragment() {
 
@@ -72,7 +74,11 @@ class ReviewMoreBottomSheetFragment: BottomSheetDialogFragment() {
                     .setTitle("알림")
                     .setMessage("등록한 맛집을 완전히 삭제합니다.\n계속 하시겠습니까?")
                     .setPositiveButton("삭제") {
-
+                        val reviewList: ArrayList<Review> = ArrayList()
+                        reviews.forEach {
+                            reviewList.add(it as Review)
+                        }
+                        doDeleteReviews(reviewList)
                     }.setNegativeButton("취소") {
                     }.show()
 
@@ -114,6 +120,40 @@ class ReviewMoreBottomSheetFragment: BottomSheetDialogFragment() {
             withContext(Dispatchers.Main) {
                 Toast.makeText(requireContext(), "리뷰 삭제 완료", Toast.LENGTH_LONG).show()
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                dismiss()
+            }
+        }
+    }
+
+    fun doDeleteReviews(reviews: ArrayList<Review>) {
+
+        var bSendUserInfoSuccess = false
+        GlobalScope.launch(Dispatchers.Default) {
+            try {
+                reviews.forEach {
+                    LikeEatRetrofit.getService().deleteReview(it.id).apply {
+                        if (isSuccessful) {
+                            bSendUserInfoSuccess = true
+                        }
+                    }
+                }
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Default) {
+            while (!bSendUserInfoSuccess) {
+                delay(1000)
+            }
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "리뷰 삭제 완료", Toast.LENGTH_LONG).show()
+                RetrofitProcedure.getUserReview(MyApplication.pref.uid)
+                val intent = Intent(requireContext(), MapActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+                startActivity(intent)
                 dismiss()
             }
         }
