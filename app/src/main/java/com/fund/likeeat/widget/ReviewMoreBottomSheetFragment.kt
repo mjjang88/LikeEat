@@ -13,9 +13,10 @@ import com.fund.likeeat.databinding.BottomSheetReivewMoreBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.RetrofitProcedure
-import com.fund.likeeat.ui.ModifyReviewAcitivity
+import com.fund.likeeat.ui.ModifyReviewActivity
 import com.fund.likeeat.ui.ModifyReviewDetailActivity
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.utilities.RESULT_CODE_FINISH_SET_REVIEW
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*
 import java.util.*
@@ -41,11 +42,15 @@ class ReviewMoreBottomSheetFragment: BottomSheetDialogFragment() {
             val reviews = arguments?.getParcelableArray(INTENT_KEY_REVIEW)
 
             if (reviews != null) {
-                val intent = Intent(requireContext(), ModifyReviewAcitivity::class.java)
-                intent.putParcelableArrayListExtra(INTENT_KEY_REVIEW,
-                    reviews.toList() as ArrayList<out Parcelable>?
-                )
-                startActivity(intent)
+                val intent = Intent(requireContext(), ModifyReviewActivity::class.java)
+                if (reviews.size <= 1) {
+                    intent.putExtra(INTENT_KEY_REVIEW, reviews[0])
+                } else {
+                    intent.putParcelableArrayListExtra(INTENT_KEY_REVIEW,
+                        reviews.toList() as ArrayList<out Parcelable>?
+                    )
+                }
+                startActivityForResult(intent, RESULT_CODE_FINISH_SET_REVIEW)
             } else {
                 val review: Review? = arguments?.getParcelable(INTENT_KEY_REVIEW)
                 review?.let {

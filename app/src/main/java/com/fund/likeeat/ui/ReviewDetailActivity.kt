@@ -4,26 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
 import com.fund.likeeat.adapter.AddReviewThemeAdapter
 import com.fund.likeeat.adapter.ReviewVisitRecordListAdapter
 import com.fund.likeeat.data.Review
-import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityReviewDetailBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.getCategoryImageByName
-import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
-import com.fund.likeeat.viewmodels.AddReviewViewModel
+import com.fund.likeeat.utilities.RESULT_CODE_FINISH_SET_REVIEW
 import com.fund.likeeat.viewmodels.ReviewDetailViewModel
-import com.fund.likeeat.widget.CategorySelectBottomSheetFragment
 import com.fund.likeeat.widget.ReviewMoreBottomSheetFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -31,20 +24,34 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     private val reviewDetailViewModel: ReviewDetailViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
 
+    lateinit var mBinding: ActivityReviewDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityReviewDetailBinding>(
+        mBinding = DataBindingUtil.setContentView<ActivityReviewDetailBinding>(
             this,
             R.layout.activity_review_detail
         )
 
         val review = intent.getParcelableExtra<Review>(INTENT_KEY_REVIEW)
-        binding.review = review
+        mBinding.review = review
         reviewDetailViewModel.inputReview.value = review
 
         review?.let {
-            initComponent(binding, it)
+            initComponent(mBinding, it)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_CODE_FINISH_SET_REVIEW) {
+            data?.getParcelableExtra<Review>(INTENT_KEY_REVIEW)?.let {
+                mBinding.review = it
+                reviewDetailViewModel.inputReview.value = it
+
+                initComponent(mBinding, it)
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun initComponent(binding: ActivityReviewDetailBinding, review: Review) {
