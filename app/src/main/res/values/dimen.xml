@@ -16,6 +16,7 @@
     <dimen name="padding_quarter">4dp</dimen>
     <dimen name="padding_one_eighth">2dp</dimen>
 
+    <dimen name="text_size_on_boarding_title">32sp</dimen>
     <dimen name="text_size_big_title">28sp</dimen>
 	<dimen name="text_size_bigger">20sp</dimen>
     <dimen name="text_size_title">18sp</dimen>

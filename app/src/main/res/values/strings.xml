@@ -101,4 +101,6 @@
     <string name="add">추가하기</string>
     <string name="add_favorite">즐겨찾기 추가</string>
 
+    <string name="start_app">시작하기</string>
+
 </resources>

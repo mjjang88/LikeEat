@@ -38,9 +38,13 @@ class SplashActivity : AppCompatActivity() {
         override fun onSessionClosed(errorResult: ErrorResult) {
             Log.e("KAKAO_API", "세션이 닫혀 있음: $errorResult")
 
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-            startActivity(intent)
-
+            if(MyApplication.pref.isNeedToSeeOnBoarding) {
+                val intent = Intent(this@SplashActivity, OnBoardingActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
             finish()
         }
 
