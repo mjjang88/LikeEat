@@ -62,7 +62,7 @@ class SplashActivity : AppCompatActivity() {
                 }
 
                 withContext(Dispatchers.Main) {
-                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    val intent = Intent(this@SplashActivity, MapActivity::class.java)
                     startActivity(intent)
 
                     finish()

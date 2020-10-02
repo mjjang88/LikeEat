@@ -308,7 +308,7 @@ class AddReviewActivity : AppCompatActivity()  {
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@AddReviewActivity, "리뷰 추가 완료", Toast.LENGTH_LONG).show()
-                val intent = Intent(this@AddReviewActivity, MainActivity::class.java).apply {
+                val intent = Intent(this@AddReviewActivity, MapActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)

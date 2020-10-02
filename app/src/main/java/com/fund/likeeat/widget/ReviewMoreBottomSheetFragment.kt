@@ -13,17 +13,12 @@ import com.fund.likeeat.databinding.BottomSheetReivewMoreBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.RetrofitProcedure
-import com.fund.likeeat.ui.AddReviewActivity
-import com.fund.likeeat.ui.MainActivity
 import com.fund.likeeat.ui.ModifyReviewAcitivity
 import com.fund.likeeat.ui.ModifyReviewDetailActivity
-import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
-import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
-import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*
-import java.util.ArrayList
+import java.util.*
 
 class ReviewMoreBottomSheetFragment: BottomSheetDialogFragment() {
 

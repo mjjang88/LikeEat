@@ -1,15 +1,11 @@
 package com.fund.likeeat.network
 
-import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.ui.MainActivity
 import com.fund.likeeat.utilities.ThemeType
 import com.fund.likeeat.utilities.ToastUtil
 import com.fund.likeeat.utilities.UID_DETACHED

@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.fund.likeeat.R
 import com.fund.likeeat.data.User
-import com.fund.likeeat.databinding.ActivityMainBinding
-import com.fund.likeeat.network.LikeEatRetrofit
+import com.fund.likeeat.databinding.ActivityLoginBinding
 import com.fund.likeeat.manager.MyApplication
+import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
 import com.kakao.auth.ApiResponseCallback
@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
         DataUtils.detachMyUid()
 
-        DataBindingUtil.setContentView<ActivityMainBinding>(
+        DataBindingUtil.setContentView<ActivityLoginBinding>(
             this,
             R.layout.activity_login
         )
@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         withContext(Dispatchers.Main) {
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            val intent = Intent(this@LoginActivity, MapActivity::class.java)
                             startActivity(intent)
 
                             finish()

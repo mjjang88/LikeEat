@@ -14,6 +14,7 @@ import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityReviewDetailBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.getCategoryImageByName
+import com.fund.likeeat.utilities.INTENT_KEY_PLACE
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
@@ -97,6 +98,12 @@ class ReviewDetailActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnMap.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            intent.putExtra(INTENT_KEY_REVIEW, review)
+            startActivity(intent)
         }
     }
 }
