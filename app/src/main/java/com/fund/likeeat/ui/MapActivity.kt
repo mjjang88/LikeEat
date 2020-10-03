@@ -21,10 +21,7 @@ import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
-import com.fund.likeeat.utilities.GpsTracker
-import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
-import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
-import com.fund.likeeat.utilities.ToastUtil
+import com.fund.likeeat.utilities.*
 import com.fund.likeeat.viewmodels.AllThemesViewModel
 import com.fund.likeeat.viewmodels.MapOneThemeViewModel
 import com.fund.likeeat.viewmodels.MapViewModel
@@ -45,6 +42,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mNaverMap : NaverMap
     private val markers = hashMapOf<Long, Marker>()
     private var nowSelectedThemeName: String? = null
+    private var nowSelectedTheme: Theme? = null
 
     private val mapViewModel: MapViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
     private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
@@ -65,6 +63,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.btnReviewAndMap.setOnClickListener {
             val intent = Intent(this, ReviewsActivity::class.java)
+            intent.putExtra(INTENT_KEY_THEME, nowSelectedTheme)
             startActivity(intent)
         }
 
@@ -129,6 +128,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 binding.themeTitle.text = theme.name
 
                 nowSelectedThemeName = theme.name
+                nowSelectedTheme = theme
 
                 mapOneThemeViewModel.getReviewIdListByThemeId(theme.id)
             }

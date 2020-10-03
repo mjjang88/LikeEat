@@ -3,16 +3,16 @@ package com.fund.likeeat.manager
 import com.fund.likeeat.R
 import com.fund.likeeat.widget.*
 
-enum class Category(val categoryName: String, val imageId: Int) {
-    KoreanFood("한식", R.drawable.ic_frame_category_korea),
-    ChineseFood("중식", R.drawable.ic_frame_category_china),
-    JapaneseFood("일식", R.drawable.ic_frame_category_japan),
-    WesternFood("양식", R.drawable.ic_frame_category_restaurant),
-    AsianFood("아시안", R.drawable.ic_frame_category_asian),
-    WorldFood("세계", R.drawable.ic_frame_category_world),
-    SnackBar("분식", R.drawable.ic_frame_category_snack),
-    Cafe("카페", R.drawable.ic_frame_category_cafe),
-    FastFood("패스트푸드", R.drawable.ic_frame_category_fastfood);
+enum class Category(val categoryName: String, val imageId: Int, val smallImageId: Int) {
+    KoreanFood("한식", R.drawable.ic_frame_category_korea, R.drawable.ic_category_korea),
+    ChineseFood("중식", R.drawable.ic_frame_category_china, R.drawable.ic_category_china),
+    JapaneseFood("일식", R.drawable.ic_frame_category_japan, R.drawable.ic_category_japan),
+    WesternFood("양식", R.drawable.ic_frame_category_restaurant, R.drawable.ic_category_restaurant),
+    AsianFood("아시안", R.drawable.ic_frame_category_asian, R.drawable.ic_category_asian),
+    WorldFood("세계", R.drawable.ic_frame_category_world, R.drawable.ic_category_world),
+    SnackBar("분식", R.drawable.ic_frame_category_snack, R.drawable.ic_category_snack),
+    Cafe("카페", R.drawable.ic_frame_category_cafe, R.drawable.ic_category_cafe),
+    FastFood("패스트푸드", R.drawable.ic_frame_category_fastfood, R.drawable.ic_category_fastfood);
 }
 
 enum class Evaluation(val evalName: String, val imageId: Int, val smallImageId: Int) {
@@ -65,6 +65,21 @@ fun getCategoryImageByName(name: String): Int {
         "분식" -> Category.SnackBar.imageId
         "카페" -> Category.Cafe.imageId
         "패스트푸드" -> Category.FastFood.imageId
+        else -> -1
+    }
+}
+
+fun getCategorySmallImageByName(name: String): Int {
+    return when (name) {
+        "한식" -> Category.KoreanFood.smallImageId
+        "중식" -> Category.ChineseFood.smallImageId
+        "일식" -> Category.JapaneseFood.smallImageId
+        "양식" -> Category.WesternFood.smallImageId
+        "아시안" -> Category.AsianFood.smallImageId
+        "세계" -> Category.WorldFood.smallImageId
+        "분식" -> Category.SnackBar.smallImageId
+        "카페" -> Category.Cafe.smallImageId
+        "패스트푸드" -> Category.FastFood.smallImageId
         else -> -1
     }
 }
