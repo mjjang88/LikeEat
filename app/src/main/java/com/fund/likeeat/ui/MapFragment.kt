@@ -114,7 +114,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.buttonLeftDrawer.setOnClickListener {
-            dataInit()  //TODO 현재 로그인 안 된 상태에서도 MapFragment 진입하기 때문에 오류가 발생함 (그렇게 유추하고 있음). 해결되면 바로 밖으로 빼버리자
+            dataInit()
             drawer.openDrawer(GravityCompat.START)
         }
 
@@ -133,6 +133,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val adapter = MainThemeAdapter()
         adapter.setOnClickNavCardListener(object: OnSelectNavCardListener {
             override fun onSelectNavCard(theme: Theme) {
+                adapter.selectedThemeId = theme.id
                 binding.navigationLeft.theme_name.text = theme.name
                 binding.navigationLeft.theme_count.text = resources.getString(R.string.review_count)
                     .replace("num", theme.reviewsCount.toString())
@@ -148,7 +149,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         binding.navigationLeft.all_theme_recycler.adapter = adapter
         themeViewModel.themeList.observe(viewLifecycleOwner) { themeList ->
+            try {
+                if (adapter.selectedThemeId != themeList[adapter.selectedPosition].id) {
+                    adapter.selectedPosition = 0
+                }
+            } catch(e: IndexOutOfBoundsException) {
+                adapter.selectedPosition = 0
+            }
             adapter.submitList(themeList)
+            adapter.notifyItemChanged(adapter.selectedPosition)
         }
 
         mapOneThemeViewModel.reviewIdList.observe(viewLifecycleOwner) { result ->

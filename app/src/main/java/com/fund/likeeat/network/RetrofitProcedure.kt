@@ -167,6 +167,11 @@ object RetrofitProcedure {
                             )
                         )
                     }
+
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
+                    }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
                 }
@@ -232,6 +237,10 @@ object RetrofitProcedure {
                     GlobalScope.launch {
                         AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().updateTheme(id, themeChanged.name, themeChanged.color, themeChanged.isPublic)
                     }
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
+                    }
                     ToastUtil.toastShort("테마 수정을 완료했습니다")
                 }
             }
@@ -249,6 +258,10 @@ object RetrofitProcedure {
                 if(response.isSuccessful) {
                     GlobalScope.launch {
                         AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().deleteTheme(id)
+                    }
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
                     }
                     ToastUtil.toastShort("테마를 삭제했습니다")
                 }
