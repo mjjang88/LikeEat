@@ -3,12 +3,11 @@ package com.fund.likeeat.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fund.likeeat.R
 import com.fund.likeeat.data.*
+import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.ReviewServerWrite
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class AddReviewViewModel internal constructor(
     val themeRepository: ThemeRepository,
@@ -99,5 +98,25 @@ class AddReviewViewModel internal constructor(
     fun setRevisit(revisit: String) {
         editedReview.value?.revisit = revisit
         editedReview.value = editedReview.value
+    }
+
+    fun setDefaultThemeId() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val themeList = getThemeList()
+            val themeIds = editedReview.value?.themeIds?.split(",")
+
+            if (themeIds == null) {
+                val baseId = themeList.find {
+                    it.name == MyApplication.applicationContext().getString(R.string.theme_all)
+                }?.id
+
+                baseId?.let {
+                    editedReview.value?.themeIds = it.toString()
+                    withContext(Dispatchers.Main) {
+                        editedReview.value = editedReview.value
+                    }
+                }
+            }
+        }
     }
 }

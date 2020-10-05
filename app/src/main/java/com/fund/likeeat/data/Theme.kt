@@ -1,9 +1,12 @@
 package com.fund.likeeat.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.fund.likeeat.manager.MyApplication
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "theme")
 data class Theme(
     @PrimaryKey val id: Long,
@@ -12,7 +15,7 @@ data class Theme(
     val name: String,
     val color: Int,
     val isPublic: Boolean
-) {
+): Parcelable {
 
 }
 

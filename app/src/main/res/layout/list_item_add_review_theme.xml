@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic24_tag"
             android:background="@null"
+            android:clickable="false"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"

@@ -35,35 +35,35 @@ class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>
                 executePendingBindings()
 
                 if (!item.serviceQuality.isNullOrBlank()) {
-                    val drawable = root.resources.getDrawable(getEvaluationImageByName(item.serviceQuality), null)
+                    val drawable = root.resources.getDrawable(getEvaluationSmallImageByName(item.serviceQuality), null)
                     binding.btnEvaluation.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
                     binding.btnEvaluation.text = item.serviceQuality
                     binding.btnEvaluation.visibility = View.VISIBLE
                 }
 
                 if (!item.companions.isNullOrBlank()) {
-                    val drawable = root.resources.getDrawable(getCompanionImageByName(item.companions), null)
+                    val drawable = root.resources.getDrawable(getCompanionSmallImageByName(item.companions), null)
                     binding.btnCompanion.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
                     binding.btnCompanion.text = item.companions
                     binding.btnCompanion.visibility = View.VISIBLE
                 }
 
                 if (!item.priceRange.isNullOrBlank()) {
-                    val drawable = root.resources.getDrawable(getPriceImageByName(item.priceRange), null)
+                    val drawable = root.resources.getDrawable(getPriceSmallImageByName(item.priceRange), null)
                     binding.btnPrice.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
                     binding.btnPrice.text = item.priceRange
                     binding.btnPrice.visibility = View.VISIBLE
                 }
 
                 if (!item.toliets.isNullOrBlank()) {
-                    val drawable = root.resources.getDrawable(getToiletImageByName(item.toliets), null)
+                    val drawable = root.resources.getDrawable(getToiletSmallImageByName(item.toliets), null)
                     binding.btnRestroom.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
                     binding.btnRestroom.text = item.toliets
                     binding.btnRestroom.visibility = View.VISIBLE
                 }
 
                 if (!item.revisit.isNullOrBlank()) {
-                    val drawable = root.resources.getDrawable(getRevisitImageByName(item.revisit), null)
+                    val drawable = root.resources.getDrawable(getRevisitSmallImageByName(item.revisit), null)
                     binding.btnReVisit.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
                     binding.btnReVisit.text = item.revisit
                     binding.btnReVisit.visibility = View.VISIBLE

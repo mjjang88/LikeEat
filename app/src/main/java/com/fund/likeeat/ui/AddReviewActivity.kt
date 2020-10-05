@@ -48,6 +48,8 @@ class AddReviewActivity : AppCompatActivity()  {
         addReviewViewModel.editedReview.observe(this) {
             it?.let { review -> updateReview(binding, review) }
         }
+
+        addReviewViewModel.setDefaultThemeId()
     }
 
     private fun initPlace(binding: ActivityAddReviewBinding) {
@@ -188,7 +190,9 @@ class AddReviewActivity : AppCompatActivity()  {
                     }
                 }
 
-                adapter.submitList(checkedList)
+                withContext(Dispatchers.Main) {
+                    adapter.submitList(checkedList)
+                }
             }
         }
 
@@ -206,50 +210,60 @@ class AddReviewActivity : AppCompatActivity()  {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnEvaluation.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnEvaluation.text = getString(R.string.evaluation)
+            binding.btnEvaluation.isSelected = false
         } else {
             val drawable = resources.getDrawable(getEvaluationImageByName(review.serviceQuality!!), null)
             binding.btnEvaluation.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnEvaluation.text = review.serviceQuality
+            binding.btnEvaluation.isSelected = true
         }
 
         if (review.companions.isNullOrBlank()) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnCompanion.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnCompanion.text = getString(R.string.companion)
+            binding.btnCompanion.isSelected = false
         } else {
             val drawable = resources.getDrawable(getCompanionImageByName(review.companions!!), null)
             binding.btnCompanion.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnCompanion.text = review.companions
+            binding.btnCompanion.isSelected = true
         }
 
         if (review.priceRange.isNullOrBlank()) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnPrice.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnPrice.text = getString(R.string.price)
+            binding.btnPrice.isSelected = false
         } else {
             val drawable = resources.getDrawable(getPriceImageByName(review.priceRange!!), null)
             binding.btnPrice.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnPrice.text = review.priceRange
+            binding.btnPrice.isSelected = true
         }
 
         if (review.toliets.isNullOrBlank()) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnRestroom.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnRestroom.text = getString(R.string.restroom)
+            binding.btnRestroom.isSelected = false
         } else {
             val drawable = resources.getDrawable(getToiletImageByName(review.toliets!!), null)
             binding.btnRestroom.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnRestroom.text = review.toliets
+            binding.btnRestroom.isSelected = true
         }
 
         if (review.revisit.isNullOrBlank()) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnReVisit.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnReVisit.text = getString(R.string.re_visit)
+            binding.btnReVisit.isSelected = false
         } else {
             val drawable = resources.getDrawable(getRevisitImageByName(review.revisit!!), null)
             binding.btnReVisit.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnReVisit.text = review.revisit
+            binding.btnReVisit.isSelected = true
         }
 
         setEnableBtnOk()
@@ -294,7 +308,7 @@ class AddReviewActivity : AppCompatActivity()  {
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@AddReviewActivity, "리뷰 추가 완료", Toast.LENGTH_LONG).show()
-                val intent = Intent(this@AddReviewActivity, MainActivity::class.java).apply {
+                val intent = Intent(this@AddReviewActivity, MapActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
                 RetrofitProcedure.getUserReview(MyApplication.pref.uid)

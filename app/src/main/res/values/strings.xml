@@ -100,5 +100,6 @@
     <string name="add_friend">친구 추가</string>
     <string name="add">추가하기</string>
     <string name="add_favorite">즐겨찾기 추가</string>
+    <string name="add_visit_record">방문기록 등록하기</string>
 
 </resources>

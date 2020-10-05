@@ -3,14 +3,13 @@ package com.fund.likeeat.ui
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.fund.likeeat.R
@@ -19,40 +18,31 @@ import com.fund.likeeat.adapter.MainThemeAdapter
 import com.fund.likeeat.adapter.OnSelectNavCardListener
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.Theme
-import com.fund.likeeat.databinding.FragmentMapBinding
+import com.fund.likeeat.databinding.ActivityMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
-import com.fund.likeeat.utilities.GpsTracker
-import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
-import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
-import com.fund.likeeat.utilities.ToastUtil
+import com.fund.likeeat.utilities.*
 import com.fund.likeeat.viewmodels.AllThemesViewModel
 import com.fund.likeeat.viewmodels.MapOneThemeViewModel
 import com.fund.likeeat.viewmodels.MapViewModel
 import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
-import com.naver.maps.map.MapFragment
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import kotlinx.android.synthetic.main.fragment_map.*
+import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.navigation_left.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-/***
- * 전체 ReivewList는 mapViewModel.review에 존재!
- * 선택된 테마의 ReviewList는 mapOneThemeViewModel.reviewOneTheme에 존재!
- */
-
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mNaverMap : NaverMap
     private val markers = hashMapOf<Long, Marker>()
     private var nowSelectedThemeName: String? = null
+    private var nowSelectedTheme: Theme? = null
 
     private val mapViewModel: MapViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
     private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
@@ -61,21 +51,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var highlightMarker: Marker? = null
     private var highlightReview: Review? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        var isReviewListOpen = false
-        val binding = FragmentMapBinding.inflate(inflater, container, false).apply {
-            viewModel = mapViewModel
-        }
-        context ?: return binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        PermissionManager.checkPermissionWhenOnCreate(requireActivity())
+        val binding = DataBindingUtil.setContentView<ActivityMapBinding>(
+            this,
+            R.layout.activity_map
+        )
+
+        PermissionManager.checkPermissionWhenOnCreate(this)
 
         binding.btnReviewAndMap.setOnClickListener {
-            val intent = Intent(requireContext(), ReviewsActivity::class.java)
+            val intent = Intent(this, ReviewsActivity::class.java)
+            intent.putExtra(INTENT_KEY_THEME, nowSelectedTheme)
             startActivity(intent)
         }
 
@@ -87,27 +75,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapInit()
 
         binding.btnAddReview.setOnClickListener {
-            val intent = Intent(requireContext(), SearchPlaceActivity::class.java)
+            val intent = Intent(this, SearchPlaceActivity::class.java)
             intent.putExtra(INTENT_KEY_LOCATION, mNaverMap.cameraPosition.target)
             startActivity(intent)
         }
         binding.btnAddReviewHighlight.setOnClickListener {
-            val intent = Intent(requireContext(), SearchPlaceActivity::class.java)
+            val intent = Intent(this, SearchPlaceActivity::class.java)
             intent.putExtra(INTENT_KEY_LOCATION, mNaverMap.cameraPosition.target)
             startActivity(intent)
         }
 
         binding.btnCurrentLocation.setOnClickListener {
-            val gpsTracker = GpsTracker(requireContext())
+            val gpsTracker = GpsTracker(this)
             moveToPoi(LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
         }
         binding.btnCurrentLocationHighlight.setOnClickListener {
-            val gpsTracker = GpsTracker(requireContext())
+            val gpsTracker = GpsTracker(this)
             moveToPoi(LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
         }
 
         binding.navigationLeft.all_theme_layout.setOnClickListener {
-            val intent = Intent(requireContext(), ThemeActivity::class.java)
+            val intent = Intent(this, ThemeActivity::class.java)
             intent.putExtra(INTENT_KEY_LOCATION, mNaverMap.cameraPosition.target)
             startActivity(intent)
             drawer.closeDrawer(GravityCompat.START)
@@ -119,7 +107,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.layoutPlaceInfo.setOnClickListener {
-            val intent = Intent(requireContext(), ReviewDetailActivity::class.java)
+            val intent = Intent(this, ReviewDetailActivity::class.java)
             intent.putExtra(INTENT_KEY_REVIEW, highlightReview)
             startActivity(intent)
         }
@@ -140,6 +128,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 binding.themeTitle.text = theme.name
 
                 nowSelectedThemeName = theme.name
+                nowSelectedTheme = theme
 
                 mapOneThemeViewModel.getReviewIdListByThemeId(theme.id)
             }
@@ -147,34 +136,32 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         })
 
         binding.navigationLeft.all_theme_recycler.adapter = adapter
-        themeViewModel.themeList.observe(viewLifecycleOwner) { themeList ->
+        themeViewModel.themeList.observe(this) { themeList ->
             adapter.submitList(themeList)
         }
 
-        mapOneThemeViewModel.reviewIdList.observe(viewLifecycleOwner) { result ->
+        mapOneThemeViewModel.reviewIdList.observe(this) { result ->
             val reviewIdList = result.map { it.reviewId }
             GlobalScope.launch { mapOneThemeViewModel.getReviews(reviewIdList) }
         }
 
-        mapOneThemeViewModel.reviewOneTheme.observe(viewLifecycleOwner) {
+        mapOneThemeViewModel.reviewOneTheme.observe(this) {
             markerAndStyleInit()
             if(nowSelectedThemeName != resources.getString(R.string.theme_all)) markerForTheme()
         }
-
-        return binding.root
     }
 
-    fun initFriend(binding: FragmentMapBinding) {
+    fun initFriend(binding: ActivityMapBinding) {
 
         var isGetFriend = false
         var isGetFriendLink = false
-        mapViewModel.kakaofriends.observe(viewLifecycleOwner) {
+        mapViewModel.kakaofriends.observe(this) {
             isGetFriend = true
             if (isGetFriend && isGetFriendLink) {
                 mapViewModel.getFriendList()
             }
         }
-        mapViewModel.friendLink.observe(viewLifecycleOwner) {
+        mapViewModel.friendLink.observe(this) {
             isGetFriendLink = true
             binding.navigationRight.textFriendCount.text = it.size.toString()
             if (isGetFriend && isGetFriendLink) {
@@ -184,18 +171,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         val favoriteAdapter = FriendListAdapter()
         binding.navigationRight.listRightNaviFavorite.adapter = favoriteAdapter
-        mapViewModel.favoriteFriends.observe(viewLifecycleOwner) {
+        mapViewModel.favoriteFriends.observe(this) {
             favoriteAdapter.submitList(it)
         }
 
         val friendAdapter = FriendListAdapter()
         binding.navigationRight.listRightNaviFriends.adapter = friendAdapter
-        mapViewModel.friends.observe(viewLifecycleOwner) {
+        mapViewModel.friends.observe(this) {
             friendAdapter.submitList(it)
         }
 
         binding.navigationRight.layoutRightNaviTitle.setOnClickListener {
-            val intent = Intent(requireContext(), FriendsActivity::class.java)
+            val intent = Intent(this, FriendsActivity::class.java)
             startActivity(intent)
         }
     }
@@ -205,15 +192,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         when (requestCode) {
             PermissionManager.GPS_ENABLE_REQUEST_CODE -> {
-                if (PermissionManager.checkLocationServicesStatus(requireContext())) {
-                    PermissionManager.checkRunTimePermission(requireActivity())
+                if (PermissionManager.checkLocationServicesStatus(this)) {
+                    PermissionManager.checkRunTimePermission(this)
                 }
             }
         }
     }
 
     private fun mapInit() {
-        val fm = childFragmentManager
+        val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.map, it).commit()
@@ -224,7 +211,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun subscribeUi() {
         markers.clear()
-        mapViewModel.review.observe(viewLifecycleOwner) {
+        mapViewModel.review.observe(this) {
             it.forEach { review ->
                 val marker = Marker()
                 marker.captionText = review.place_name ?: "Null"
@@ -240,6 +227,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 markers[review.id] = marker
             }
             mapViewModel.getReviewFullList(it)
+
+            val review = intent.getParcelableExtra<Review>(INTENT_KEY_REVIEW)
+            review?.let {
+                setHighLightReviewAndMarkerStyle(it)
+                moveToPoi(LatLng(it.y?: 0.0, it.x?: 0.0))
+                changeState(STATE_HIGHLIGHT)
+            }
         }
     }
 
@@ -292,11 +286,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
 
             if (!check_result) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), PermissionManager.REQUIRED_PERMISSIONS[0]) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), PermissionManager.REQUIRED_PERMISSIONS[1])) {
-                    Toast.makeText(requireContext(), "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show()
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, PermissionManager.REQUIRED_PERMISSIONS[0]) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, PermissionManager.REQUIRED_PERMISSIONS[1])) {
+                    Toast.makeText(this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(requireContext(), "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -357,6 +351,4 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         text_highlight_place_name.text = review.place_name
         text_highlight_place_address.text = review.address_name
     }
-
-
 }

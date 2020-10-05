@@ -40,8 +40,10 @@ class AddReviewThemeAdapter: ListAdapter<Theme, RecyclerView.ViewHolder>(ThemeDi
                 }
 
                 binding.layoutTheme.setOnClickListener {
-                    toggle()
-                    updateCheckList(item)
+                    if (item.name != MyApplication.applicationContext().getString(R.string.theme_all)) {
+                        toggle()
+                        updateCheckList(item)
+                    }
                 }
             }
         }
