@@ -1,135 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-        <LinearLayout
-            android:id="@+id/layout_search"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_text_min_height"
-            android:background="@drawable/edit_background_shape"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_normal">
+            android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/edit_search"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/search_place_hint"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
+            <LinearLayout
+                android:id="@+id/layout_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_min_height"
                 android:layout_marginStart="@dimen/margin_normal"
-                android:lines="1">
-                <requestFocus />
-            </EditText>
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:background="@drawable/edit_background_shape"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/edit_delete"
+                <EditText
+                    android:id="@+id/edit_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/search_place_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:lines="1">
+
+                    <requestFocus />
+                </EditText>
+
+                <ImageButton
+                    android:id="@+id/edit_delete"
+                    style="@style/ImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:src="@drawable/ic_baseline_close_24" />
+
+                <ImageButton
+                    android:id="@+id/edit_search_button"
+                    style="@style/ImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:src="@drawable/ic_baseline_search_24" />
+
+            </LinearLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/radio_group_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_1.5_times"
+                android:layout_marginTop="@dimen/margin_normal"
+                app:checkedChip="@id/chip_distance_by_location"
+                app:layout_constraintTop_toBottomOf="@id/layout_search"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_distance_by_location"
+                    style="@style/Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_filter_distance_by_location" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_distance_by_map"
+                    style="@style/Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_filter_distance_by_map" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_match"
+                    style="@style/Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_filter_match" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <View
+                android:id="@+id/separator"
+                style="@style/Divider"
+                android:layout_marginTop="@dimen/margin_normal"
+                app:layout_constraintTop_toBottomOf="@id/radio_group_filter" />
+
+            <ImageView
+                android:id="@+id/image_suggest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:src="@drawable/image_suggest_add_review"
+                app:layout_constraintTop_toBottomOf="@id/separator" />
+
+            <TextView
+                android:id="@+id/text_suggest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_close_24"
-                android:background="@null"
-                android:layout_gravity="center"
-                style="@style/ImageButton"/>
+                android:layout_marginTop="@dimen/margin_big"
+                android:text="테마에 맛집을 추가해보세요!"
+                android:textColor="@color/black02"
+                android:textSize="@dimen/text_size_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_suggest" />
 
-            <ImageButton
-                android:id="@+id/edit_search_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_search_24"
-                android:background="@null"
-                android:layout_gravity="center"
-                style="@style/ImageButton"/>
 
-        </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_place"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/margin_half"
+                android:visibility="gone"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator"
+                tools:context="com.fund.likeeat.ui.SearchPlaceActivity"
+                tools:listitem="@layout/list_item_place" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/radio_group_filter"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:singleLine="true"
-            app:singleSelection="true"
-            app:selectionRequired="true"
-            app:checkedChip="@id/chip_distance_by_location"
-            android:layout_marginStart="@dimen/margin_1.5_times"
-            android:layout_marginTop="@dimen/margin_normal"
-            app:layout_constraintTop_toBottomOf="@id/layout_search">
+            app:behavior_hideable="true"
+            android:background="@drawable/item_border_top_round_shadow"
+            app:layout_behavior="@string/bottom_sheet_behavior">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_distance_by_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search_filter_distance_by_location"
-                style="@style/Chip"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/action_enroll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clickable_button_height"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginVertical="@dimen/margin_1.5_times"
+                android:background="@drawable/item_fill_black01_round"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clickable="true">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_distance_by_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search_filter_distance_by_map"
-                style="@style/Chip"/>
+                <ImageView
+                    android:id="@+id/image_enroll"
+                    android:layout_width="@dimen/image_size_normal"
+                    android:layout_height="@dimen/image_size_normal"
+                    android:src="@drawable/ic_baseline_check_24"
+                    android:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/text_enroll"
+                    app:layout_constraintHorizontal_chainStyle="packed" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_match"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search_filter_match"
-                style="@style/Chip"/>
+                <TextView
+                    android:id="@+id/text_enroll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:text="@string/complete_select"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_big"
+                    app:layout_constraintStart_toEndOf="@id/image_enroll"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-        </com.google.android.material.chip.ChipGroup>
-
-        <View
-            android:id="@+id/separator"
-            app:layout_constraintTop_toBottomOf="@id/radio_group_filter"
-            style="@style/Divider"
-            android:layout_marginTop="@dimen/margin_normal"/>
-        
-        <ImageView
-            android:id="@+id/image_suggest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/separator"
-            android:src="@drawable/image_suggest_add_review"
-            android:layout_marginTop="@dimen/margin_normal"/>
-        
-        <TextView
-            android:id="@+id/text_suggest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="테마에 맛집을 추가해보세요!"
-            app:layout_constraintTop_toBottomOf="@id/image_suggest"
-            android:layout_marginTop="@dimen/margin_big"
-            android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black02"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_place"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/radio_group_filter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/margin_half"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context="com.fund.likeeat.ui.SearchPlaceActivity"
-            tools:listitem="@layout/list_item_place"
-            android:visibility="gone"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

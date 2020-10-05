@@ -11,6 +11,7 @@ import com.fund.likeeat.databinding.ItemThemeBinding
 
 class MainThemeAdapter: ListAdapter<Theme, RecyclerView.ViewHolder>(ThemeDiffCallback()) {
     var selectedPosition : Int = 0
+    var selectedThemeId: Long = 0
 
     var selectNavCardListener : OnSelectNavCardListener? = null
 

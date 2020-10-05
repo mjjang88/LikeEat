@@ -9,17 +9,13 @@ import com.fund.likeeat.R
 import com.fund.likeeat.adapter.OnClickAddThemeListener
 import com.fund.likeeat.adapter.OnClickCardListener
 import com.fund.likeeat.adapter.ThemeAdapter
-import com.fund.likeeat.data.ReviewThemeLink
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityThemeBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.utilities.INTENT_KEY_LOCATION
 import com.fund.likeeat.viewmodels.AllThemesViewModel
-import com.fund.likeeat.viewmodels.ReviewThemeLinkViewModel
 import com.fund.likeeat.widget.OnSelectEditListener
 import com.naver.maps.geometry.LatLng
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

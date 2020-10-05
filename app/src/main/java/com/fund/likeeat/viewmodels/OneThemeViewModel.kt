@@ -6,11 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fund.likeeat.data.*
 import com.fund.likeeat.network.RetrofitProcedure
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.core.context.GlobalContext
 
 class OneThemeViewModel(
     themeRepository: ThemeRepository,
     val reviewRepository: ReviewRepository,
-    reviewThemeLinkDao: ReviewThemeLinkDao,
+    val reviewThemeLinkDao: ReviewThemeLinkDao,
     themeId: Long
 ): ViewModel() {
     val theme = themeRepository.getTheme(themeId)

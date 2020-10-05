@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeEat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.AddFriendActivity"></activity>
+        <activity android:name=".ui.OnBoardingActivity"></activity>
+        <activity android:name=".ui.AddFriendActivity" />
         <activity android:name=".ui.FriendsActivity" />
         <activity
             android:name=".ui.SplashActivity"
@@ -27,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.PlacesInThemeActivity"></activity>
+        <activity android:name=".ui.PlacesInThemeActivity" />
         <activity android:name=".ui.ModifyReviewDetailActivity" />
         <activity android:name=".ui.ModifyReviewActivity" />
         <activity android:name=".ui.ReviewDetailActivity" />

@@ -45,6 +45,11 @@ interface RetrofitService {
         @Path("id") id: Long
     ): Response<Unit>
 
+    @DELETE("/reviews/{id}")
+    fun deleteReviewProcedure(
+        @Path("id") id: Long
+    ): Call<Review>
+
     // http://likeeat-server.herokuapp.com/themes/?uid=UID
     @GET("/themes/")
     fun requestThemeByUid(

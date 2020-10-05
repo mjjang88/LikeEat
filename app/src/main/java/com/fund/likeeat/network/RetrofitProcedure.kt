@@ -119,6 +119,27 @@ object RetrofitProcedure {
         })
     }
 
+    fun deleteReview(reviewId: Long, themeId: List<Long>) {
+        LikeEatRetrofit.getService().deleteReviewProcedure(reviewId).enqueue(object: Callback<Review> {
+            override fun onFailure(call: Call<Review>, t: Throwable) {
+                ToastUtil.toastShort("맛집 삭제 실패")
+            }
+
+            override fun onResponse(call: Call<Review>, response: Response<Review>) {
+                GlobalScope.launch {
+                    AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().deleteRelations(reviewId, themeId)
+                }
+
+                GlobalScope.launch {
+                    getThemeByUid(MyApplication.pref.uid)
+                    getUserReview(MyApplication.pref.uid)
+                }
+                ToastUtil.toastShort("맛집 삭제를 완료했습니다")
+            }
+
+        })
+    }
+
     fun sendThemeToServer(theme: ThemeRequest, type: ThemeType) {
         LikeEatRetrofit.getService().sendTheme(theme).enqueue(object : Callback<Theme> {
             override fun onFailure(call: Call<Theme>, t: Throwable) {
@@ -141,6 +162,11 @@ object RetrofitProcedure {
                                 )
                             )
                         )
+                    }
+
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
                     }
                 } else {
                     Toast.makeText(MyApplication.applicationContext(), "테마 저장 실패", Toast.LENGTH_SHORT).show()
@@ -207,6 +233,10 @@ object RetrofitProcedure {
                     GlobalScope.launch {
                         AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().updateTheme(id, themeChanged.name, themeChanged.color, themeChanged.isPublic)
                     }
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
+                    }
                     ToastUtil.toastShort("테마 수정을 완료했습니다")
                 }
             }
@@ -224,6 +254,10 @@ object RetrofitProcedure {
                 if(response.isSuccessful) {
                     GlobalScope.launch {
                         AppDatabase.getInstance(MyApplication.applicationContext()).themeDao().deleteTheme(id)
+                    }
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
                     }
                     ToastUtil.toastShort("테마를 삭제했습니다")
                 }
@@ -253,6 +287,29 @@ object RetrofitProcedure {
                             }
                         }
                     }
+                    GlobalScope.launch {
+                        getThemeByUid(MyApplication.pref.uid)
+                        getUserReview(MyApplication.pref.uid)
+                    }
+                }
+            }
+
+        })
+    }
+
+    fun addReviewOnlyTheme(link: ReviewThemeLink, reviewId: Long, changeRequest: ReviewChanged, isLast: Boolean) {
+        LikeEatRetrofit.getService().updateReviewOnlyTheme(reviewId, changeRequest).enqueue(object: Callback<Review> {
+            override fun onFailure(call: Call<Review>, t: Throwable) {
+                Toast.makeText(MyApplication.applicationContext(), "맛집 추가 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Review>, response: Response<Review>) {
+
+                GlobalScope.launch {
+                    AppDatabase.getInstance(MyApplication.applicationContext()).reviewThemeLinkDao().insertOneRelation(link)
+                }
+
+                if(isLast) {
                     GlobalScope.launch {
                         getThemeByUid(MyApplication.pref.uid)
                         getUserReview(MyApplication.pref.uid)
