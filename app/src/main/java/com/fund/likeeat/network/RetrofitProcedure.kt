@@ -37,7 +37,7 @@ object RetrofitProcedure {
         })
     }
 
-    suspend fun getUserReview(uid: Long) {
+    suspend fun getUserReview(uid: Long, notDelete: Boolean = false) {
         var bEndDbSave = false
 
         LikeEatRetrofit.getService().requestUserReview(uid).enqueue(object : Callback<List<ReviewServerRead>> {
@@ -85,8 +85,13 @@ object RetrofitProcedure {
                                 }
 
                                 val database : AppDatabase = AppDatabase.getInstance(MyApplication.applicationContext())
-                                database.reviewDao().deleteAndInsertAll(reviewList)
-                                database.reviewThemeLinkDao().deleteAndInsertAll(reviewThemeLinkList)
+                                if (notDelete) {
+                                    database.reviewDao().insertAll(reviewList)
+                                    database.reviewThemeLinkDao().insertAll(reviewThemeLinkList)
+                                } else {
+                                    database.reviewDao().deleteAndInsertAll(reviewList)
+                                    database.reviewThemeLinkDao().deleteAndInsertAll(reviewThemeLinkList)
+                                }
                             }
                         }
                         job.join()
@@ -178,7 +183,7 @@ object RetrofitProcedure {
 
     // 만약 getThemeByUid를 통해 데이터를 불러올 경우, 값이 하나도 안들어있다면 기본 Default 테마를 만들어준다.
     // 그 이후에는 무조건 테마가 하나 이상 존재하게 되므로, 또 다시 Default 테마가 추가 될 일은 없다. (서버 자체에서 삭제하지 않는 이상은)
-    suspend fun getThemeByUid(uid: Long) {
+    suspend fun getThemeByUid(uid: Long, notDelete: Boolean = false) {
         var bEndDbSave = false
 
         if(MyApplication.pref.uid == UID_DETACHED) return
@@ -202,9 +207,15 @@ object RetrofitProcedure {
                     } else {
                         runBlocking {
                             val job = CoroutineScope(Dispatchers.IO).launch {
-                                AppDatabase.getInstance(MyApplication.applicationContext()).themeDao()
-                                    .insertTheme(
-                                        response.body()?.map { it.copy(uid = uid) })
+                                if (notDelete) {
+                                    AppDatabase.getInstance(MyApplication.applicationContext()).themeDao()
+                                        .insertTheme(
+                                            response.body()?.map { it.copy(uid = uid) })
+                                } else {
+                                    AppDatabase.getInstance(MyApplication.applicationContext()).themeDao()
+                                        .deleteAndInsertAll(
+                                            response.body()?.map { it.copy(uid = uid) })
+                                }
                             }
                             job.join()
                             bEndDbSave = true

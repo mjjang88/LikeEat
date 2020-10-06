@@ -26,8 +26,17 @@ interface ThemeDao {
     @Query("UPDATE theme SET name=:name, color=:color, isPublic=:isPublic WHERE id=:id")
     suspend fun updateTheme(id: Long, name: String, color: Int, isPublic: Boolean)
 
+    @Query("DELETE FROM theme")
+    suspend fun deleteAll()
+
     @Query("DELETE FROM theme WHERE id=:id")
     suspend fun deleteTheme(id: Long)
+
+    @Transaction
+    suspend fun deleteAndInsertAll(matchs: List<Theme>?) {
+        deleteAll()
+        insertTheme(matchs)
+    }
 
     @Query("SELECT * FROM theme WHERE id=:themeId")
     fun getThemeByThemeId(themeId: Long): Theme

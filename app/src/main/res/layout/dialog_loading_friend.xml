@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/image_loading_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/image_loading"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_loading_friend"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/text_loading_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loading_friend"
+        android:textColor="?attr/colorPrimary"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/image_loading_friend"
+        app:layout_constraintBottom_toTopOf="@id/text_content_loading_friend"
+        android:layout_marginTop="@dimen/margin_double"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/TextBigTitle"/>
+
+    <TextView
+        android:id="@+id/text_content_loading_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loading_friend_content"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/text_loading_friend"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_double"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/TextBig"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

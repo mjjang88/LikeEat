@@ -25,7 +25,17 @@ class FriendListAdapter: ListAdapter<KakaoFriend, RecyclerView.ViewHolder>(Kakao
             binding.apply {
                 friend = item
                 executePendingBindings()
+
+                binding.imageMap.setOnClickListener {
+                    mFriendListClickListener?.onClick(item.uid)
+                }
             }
         }
     }
+
+    var mFriendListClickListener: FriendListClickListener? = null
+}
+
+interface FriendListClickListener {
+    fun onClick(friendId: Long)
 }

@@ -1,9 +1,11 @@
 package com.fund.likeeat.ui
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -14,6 +16,7 @@ import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.fund.likeeat.R
 import com.fund.likeeat.adapter.FriendListAdapter
+import com.fund.likeeat.adapter.FriendListClickListener
 import com.fund.likeeat.adapter.MainThemeAdapter
 import com.fund.likeeat.adapter.OnSelectNavCardListener
 import com.fund.likeeat.data.Review
@@ -21,6 +24,7 @@ import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityMapBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
+import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.*
 import com.fund.likeeat.viewmodels.AllThemesViewModel
 import com.fund.likeeat.viewmodels.MapOneThemeViewModel
@@ -32,7 +36,10 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.navigation_left.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -44,12 +51,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var nowSelectedThemeName: String? = null
     private var nowSelectedTheme: Theme? = null
 
-    private val mapViewModel: MapViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
-    private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val mapViewModel: MapViewModel by viewModel { parametersOf(getUid()) }
+    private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(getUid()) }
     private val mapOneThemeViewModel: MapOneThemeViewModel by inject()
 
     private var highlightMarker: Marker? = null
     private var highlightReview: Review? = null
+
+    fun getUid(): Long {
+        val nFriendUid = intent.getLongExtra(INTENT_KEY_FRIEND_UID, 0)
+        if (nFriendUid != 0L) {
+            return nFriendUid
+        } else {
+            return MyApplication.pref.uid
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -183,16 +199,42 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         mapViewModel.favoriteFriends.observe(this) {
             favoriteAdapter.submitList(it)
         }
+        favoriteAdapter.mFriendListClickListener = friendListClickListener
 
         val friendAdapter = FriendListAdapter()
         binding.navigationRight.listRightNaviFriends.adapter = friendAdapter
         mapViewModel.friends.observe(this) {
             friendAdapter.submitList(it)
         }
+        friendAdapter.mFriendListClickListener = friendListClickListener
 
         binding.navigationRight.layoutRightNaviTitle.setOnClickListener {
             val intent = Intent(this, FriendsActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    val friendListClickListener = object : FriendListClickListener {
+        override fun onClick(friendId: Long) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                var dialog: Dialog? = null
+                withContext(Dispatchers.Main) {
+                    dialog = Dialog(this@MapActivity, R.style.Theme_LikeEat_NoActionBar).apply {
+                        requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        setContentView(R.layout.dialog_loading_friend)
+                    }
+                    dialog?.show()
+                }
+                RetrofitProcedure.getThemeByUid(friendId, true)
+                RetrofitProcedure.getUserReview(friendId, true)
+                withContext(Dispatchers.Main) {
+                    val intent = Intent(this@MapActivity, MapActivity::class.java)
+                    intent.putExtra(INTENT_KEY_FRIEND_UID, friendId)
+                    startActivity(intent)
+
+                    dialog?.dismiss()
+                }
+            }
         }
     }
 
@@ -235,7 +277,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 markers[review.id] = marker
             }
-            mapViewModel.getReviewFullList(it)
 
             val review = intent.getParcelableExtra<Review>(INTENT_KEY_REVIEW)
             review?.let {
