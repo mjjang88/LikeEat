@@ -42,24 +42,24 @@ class OnBoardingActivity : AppCompatActivity() {
             add(
                 OnBoardingItem(
                     R.drawable.image_on_boarding_first,
-                    "간편한 맛집등록",
-                    "라이크잇에서 간편하게\n맛집을 등록해보세요"
+                    resources.getText(R.string.on_boarding_title_first),
+                    resources.getString(R.string.on_boarding_description_first)
                 )
             )
 
             add(
                 OnBoardingItem(
                     R.drawable.image_on_boarding_second,
-                    "나만의 테마분류",
-                    "내가 지정한 테마로\n맛집을 보기쉽게 분류하세요"
+                    resources.getText(R.string.on_boarding_title_second),
+                    resources.getString(R.string.on_boarding_description_second)
                 )
             )
 
             add(
                 OnBoardingItem(
                     R.drawable.image_on_boarding_third,
-                    "믿을수 있는 친구의 맛집",
-                    "라이크잇을 통해 믿을수 있는\n친구의 맛집목록을 확인하세요"
+                    resources.getText(R.string.on_boarding_title_third),
+                    resources.getString(R.string.on_boarding_description_third)
                 )
             )
         }
