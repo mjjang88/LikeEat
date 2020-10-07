@@ -7,9 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import com.fund.likeeat.R
+import com.fund.likeeat.data.PlaceWhenChangeReview
+import com.fund.likeeat.data.Review
+import com.fund.likeeat.data.ReviewChanged
 import com.fund.likeeat.databinding.BottomSheetSetPlaceInThemeBinding
-import com.fund.likeeat.utilities.ToastUtil
+import com.fund.likeeat.network.RetrofitProcedure
+import com.fund.likeeat.utilities.*
 import com.fund.likeeat.viewmodels.OneReviewViewModel
+import com.fund.likeeat.viewmodels.ReviewInThemeViewModel
 import com.fund.likeeat.viewmodels.ReviewThemeLinkViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.GlobalScope
@@ -22,11 +27,16 @@ class SetPlaceInThemeBottomSheet : BottomSheetDialogFragment() {
     var reviewId: Long? = null
     var themeId: Long? = null
     var themesIdString: String? = null
+    var x: Double? = null
+    var y: Double? = null
+    var placeName: String? = null
+
     var reviewAndThemeDataBundle = Bundle()
     var isBundleFilled = false
 
     private val oneReviewViewModel: OneReviewViewModel by viewModel { parametersOf(reviewId) }
     private val linkViewModel: ReviewThemeLinkViewModel by inject()
+    private val reviewInThemeViewModel : ReviewInThemeViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +45,10 @@ class SetPlaceInThemeBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         reviewId = arguments?.getLong("REVIEW_ID")
         themeId = arguments?.getLong("THEME_ID")
+        x = arguments?.getDouble("PLACE_X")
+        y = arguments?.getDouble("PLACE_Y")
+        placeName = arguments?.getString("PLACE_NAME")
+
         GlobalScope.launch { linkViewModel.getThemeIdList(reviewId!!) }
 
         oneReviewViewModel.review.observe(viewLifecycleOwner) {
@@ -69,9 +83,7 @@ class SetPlaceInThemeBottomSheet : BottomSheetDialogFragment() {
             container,
             false
         ).apply {
-            // viewModel = themeViewModel
             lifecycleOwner = viewLifecycleOwner
-
 
             actionMove.setOnClickListener {
                 themesIdString?.let {
@@ -89,18 +101,62 @@ class SetPlaceInThemeBottomSheet : BottomSheetDialogFragment() {
 
             actionDelete.setOnClickListener {
                 themesIdString?.let {
-                    if (isBundleFilled) {
-                        val dialog =
-                            DeleteReviewInThemeDialog(reviewAndThemeDataBundle)
-                        dialog.isCancelable = false
-                        dialog.show(parentFragmentManager, dialog.tag)
-                        dismiss()
-                    } else {
-                        ToastUtil.toastShort("다시 시도해주세요")
-                    }
+                    CustomAlertDialog(requireContext())
+                        .setTitle(resources.getString(R.string.delete_theme_title))
+                        .setMessage(resources.getString(R.string.delete_review_content))
+                        .setPositiveButton(resources.getString(R.string.delete_theme_ok)) {
+                            GlobalScope.launch {
+                                reviewInThemeViewModel.getAllReviews(x ?: NO_X_VALUE, y ?: NO_Y_VALUE, placeName ?: NO_PLACE_NAME)
+                            }
+                            dismiss()
+                        }.setNegativeButton(resources.getString(R.string.delete_theme_cancel)) {
+                            dismiss()
+                        }.show()
                 }?: ToastUtil.toastShort("다시 시도해주세요")
             }
         }
+
+        reviewInThemeViewModel.allReviewsList.observe(viewLifecycleOwner) { result: List<Review> ->
+            val reviewChanged = makeReviewChanged(result[0])
+            for(review in result) {
+                reviewChanged?.let {
+                    RetrofitProcedure.updateReviewOnlyTheme(review.id, themeId!!, it, UpdateReviewOnlyThemeType.TYPE_DELETE)
+                }?:ToastUtil.toastShort("Error")
+            }
+            ToastUtil.toastShort("맛집을 테마에서 제거했습니다")
+        }
         return binding.root
+    }
+
+    private fun makeReviewChanged(review: Review): ReviewChanged? {
+        val place = PlaceWhenChangeReview(review.x ?: NO_X_VALUE, review.y ?: NO_Y_VALUE, review.address_name, review.place_name, review.phone)
+        val themeIds = deleteThemeIdInListAndReturnToString()
+        return ReviewChanged(
+            review.isPublic,
+            review.category,
+            review.comment,
+            review.visitedDayYmd,
+            review.companions,
+            review.toliets,
+            review.priceRange,
+            review.serviceQuality,
+            review.revisit,
+            themeIds,
+            place
+        )
+    }
+
+    private fun deleteThemeIdInListAndReturnToString(): String {
+        val themesIdList = themesIdString?.split(",")
+        val newList = themesIdList!!.filter { it != themeId.toString() }
+
+        val builder = StringBuilder()
+        for((index, item) in newList.withIndex()) {
+            builder.append(item)
+            if(index != newList.size-1) {
+                builder.append(",")
+            }
+        }
+        return builder.toString()
     }
 }
