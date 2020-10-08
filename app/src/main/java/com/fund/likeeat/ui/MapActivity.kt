@@ -158,6 +158,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             markerAndStyleInit()
             if(nowSelectedThemeName != resources.getString(R.string.theme_all)) markerForTheme()
         }
+
+        mapViewModel.placeCount.observe(this) {
+            navigation_left.review_count.text = it.size.toString()
+        }
     }
 
     fun initFriend(binding: ActivityMapBinding) {
