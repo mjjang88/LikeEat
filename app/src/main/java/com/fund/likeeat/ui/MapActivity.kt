@@ -40,7 +40,7 @@ import org.koin.core.parameter.parametersOf
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mNaverMap : NaverMap
-    private val markers = hashMapOf<Long, Marker>()
+    private val markers = hashMapOf<Long, Pair<String?, Marker>>()
     private var nowSelectedThemeName: String? = null
     private var nowSelectedTheme: Theme? = null
 
@@ -225,7 +225,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val marker = Marker()
                 marker.captionText = review.place_name ?: "Null"
                 marker.position = LatLng(review.y!!, review.x!!)
-                marker.icon = OverlayImage.fromResource(R.drawable.marker_base)
+                marker.icon = setMarkerImageByCategory(review.category, TYPE_DEFAULT)
                 marker.map = mNaverMap
                 marker.setOnClickListener {
                     setHighLightReviewAndMarkerStyle(review)
@@ -233,7 +233,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     true
                 }
 
-                markers[review.id] = marker
+                markers[review.id] = Pair(review.category, marker)
             }
             mapViewModel.getReviewFullList(it)
 
@@ -338,13 +338,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val iter = markers.keys.iterator()
         while(iter.hasNext()) {
             val id = iter.next()
-            markers[id]?.icon = OverlayImage.fromResource(R.drawable.marker_base)
+            markers[id]?.second?.icon = setMarkerImageByCategory(markers[id]?.first, TYPE_DEFAULT)
         }
     }
 
     private fun markerForTheme() {
         mapOneThemeViewModel.reviewOneTheme.value?.forEach { review ->
-            markers[review.id]?.icon = OverlayImage.fromResource(R.drawable.marker_theme)
+            markers[review.id]?.second?.icon = setMarkerImageByCategory(markers[review.id]?.first, TYPE_THEME)
         }
     }
 
@@ -352,12 +352,81 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         highlightMarker?.map = null
         val highLightMarker = Marker()
         highLightMarker.position = LatLng(review.y!!, review.x!!)
-        highLightMarker.icon = OverlayImage.fromResource(R.drawable.marker_base_highlight)
+        highLightMarker.icon = setMarkerImageByCategory(review.category, TYPE_ACCENT)
         highLightMarker.map = mNaverMap
         highlightMarker = highLightMarker
         highlightReview = review
 
         text_highlight_place_name.text = review.place_name
         text_highlight_place_address.text = review.address_name
+    }
+
+    private fun setMarkerImageByCategory(category: String?, type: Int): OverlayImage {
+        return when(type) {
+            TYPE_DEFAULT -> {
+                when(category) {
+                    "한식" -> OverlayImage.fromResource(R.drawable.ic_korea_normal)
+                    "중식" -> OverlayImage.fromResource(R.drawable.ic_china_normal)
+                    "일식" -> OverlayImage.fromResource(R.drawable.ic_japan_normal)
+                    "양식" -> OverlayImage.fromResource(R.drawable.ic_west_normal)
+                    "아시안" -> OverlayImage.fromResource(R.drawable.ic_asian_normal)
+                    "세계" -> OverlayImage.fromResource(R.drawable.ic_world_normal)
+                    "분식" -> OverlayImage.fromResource(R.drawable.ic_snack_normal)
+                    "카페" -> OverlayImage.fromResource(R.drawable.ic_cafe_normal)
+                    "패스트푸드" -> OverlayImage.fromResource(R.drawable.ic_fastfood_normal)
+                    else -> OverlayImage.fromResource(R.drawable.marker_base)
+                }
+            }
+            TYPE_THEME -> {
+                when(category) {
+                    "한식" -> OverlayImage.fromResource(R.drawable.ic_korea_theme)
+                    "중식" -> OverlayImage.fromResource(R.drawable.ic_china_theme)
+                    "일식" -> OverlayImage.fromResource(R.drawable.ic_japan_theme)
+                    "양식" -> OverlayImage.fromResource(R.drawable.ic_west_theme)
+                    "아시안" -> OverlayImage.fromResource(R.drawable.ic_asian_theme)
+                    "세계" -> OverlayImage.fromResource(R.drawable.ic_world_theme)
+                    "분식" -> OverlayImage.fromResource(R.drawable.ic_snack_theme)
+                    "카페" -> OverlayImage.fromResource(R.drawable.ic_cafe_theme)
+                    "패스트푸드" -> OverlayImage.fromResource(R.drawable.ic_fastfood_theme)
+                    else -> OverlayImage.fromResource(R.drawable.marker_theme)
+                }
+            }
+            TYPE_ACCENT -> {
+                when(category) {
+                    "한식" -> OverlayImage.fromResource(R.drawable.ic_korea_accent)
+                    "중식" -> OverlayImage.fromResource(R.drawable.ic_china_accent)
+                    "일식" -> OverlayImage.fromResource(R.drawable.ic_japan_accent)
+                    "양식" -> OverlayImage.fromResource(R.drawable.ic_west_accent)
+                    "아시안" -> OverlayImage.fromResource(R.drawable.ic_asian_accent)
+                    "세계" -> OverlayImage.fromResource(R.drawable.ic_world_accent)
+                    "분식" -> OverlayImage.fromResource(R.drawable.ic_snack_accent)
+                    "카페" -> OverlayImage.fromResource(R.drawable.ic_cafe_accent)
+                    "패스트푸드" -> OverlayImage.fromResource(R.drawable.ic_fastfood_accent)
+                    else -> OverlayImage.fromResource(R.drawable.marker_base_highlight)
+                }
+            }
+            else -> {
+                when(category) {
+                    "한식" -> OverlayImage.fromResource(R.drawable.ic_korea_small)
+                    "중식" -> OverlayImage.fromResource(R.drawable.ic_china_small)
+                    "일식" -> OverlayImage.fromResource(R.drawable.ic_japan_small)
+                    "양식" -> OverlayImage.fromResource(R.drawable.ic_west_small)
+                    "아시안" -> OverlayImage.fromResource(R.drawable.ic_asian_small)
+                    "세계" -> OverlayImage.fromResource(R.drawable.ic_world_small)
+                    "분식" -> OverlayImage.fromResource(R.drawable.ic_snack_small)
+                    "카페" -> OverlayImage.fromResource(R.drawable.ic_cafe_small)
+                    "패스트푸드" -> OverlayImage.fromResource(R.drawable.ic_fastfood_small)
+                    else -> OverlayImage.fromResource(R.drawable.ic_base_small)
+                }
+            }
+        }
+
+    }
+
+    companion object {
+        const val TYPE_DEFAULT = 0
+        const val TYPE_THEME = 1
+        const val TYPE_ACCENT = 2
+        const val TYPE_SMALL = 3
     }
 }
