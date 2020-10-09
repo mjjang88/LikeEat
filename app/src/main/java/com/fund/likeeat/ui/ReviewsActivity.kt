@@ -13,6 +13,7 @@ import com.fund.likeeat.databinding.ActivityReviewsBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.utilities.INTENT_KEY_THEME
 import com.fund.likeeat.utilities.UID_DETACHED
+import com.fund.likeeat.utilities.getUid
 import com.fund.likeeat.viewmodels.MapOneThemeViewModel
 import com.fund.likeeat.viewmodels.ReviewsViewModel
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +27,7 @@ import org.koin.core.parameter.parametersOf
 class ReviewsActivity: AppCompatActivity() {
     private lateinit var binding: ActivityReviewsBinding
     private val oneThemeViewModel: MapOneThemeViewModel by inject()
-    private val reviewsViewModel: ReviewsViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val reviewsViewModel: ReviewsViewModel by viewModel { parametersOf(getUid(intent)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class ReviewsActivity: AppCompatActivity() {
         Log.i("UID_ATTACHED", intent.getLongExtra("uid", UID_DETACHED).toString())
 
         val adapter = ReviewsAdapter()
+        adapter.mIntent = intent
         binding.recyclerViewReviewList.adapter = adapter
 
         val theme = intent.getParcelableExtra<Theme>(INTENT_KEY_THEME)

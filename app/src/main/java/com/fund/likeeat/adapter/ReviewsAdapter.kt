@@ -17,9 +17,15 @@ import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.getCategorySmallImageByName
 import com.fund.likeeat.ui.MapActivity
 import com.fund.likeeat.ui.ReviewDetailActivity
+import com.fund.likeeat.utilities.INTENT_KEY_FRIEND_UID
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.utilities.getUid
+import com.fund.likeeat.utilities.isMyMap
 
 class ReviewsAdapter: ListAdapter<ReviewFull, RecyclerView.ViewHolder>(ReviewDiffCallback()) {
+
+    var mIntent: Intent? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ReviewsViewHolder(
             ItemReviewsBinding.inflate(
@@ -35,7 +41,7 @@ class ReviewsAdapter: ListAdapter<ReviewFull, RecyclerView.ViewHolder>(ReviewDif
         (holder as ReviewsViewHolder).bind(reviewFull)
     }
 
-    class ReviewsViewHolder(private val binding: ItemReviewsBinding): RecyclerView.ViewHolder(
+    inner class ReviewsViewHolder(private val binding: ItemReviewsBinding): RecyclerView.ViewHolder(
         binding.root
     ) {
         fun bind(item: ReviewFull) {
@@ -73,12 +79,18 @@ class ReviewsAdapter: ListAdapter<ReviewFull, RecyclerView.ViewHolder>(ReviewDif
                 setClickListener {
                     val intent = Intent(root.context, ReviewDetailActivity::class.java)
                     intent.putExtra(INTENT_KEY_REVIEW, item.review)
+                    if (!isMyMap(mIntent?: Intent())) {
+                        intent.putExtra(INTENT_KEY_FRIEND_UID, getUid(mIntent?: Intent()))
+                    }
                     root.context.startActivity(intent)
                 }
 
                 btnGoMap.setOnClickListener {
                     val intent = Intent(root.context, MapActivity::class.java)
                     intent.putExtra(INTENT_KEY_REVIEW, item.review)
+                    if (!isMyMap(mIntent?: Intent())) {
+                        intent.putExtra(INTENT_KEY_FRIEND_UID, getUid(mIntent?: Intent()))
+                    }
                     root.context.startActivity(intent)
                 }
             }

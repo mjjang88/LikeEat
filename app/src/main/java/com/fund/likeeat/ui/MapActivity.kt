@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
@@ -22,7 +23,6 @@ import com.fund.likeeat.adapter.OnSelectNavCardListener
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityMapBinding
-import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.PermissionManager
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.*
@@ -51,21 +51,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var nowSelectedThemeName: String? = null
     private var nowSelectedTheme: Theme? = null
 
-    private val mapViewModel: MapViewModel by viewModel { parametersOf(getUid()) }
-    private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(getUid()) }
+    private val mapViewModel: MapViewModel by viewModel { parametersOf(getUid(intent)) }
+    private val themeViewModel: AllThemesViewModel by viewModel { parametersOf(getUid(intent)) }
     private val mapOneThemeViewModel: MapOneThemeViewModel by inject()
 
     private var highlightMarker: Marker? = null
     private var highlightReview: Review? = null
-
-    fun getUid(): Long {
-        val nFriendUid = intent.getLongExtra(INTENT_KEY_FRIEND_UID, 0)
-        if (nFriendUid != 0L) {
-            return nFriendUid
-        } else {
-            return MyApplication.pref.uid
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +71,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.btnReviewAndMap.setOnClickListener {
             val intent = Intent(this, ReviewsActivity::class.java)
             intent.putExtra(INTENT_KEY_THEME, nowSelectedTheme)
+            if (!isMyMap(getIntent())) {
+                intent.putExtra(INTENT_KEY_FRIEND_UID, getUid(getIntent()))
+            }
             startActivity(intent)
         }
 
@@ -117,19 +111,30 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             drawer.closeDrawer(GravityCompat.START)
         }
 
-        binding.buttonLeftDrawer.setOnClickListener {
-            dataInit()
-            drawer.openDrawer(GravityCompat.START)
-        }
-
         binding.layoutPlaceInfo.setOnClickListener {
             val intent = Intent(this, ReviewDetailActivity::class.java)
             intent.putExtra(INTENT_KEY_REVIEW, highlightReview)
+            if (!isMyMap(getIntent())) {
+                intent.putExtra(INTENT_KEY_FRIEND_UID, getUid(getIntent()))
+            }
             startActivity(intent)
         }
 
-        binding.btnFriend.setOnClickListener {
-            drawer.openDrawer(GravityCompat.END)
+        if (isMyMap(intent)) {
+            binding.buttonLeftDrawer.setOnClickListener {
+                dataInit()
+                drawer.openDrawer(GravityCompat.START)
+            }
+
+            binding.btnFriend.setOnClickListener {
+                drawer.openDrawer(GravityCompat.END)
+            }
+        } else {
+            binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            binding.buttonLeftDrawer.visibility = View.INVISIBLE
+            binding.btnFriend.visibility = View.INVISIBLE
+            binding.btnAddReview.visibility = View.GONE
+            binding.btnAddReviewHighlight.visibility = View.GONE
         }
 
         initFriend(binding)
@@ -161,7 +166,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             } catch(e: IndexOutOfBoundsException) {
                 adapter.selectedPosition = 0
             }
-            adapter.submitList(themeList)
+            themeList.filter {
+                it.uid == getUid(intent)
+            }.let {
+                adapter.submitList(it)
+            }
             adapter.notifyItemChanged(adapter.selectedPosition)
         }
 

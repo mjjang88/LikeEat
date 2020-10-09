@@ -15,7 +15,7 @@ class ReviewsViewModel internal constructor(
     val reviewThemeLinkDao: ReviewThemeLinkDao,
     val uid: Long
 ) : ViewModel(){
-    val review: LiveData<List<Review>> = reviewRepository.getReviewList()
+    val review: LiveData<List<Review>> = reviewRepository.getReviewListByUid(uid)
     val theme: LiveData<List<Theme>> = themeDao.getThemeList(uid)
 
     val reviewFull = MutableLiveData<ArrayList<ReviewFull>>().apply { value = arrayListOf() }
@@ -29,7 +29,9 @@ class ReviewsViewModel internal constructor(
 
                 val reviewFullList = ArrayList<ReviewFull>()
 
-                reviewList.forEach {review: Review ->
+                reviewList.filter {
+                    it.uid == uid
+                }.forEach {review: Review ->
                     val themeListForAdd = ArrayList<Theme>()
 
                     reviewThemeLinkList.forEach { reviewThemeLink: ReviewThemeLink ->
