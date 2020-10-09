@@ -16,10 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.fund.likeeat.R
-import com.fund.likeeat.adapter.FriendListAdapter
-import com.fund.likeeat.adapter.FriendListClickListener
-import com.fund.likeeat.adapter.MainThemeAdapter
-import com.fund.likeeat.adapter.OnSelectNavCardListener
+import com.fund.likeeat.adapter.*
 import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityMapBinding
@@ -193,6 +190,16 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             isGetFriend = true
             if (isGetFriend && isGetFriendLink) {
                 mapViewModel.getFriendList()
+            }
+            if (!isMyMap(intent)) {
+                it.filter {
+                    it.uid == getUid(intent)
+                }.let {
+                    bindImageFromUri(image_friend_thumbnail, it[0].thumbnailUrl)
+                    text_friend_name.text = "${it[0].nickname}의 지도"
+                    btn_close_friend_tag.setOnClickListener { finish() }
+                    layout_friend_tag.visibility = View.VISIBLE
+                }
             }
         }
         mapViewModel.friendLink.observe(this) {

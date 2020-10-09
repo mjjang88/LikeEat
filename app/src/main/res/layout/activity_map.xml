@@ -71,6 +71,47 @@
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+            
+            <LinearLayout
+                android:id="@+id/layout_friend_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/friend_tag_shape"
+                app:layout_constraintTop_toBottomOf="@id/search_layout_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/image_friend_thumbnail"
+                    android:layout_width="@dimen/friend_image_width"
+                    android:layout_height="@dimen/friend_image_height"
+                    android:layout_gravity="center"/>
+                
+                <TextView
+                    android:id="@+id/text_friend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="?attr/colorSurface"
+                    android:layout_marginLeft="@dimen/margin_half"
+                    android:layout_marginRight="@dimen/margin_half"
+                    style="@style/TextBig"/>
+
+                <ImageButton
+                    android:id="@+id/btn_close_friend_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_close"
+                    android:tint="?attr/colorSurface"
+                    android:inset="0dp"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/margin_half"/>
+                
+            </LinearLayout>
+                
 
             <LinearLayout
                 android:id="@+id/layout_fab_none_highlight"
