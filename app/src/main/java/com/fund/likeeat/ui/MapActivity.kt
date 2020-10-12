@@ -106,6 +106,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             drawer.openDrawer(GravityCompat.START)
         }
 
+        binding.navigationLeft.profile_setting.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+            drawer.closeDrawer(GravityCompat.START)
+        }
+
         binding.layoutPlaceInfo.setOnClickListener {
             val intent = Intent(this, ReviewDetailActivity::class.java)
             intent.putExtra(INTENT_KEY_REVIEW, highlightReview)

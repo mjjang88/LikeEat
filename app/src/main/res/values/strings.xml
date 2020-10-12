@@ -112,4 +112,6 @@
     <string name="on_boarding_description_first">라이크잇에서 간편하게\n맛집을 등록해보세요</string>
     <string name="on_boarding_description_second">내가 지정한 테마로\n맛집을 보기쉽게 분류하세요</string>
     <string name="on_boarding_description_third">라이크잇을 통해 믿을수 있는\n친구의 맛집목록을 확인하세요></string>
+
+    <string name="setting">설정</string>
 </resources>
