@@ -19,6 +19,7 @@ import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.utilities.RESULT_CODE_FINISH_SET_REVIEW
+import com.fund.likeeat.utilities.VISIT_DATE_EMPTY_VALUE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.widget.CategorySelectBottomSheetFragment
 import com.fund.likeeat.widget.ThemeSelectBottomSheetFragment
@@ -209,7 +210,7 @@ class ModifyReviewActivity : AppCompatActivity() {
             review?.isPublic?: false,
             review?.category?: "",
             review?.comment?: "",
-            review?.visitedDayYmd?: "",
+            review?.visitedDayYmd?: VISIT_DATE_EMPTY_VALUE,
             review?.companions?: "",
             review?.toliets?: "",
             review?.priceRange?: "",

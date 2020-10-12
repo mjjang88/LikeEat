@@ -12,6 +12,7 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ListItemReviewVisitRecordBinding
 import com.fund.likeeat.manager.*
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.utilities.VISIT_DATE_EMPTY_VALUE
 import com.fund.likeeat.widget.ReviewMoreBottomSheetFragment
 
 class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(ReviewVisitRecordDiffCallback()) {
@@ -35,6 +36,10 @@ class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>
             binding.apply {
                 review = item
                 executePendingBindings()
+
+                if (item.visitedDayYmd.isNullOrBlank() || item.visitedDayYmd.equals(VISIT_DATE_EMPTY_VALUE)) {
+                    binding.textVisitedDay.visibility = View.GONE
+                }
 
                 if (!item.serviceQuality.isNullOrBlank()) {
                     val drawable = root.resources.getDrawable(getEvaluationSmallImageByName(item.serviceQuality), null)

@@ -21,6 +21,7 @@ import com.fund.likeeat.network.PlaceServer
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_PLACE
+import com.fund.likeeat.utilities.VISIT_DATE_EMPTY_VALUE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.widget.*
 import kotlinx.android.synthetic.main.activity_add_review.*
@@ -196,7 +197,7 @@ class AddReviewActivity : AppCompatActivity()  {
             }
         }
 
-        if (review.visitedDayYmd.isNullOrBlank()) {
+        if (review.visitedDayYmd.isNullOrBlank() || review.visitedDayYmd.equals(VISIT_DATE_EMPTY_VALUE)) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnVisitDate.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnVisitDate.text = getString(R.string.visit_date)
@@ -323,7 +324,7 @@ class AddReviewActivity : AppCompatActivity()  {
         val isPublic = check_is_public.isChecked
         val category = addReviewViewModel.editedReview.value?.category?: ""
         val comment = edit_comment.text.toString()
-        val visitedDayYmd = addReviewViewModel.editedReview.value?.visitedDayYmd
+        val visitedDayYmd = addReviewViewModel.editedReview.value?.visitedDayYmd?: VISIT_DATE_EMPTY_VALUE
         val companions = addReviewViewModel.editedReview.value?.companions?: ""
         val toliets = addReviewViewModel.editedReview.value?.toliets?: ""
         val priceRange = addReviewViewModel.editedReview.value?.priceRange?: ""
