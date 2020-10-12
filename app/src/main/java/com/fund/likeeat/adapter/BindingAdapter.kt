@@ -1,5 +1,6 @@
 package com.fund.likeeat.adapter
 
+import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -19,6 +20,10 @@ fun bindImageFromUri(view: ImageView, imageUri: String?) {
             .transition(DrawableTransitionOptions.withCrossFade())
             .transform(CenterCrop(), RoundedCorners(16))
             .into(view)
+    } else {
+        view.setImageResource(R.drawable.kakao_no_image)
+        view.setBackgroundResource(R.drawable.background_rounding_shape)
+        view.clipToOutline = true
     }
 }
 
