@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fund.likeeat.R
 import com.fund.likeeat.data.*
 import com.fund.likeeat.manager.MyApplication
-import com.fund.likeeat.utilities.ThemeType
-import com.fund.likeeat.utilities.ToastUtil
-import com.fund.likeeat.utilities.UID_DETACHED
-import com.fund.likeeat.utilities.UpdateReviewOnlyThemeType
+import com.fund.likeeat.utilities.*
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -103,7 +100,7 @@ object RetrofitProcedure {
         })
 
         while (!bEndDbSave) {
-            delay(500)
+            delay(NETWORK_CHECK_TIME)
         }
     }
 
@@ -229,7 +226,7 @@ object RetrofitProcedure {
         })
 
         while (!bEndDbSave) {
-            delay(500)
+            delay(NETWORK_CHECK_TIME)
         }
     }
 
@@ -346,7 +343,7 @@ object RetrofitProcedure {
         }
 
         while (!bEndDbSave) {
-            delay(500)
+            delay(NETWORK_CHECK_TIME)
         }
     }
 }

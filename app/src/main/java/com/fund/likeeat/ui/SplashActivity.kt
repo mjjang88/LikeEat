@@ -11,6 +11,7 @@ import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.network.LikeEatRetrofit
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.DataUtils
+import com.fund.likeeat.utilities.NETWORK_CHECK_TIME
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
 import com.kakao.auth.network.response.AccessTokenInfoResponse
@@ -116,6 +117,6 @@ suspend fun getKakaoFriends() {
         })
 
     while (!bEndDbSave) {
-        delay(500)
+        delay(NETWORK_CHECK_TIME)
     }
 }
