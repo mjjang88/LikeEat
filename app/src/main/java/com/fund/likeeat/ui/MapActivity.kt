@@ -314,6 +314,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun initAfterMapReady() {
+        val gpsTracker = GpsTracker(this)
+        if (gpsTracker.mLocation != null && intent.extras == null) {
+            moveToPoi(LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
+        }
+
         subscribeUi()
     }
 
