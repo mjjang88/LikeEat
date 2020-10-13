@@ -103,8 +103,18 @@
     <string name="add_visit_record">방문기록 등록하기</string>
 
     <string name="start_app">시작하기</string>
+    <string name="login_title">라이킷과 함께\n즐거운 맛집 라이프</string>
+    <string name="login_description">로그인 완료 시 라이킷 앱에 \'자동로그인\'됩니다.\n본인 기기가 아니거나 여러 사람이 사용 중인 기기인 경우 사용 후 [설정]에서 \'로그아웃\'해주세요.</string>
 
     <string name="loading_friend">이동중..</string>
     <string name="loading_friend_content">친구의 지도로\n이동하는 중입니다</string>
 
+    <string name="on_boarding_title_first">간편한 <b>맛집등록</b></string>
+    <string name="on_boarding_title_second">나만의 <b>테마분류</b></string>
+    <string name="on_boarding_title_third">믿을수 있는 <b>친구의 맛집</b></string>
+    <string name="on_boarding_description_first">라이크잇에서 간편하게\n맛집을 등록해보세요</string>
+    <string name="on_boarding_description_second">내가 지정한 테마로\n맛집을 보기쉽게 분류하세요</string>
+    <string name="on_boarding_description_third">라이크잇을 통해 믿을수 있는\n친구의 맛집목록을 확인하세요></string>
+
+    <string name="setting">설정</string>
 </resources>

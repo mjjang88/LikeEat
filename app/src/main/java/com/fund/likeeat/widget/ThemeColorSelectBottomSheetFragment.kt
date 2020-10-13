@@ -1,9 +1,11 @@
 package com.fund.likeeat.widget
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.fund.likeeat.adapter.ColorItem
 import com.fund.likeeat.adapter.ColorListAdapter
 import com.fund.likeeat.adapter.ColorSelectedListener
@@ -45,7 +47,9 @@ class ThemeColorSelectBottomSheetFragment: BottomSheetDialogFragment() {
         adapter.submitList(colorItemList, selectedPosition)
 
         binding.actionEnroll.setOnClickListener {
-            myColorSavedListener.onSaved(colorSelected!!)
+            if(colorSelected != COLOR_NOT_SELECTED) {
+                myColorSavedListener.onSaved(colorSelected!!)
+            }
             dismiss()
         }
 

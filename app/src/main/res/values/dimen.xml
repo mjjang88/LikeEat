@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="margin_login_title">100dp</dimen>
     <dimen name="margin_big">54dp</dimen>
     <dimen name="margin_double">32dp</dimen>
     <dimen name="margin_1.5_times">24dp</dimen>
@@ -47,6 +48,7 @@
     <dimen name="theme_circle_view_size">48dp</dimen>
     <dimen name="image_size_normal">24dp</dimen>
     <dimen name="image_size_small">18dp</dimen>
+    <dimen name="logo_size">107dp</dimen>
 
     <dimen name="clickable_button_height">56dp</dimen>
     <dimen name="center_dialog_width">347dp</dimen>

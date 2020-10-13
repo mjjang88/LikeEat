@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SettingActivity"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/action_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_24"/>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setting"
+        android:layout_marginTop="@dimen/margin_double"
+        android:layout_marginLeft="@dimen/margin_double"
+        style="@style/TextBigTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="버전"
+        android:layout_marginStart="@dimen/margin_double"
+        android:layout_marginTop="@dimen/margin_big"
+        android:paddingVertical="@dimen/padding_1.5_times"
+        style="@style/TextBigger"/>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_height"
+        android:layout_marginHorizontal="@dimen/margin_double"
+        android:background="@color/black06"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/padding_1.5_times">
+
+        <TextView
+            android:id="@+id/app_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1.0.2"
+            android:layout_marginStart="@dimen/margin_double"
+            android:textSize="@dimen/text_size_big"
+            android:textColor="@color/black02"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_height"
+        android:layout_marginHorizontal="@dimen/margin_double"
+        android:background="@color/black06"/>
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="계정"
+        android:layout_marginTop="@dimen/margin_double"
+        android:layout_marginStart="@dimen/margin_double"
+        android:paddingVertical="@dimen/padding_1.5_times"
+        style="@style/TextBigger"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_height"
+        android:layout_marginHorizontal="@dimen/margin_double"
+        android:background="@color/black06"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/padding_1.5_times">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="로그아웃"
+            android:layout_marginStart="@dimen/margin_double"
+            android:textSize="@dimen/text_size_big"
+            android:textColor="@color/black02"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_height"
+        android:layout_marginHorizontal="@dimen/margin_double"
+        android:background="@color/black06"/>-->
+
+</LinearLayout>

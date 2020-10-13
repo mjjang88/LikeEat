@@ -38,4 +38,8 @@ class ReviewRepository (
     fun getReviewListByPlace(uid: Long, x: Double, y: Double, placeName: String): List<Review> {
         return reviewDao.getReviewListByPlace(uid, x, y, placeName)
     }
+
+    fun getPlaceCount(uid: Long): LiveData<List<Review>> {
+        return reviewDao.getPlaceCount(uid)
+    }
 }

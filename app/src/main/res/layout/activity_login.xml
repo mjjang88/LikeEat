@@ -7,6 +7,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.LoginActivity">
+        
+        <TextView
+            android:id="@+id/login_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title"
+            android:textColor="@color/black01"
+            android:textSize="@dimen/text_size_big_title"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_login_title"
+            android:layout_marginHorizontal="@dimen/margin_double"
+            android:lineSpacingMultiplier="1.2"/>
+
+        <ImageView
+            android:id="@+id/login_image"
+            android:layout_width="@dimen/logo_size"
+            android:layout_height="@dimen/logo_size"
+            android:src="@drawable/image_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_title"
+            app:layout_constraintBottom_toTopOf="@id/login_button"/>
 
         <com.kakao.usermgmt.LoginButton
             android:id="@+id/login_button"
@@ -17,7 +40,23 @@
             android:layout_marginBottom="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/login_description" />
+        
+        <TextView
+            android:id="@+id/login_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            android:layout_marginHorizontal="48dp"
+            android:text="@string/login_description"
+            android:textColor="@color/black02"
+            android:textSize="@dimen/text_size_small"
+            android:hyphenationFrequency="none"
+            android:gravity="center"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         tools:text="간편한 맛집등록"
         android:textSize="@dimen/text_size_on_boarding_title"
-        android:textStyle="bold"
         android:textColor="@color/black01"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
