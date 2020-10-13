@@ -400,7 +400,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 Glide.with(this)
                     .load(user.kakaoAccount?.profile?.thumbnailImageUrl)
-                    .placeholder(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.kakao_no_image)
                     .into(navigation_left.profile_image)
             }
         }
