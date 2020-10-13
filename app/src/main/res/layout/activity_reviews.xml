@@ -29,7 +29,8 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginRight="@dimen/margin_normal"
-            style="@style/ImageButton"/>
+            style="@style/ImageButton"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/text_title"

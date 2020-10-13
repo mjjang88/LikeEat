@@ -104,4 +104,7 @@
 
     <string name="start_app">시작하기</string>
 
+    <string name="loading_friend">이동중..</string>
+    <string name="loading_friend_content">친구의 지도로\n이동하는 중입니다</string>
+
 </resources>

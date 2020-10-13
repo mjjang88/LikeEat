@@ -71,7 +71,8 @@
             android:layout_marginLeft="@dimen/margin_normal"
             android:layout_marginRight="@dimen/margin_normal"
             android:hint="@string/search_name"
-            style="@style/TextNormal" />
+            style="@style/TextNormal"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/text_right_navi_favorite"

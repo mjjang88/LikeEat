@@ -2,6 +2,7 @@ package com.fund.likeeat.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
@@ -12,9 +13,7 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ActivityReviewDetailBinding
 import com.fund.likeeat.manager.MyApplication
 import com.fund.likeeat.manager.getCategoryImageByName
-import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
-import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
-import com.fund.likeeat.utilities.RESULT_CODE_FINISH_SET_REVIEW
+import com.fund.likeeat.utilities.*
 import com.fund.likeeat.viewmodels.ReviewDetailViewModel
 import com.fund.likeeat.widget.ReviewMoreBottomSheetFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +21,7 @@ import org.koin.core.parameter.parametersOf
 
 class ReviewDetailActivity : AppCompatActivity() {
 
-    private val reviewDetailViewModel: ReviewDetailViewModel by viewModel { parametersOf(MyApplication.pref.uid) }
+    private val reviewDetailViewModel: ReviewDetailViewModel by viewModel { parametersOf(getUid(intent)) }
 
     lateinit var mBinding: ActivityReviewDetailBinding
 
@@ -39,6 +38,11 @@ class ReviewDetailActivity : AppCompatActivity() {
 
         review?.let {
             initComponent(mBinding, it)
+        }
+
+        if (!isMyMap(intent)) {
+            mBinding.btnMore.visibility = View.GONE
+            mBinding.editComment.visibility = View.GONE
         }
     }
 
@@ -85,6 +89,7 @@ class ReviewDetailActivity : AppCompatActivity() {
         }
 
         val reviewAdapter = ReviewVisitRecordListAdapter()
+        reviewAdapter.isFixEnable = isMyMap(intent)
         binding.listReview.adapter = reviewAdapter
         reviewDetailViewModel.reviews.observe(this) {
             reviewAdapter.submitList(it)
@@ -110,6 +115,9 @@ class ReviewDetailActivity : AppCompatActivity() {
         binding.btnMap.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             intent.putExtra(INTENT_KEY_REVIEW, review)
+            if (!isMyMap(getIntent())) {
+                intent.putExtra(INTENT_KEY_FRIEND_UID, getUid(getIntent()))
+            }
             startActivity(intent)
         }
     }

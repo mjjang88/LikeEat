@@ -19,6 +19,7 @@ import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.network.ReviewServerWrite
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW_CREATE
+import com.fund.likeeat.utilities.VISIT_DATE_EMPTY_VALUE
 import com.fund.likeeat.viewmodels.AddReviewViewModel
 import com.fund.likeeat.widget.*
 import kotlinx.android.synthetic.main.activity_add_review.*
@@ -154,7 +155,7 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
 
     private fun updateReview(binding: ActivityModifyReviewDetailBinding, review: ReviewServerWrite) {
 
-        if (review.visitedDayYmd.isNullOrBlank()) {
+        if (review.visitedDayYmd.isNullOrBlank() || review.visitedDayYmd.equals(VISIT_DATE_EMPTY_VALUE)) {
             val drawable = resources.getDrawable(R.drawable.btn_plus_black, null)
             binding.btnVisitDate.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
             binding.btnVisitDate.text = getString(R.string.visit_date)
@@ -310,7 +311,7 @@ class ModifyReviewDetailActivity : AppCompatActivity() {
             review?.isPublic?: false,
             review?.category?: "",
             review?.comment?: "",
-            review?.visitedDayYmd?: "",
+            review?.visitedDayYmd?: VISIT_DATE_EMPTY_VALUE,
             review?.companions?: "",
             review?.toliets?: "",
             review?.priceRange?: "",

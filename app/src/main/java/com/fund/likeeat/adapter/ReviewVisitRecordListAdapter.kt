@@ -12,9 +12,12 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.databinding.ListItemReviewVisitRecordBinding
 import com.fund.likeeat.manager.*
 import com.fund.likeeat.utilities.INTENT_KEY_REVIEW
+import com.fund.likeeat.utilities.VISIT_DATE_EMPTY_VALUE
 import com.fund.likeeat.widget.ReviewMoreBottomSheetFragment
 
 class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>(ReviewVisitRecordDiffCallback()) {
+
+    var isFixEnable = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ReviewVisitRecordHolder(ListItemReviewVisitRecordBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -25,7 +28,7 @@ class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>
         (holder as ReviewVisitRecordHolder).bind(review)
     }
 
-    class ReviewVisitRecordHolder(
+    inner class ReviewVisitRecordHolder(
         private val binding: ListItemReviewVisitRecordBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
@@ -33,6 +36,10 @@ class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>
             binding.apply {
                 review = item
                 executePendingBindings()
+
+                if (item.visitedDayYmd.isNullOrBlank() || item.visitedDayYmd.equals(VISIT_DATE_EMPTY_VALUE)) {
+                    binding.textVisitedDay.visibility = View.GONE
+                }
 
                 if (!item.serviceQuality.isNullOrBlank()) {
                     val drawable = root.resources.getDrawable(getEvaluationSmallImageByName(item.serviceQuality), null)
@@ -74,6 +81,10 @@ class ReviewVisitRecordListAdapter: ListAdapter<Review, RecyclerView.ViewHolder>
                     reviewMoreBottomSheetFragment.arguments = Bundle().apply { putParcelable(
                         INTENT_KEY_REVIEW, item) }
                     reviewMoreBottomSheetFragment.show((binding.root.context as FragmentActivity).supportFragmentManager, reviewMoreBottomSheetFragment.tag)
+                }
+
+                if (!isFixEnable) {
+                    binding.imageMore.visibility = View.GONE
                 }
             }
         }
