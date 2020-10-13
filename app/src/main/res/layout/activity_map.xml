@@ -183,6 +183,7 @@
                     android:layout_marginTop="@dimen/margin_half">
 
                     <ImageView
+                        android:id="@+id/image_place_info"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic24_anchor"/>

@@ -21,6 +21,7 @@ import com.fund.likeeat.data.Review
 import com.fund.likeeat.data.Theme
 import com.fund.likeeat.databinding.ActivityMapBinding
 import com.fund.likeeat.manager.PermissionManager
+import com.fund.likeeat.manager.getCategorySmallImageByName
 import com.fund.likeeat.network.RetrofitProcedure
 import com.fund.likeeat.utilities.*
 import com.fund.likeeat.viewmodels.AllThemesViewModel
@@ -435,6 +436,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         text_highlight_place_name.text = review.place_name
         text_highlight_place_address.text = review.address_name
+        image_place_info.setImageResource(getCategorySmallImageByName(review.category?: "한식"))
     }
 
     private fun setMarkerImageByCategory(category: String?, type: Int): OverlayImage {
