@@ -64,7 +64,12 @@ class ThemeActivity : AppCompatActivity() {
             // TODO 의미없는 데이터입니다. 처리를 해야 할 필요가 있습니다.
             result.add(0, Theme(-11,-11,-11,"d",-11,true))
             result.add(Theme(-11,-11,-11,"d",-11,true))
-            adapter.submitList(result)
+            result.filter {
+                it.uid == MyApplication.pref.uid
+                        || it.id == -11L
+            }.let {
+                adapter.submitList(it)
+            }
 
             /*val themeIdList = result.map{ it.id }
             GlobalScope.launch { themeViewModel.getAllRelations(themeIdList) }*/
