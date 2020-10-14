@@ -21,7 +21,9 @@ class VisitDateSelectBottomSheetFragment: BottomSheetDialogFragment() {
         context ?: return binding.root
 
         addReviewViewModel?.editedReview?.value?.visitedDayYmd?.let {
-            binding.datePickerVisitDate.init(it.substring(0, 4).toInt(), it.substring(4, 6).toInt() - 1, it.substring(6, 8).toInt(), null)
+            if (it.length == 8) {
+                binding.datePickerVisitDate.init(it.substring(0, 4).toInt(), it.substring(4, 6).toInt() - 1, it.substring(6, 8).toInt(), null)
+            }
         }
 
         binding.btnOk.setOnClickListener {
