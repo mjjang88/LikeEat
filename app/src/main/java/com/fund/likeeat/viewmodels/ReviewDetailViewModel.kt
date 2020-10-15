@@ -15,7 +15,7 @@ class ReviewDetailViewModel internal constructor(
 
     val inputReview: MutableLiveData<Review?> = MutableLiveData()
     val reviews: LiveData<List<Review>> = Transformations.switchMap(inputReview) {
-        reviewDao.getReviewListBySamePlace(inputReview.value?.place_name?: "", inputReview.value?.address_name?: "")
+        reviewDao.getReviewListBySamePlace(uid, inputReview.value?.place_name?: "", inputReview.value?.address_name?: "")
     }
 
     val themeList: MutableLiveData<List<Theme>> = MutableLiveData()
