@@ -15,8 +15,8 @@ interface ReviewDao {
     @Query("SELECT * FROM reviews WHERE uid = :uid GROUP BY x, y, place_name")
     fun getReviewListByUid(uid: Long): LiveData<List<Review>>
 
-    @Query("SELECT * FROM reviews WHERE place_name = :placeName AND address_name = :addressName")
-    fun getReviewListBySamePlace(placeName: String, addressName: String): LiveData<List<Review>>
+    @Query("SELECT * FROM reviews WHERE uid = :uid AND place_name = :placeName AND address_name = :addressName")
+    fun getReviewListBySamePlace(uid: Long, placeName: String, addressName: String): LiveData<List<Review>>
 
     @Query("SELECT * FROM reviews WHERE place_name = :placeName AND address_name = :addressName")
     fun getReviewListBySamePlace2(placeName: String, addressName: String): List<Review>
